@@ -1,0 +1,618 @@
+<!doctype html>
+<html lang="cs">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>MMA Ladder · Editor</title>
+<link rel="icon" type="image/png" href="data:image/png;base64,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">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,600;0,700;0,800;1,800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #000; --panel: #0d0d0d; --panel-2: #141414; --line: #1f1f1f; --line-2: #2c2c2c;
+    --text: #f3f3f3; --muted: #8c8c8c; --dim: #5a5a5a; --up: #2ecc71; --down: #ff4d4d; --gold: #d9b45a;
+    --display: "Barlow Condensed", "Arial Narrow", Arial, sans-serif;
+    --body: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  }
+  * { box-sizing: border-box; }
+  [hidden] { display: none !important; }
+  html, body { margin: 0; background: var(--bg); color: var(--text); font-family: var(--body); font-size: 14px; }
+  button, input, select { font: inherit; color: inherit; }
+  button { cursor: pointer; }
+  a { color: inherit; }
+  .wrap { max-width: 1080px; margin: 0 auto; padding: 0 20px; }
+
+  header { position: sticky; top: 0; z-index: 10; background: rgba(5,5,5,.92); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); }
+  header .wrap { display: flex; align-items: center; gap: 12px; min-height: 62px; flex-wrap: wrap; padding-top: 8px; padding-bottom: 8px; }
+  .brand { display: flex; align-items: center; gap: 10px; margin-right: auto; }
+  .brand img { width: 32px; height: 32px; }
+  .brand b { font-family: var(--display); font-weight: 800; font-style: italic; font-size: 21px; text-transform: uppercase; }
+  .brand span { color: var(--muted); font-size: 12px; letter-spacing: .14em; text-transform: uppercase; font-weight: 600; }
+
+  .btn { height: 36px; padding: 0 14px; border-radius: 8px; border: 1px solid var(--line-2); background: var(--panel); font-weight: 600; font-size: 13px; display: inline-flex; align-items: center; gap: 6px; white-space: nowrap; transition: border-color .15s, background .15s; }
+  .btn:hover { border-color: #666; }
+  .btn.primary { background: #fff; color: #000; border-color: #fff; }
+  .btn.primary:hover { background: #ddd; }
+  .btn.ghost { background: transparent; }
+  .btn.danger:hover { border-color: var(--down); color: var(--down); }
+  .btn.sm { height: 30px; padding: 0 10px; font-size: 12px; }
+  .icon-btn { width: 30px; height: 30px; border-radius: 7px; border: 1px solid var(--line-2); background: var(--panel); display: inline-grid; place-items: center; font-size: 13px; color: var(--muted); }
+  .icon-btn:hover { color: #fff; border-color: #666; }
+  .icon-btn.on { background: var(--gold); color: #000; border-color: var(--gold); font-weight: 800; }
+  .icon-btn.del:hover { color: var(--down); border-color: var(--down); }
+
+  input[type=text], input[type=search], input[type=date], select { height: 36px; border-radius: 8px; border: 1px solid var(--line-2); background: var(--panel); padding: 0 10px; outline: none; min-width: 0; }
+  input:focus, select:focus { border-color: #fff; }
+  input[type=color] { width: 36px; height: 30px; border: 1px solid var(--line-2); background: var(--panel); border-radius: 6px; padding: 2px; }
+  label.field { display: grid; gap: 5px; font-size: 11px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--dim); }
+
+  .notice { margin-top: 18px; padding: 12px 14px; border: 1px solid var(--line-2); border-radius: 10px; background: var(--panel); display: flex; gap: 12px; align-items: center; flex-wrap: wrap; color: var(--muted); }
+  .notice strong { color: var(--text); }
+  .notice .btn { margin-left: auto; }
+
+  .meta-row { display: flex; gap: 16px; align-items: flex-end; flex-wrap: wrap; margin: 18px 0 6px; }
+  .saved { color: var(--muted); font-size: 12px; margin-left: auto; }
+  .saved::before { content: ""; display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: var(--up); margin-right: 7px; vertical-align: middle; }
+
+  .tabs { display: flex; gap: 4px; border-bottom: 1px solid var(--line); margin-top: 18px; overflow-x: auto; }
+  .tab { background: none; border: 0; padding: 12px 14px; font-family: var(--display); font-weight: 700; font-size: 16px; letter-spacing: .06em; text-transform: uppercase; color: var(--dim); position: relative; white-space: nowrap; }
+  .tab.on { color: var(--text); }
+  .tab.on::after { content: ""; position: absolute; left: 14px; right: 14px; bottom: -1px; height: 2px; background: #fff; }
+  .pane { display: none; padding: 22px 0 80px; }
+  .pane.on { display: block; }
+
+  .toolbar { display: flex; gap: 10px; flex-wrap: wrap; align-items: flex-end; }
+  .divs { display: flex; gap: 6px; flex-wrap: wrap; margin: 16px 0; }
+  .divbtn { height: 32px; padding: 0 12px; border-radius: 999px; border: 1px solid var(--line-2); background: transparent; font-weight: 600; font-size: 12px; color: var(--muted); }
+  .divbtn.on { background: #fff; color: #000; border-color: #fff; }
+  .divbtn small { opacity: .6; margin-left: 4px; }
+
+  .panel { border: 1px solid var(--line); border-radius: 12px; background: var(--panel); }
+  .panel-head { display: flex; align-items: center; gap: 10px; padding: 14px 16px; border-bottom: 1px solid var(--line); flex-wrap: wrap; }
+  .panel-head h3 { margin: 0; font-family: var(--display); font-weight: 800; text-transform: uppercase; font-size: 24px; letter-spacing: .02em; display: flex; align-items: center; gap: 10px; }
+  .panel-head .spacer { flex: 1; }
+
+  .entry { display: grid; grid-template-columns: 22px 44px 54px 1fr auto; align-items: center; gap: 10px; padding: 9px 16px; border-bottom: 1px solid var(--line); background: var(--panel); }
+  .entry:last-child { border-bottom: 0; }
+  .entry.dragging { opacity: .4; }
+  .entry.over { box-shadow: inset 0 2px 0 #fff; }
+  .grip { cursor: grab; color: var(--dim); text-align: center; user-select: none; letter-spacing: -2px; }
+  .pos { font-family: var(--display); font-weight: 800; font-size: 24px; text-align: center; }
+  .pos.c { color: var(--gold); font-size: 15px; letter-spacing: .08em; }
+  .mv { font-size: 11px; font-weight: 700; text-align: center; }
+  .mv.up { color: var(--up); } .mv.down { color: var(--down); } .mv.same { color: var(--dim); }
+  .mv.new { background: #fff; color: #000; border-radius: 4px; padding: 2px 0; font-size: 9px; letter-spacing: .08em; }
+  .who { display: flex; align-items: center; gap: 10px; min-width: 0; }
+  .who .nm { font-weight: 600; font-size: 15px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .who .sm { color: var(--muted); font-size: 11px; display: flex; gap: 6px; align-items: center; }
+  .acts { display: flex; gap: 5px; align-items: center; }
+  .acts input { width: 48px; height: 30px; text-align: center; padding: 0 4px; }
+  .flag { width: 26px; height: 18px; object-fit: cover; border-radius: 3px; box-shadow: 0 0 0 1px rgba(255,255,255,.12); background: #222; flex-shrink: 0; display: inline-block; }
+  .flag-text { font-size: 8px; font-weight: 700; color: var(--muted); display: inline-flex; align-items: center; justify-content: center; }
+  .orgdot { width: 7px; height: 7px; border-radius: 2px; display: inline-block; }
+  .empty { padding: 34px 16px; text-align: center; color: var(--muted); }
+
+  .add { display: flex; gap: 8px; padding: 14px 16px; border-top: 1px solid var(--line); flex-wrap: wrap; align-items: center; }
+  .add input[type=text] { flex: 1; min-width: 200px; }
+  .newf { display: none; gap: 8px; padding: 0 16px 14px; flex-wrap: wrap; align-items: flex-end; }
+  .newf.open { display: flex; }
+  .hint { color: var(--muted); font-size: 12px; line-height: 1.5; margin: 10px 0 0; }
+  .hint b { color: var(--text); }
+
+  table { width: 100%; border-collapse: collapse; }
+  th { text-align: left; font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--dim); font-weight: 700; padding: 10px 8px; border-bottom: 1px solid var(--line); }
+  td { padding: 6px 8px; border-bottom: 1px solid var(--line); vertical-align: middle; }
+  td input[type=text], td select { width: 100%; height: 32px; }
+  td.ranks { color: var(--muted); font-size: 12px; white-space: nowrap; }
+  .tablewrap { overflow-x: auto; }
+
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; align-items: start; }
+  .item { display: flex; align-items: center; gap: 10px; padding: 10px 16px; border-bottom: 1px solid var(--line); }
+  .item:last-child { border-bottom: 0; }
+  .item .grow { flex: 1; min-width: 0; }
+  .item input[type=text] { width: 100%; }
+  .chk { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; color: var(--muted); white-space: nowrap; }
+
+  .toast { position: fixed; bottom: 22px; left: 50%; transform: translateX(-50%) translateY(20px); background: #fff; color: #000; font-weight: 600; padding: 10px 16px; border-radius: 8px; opacity: 0; transition: .2s; pointer-events: none; z-index: 99; }
+  .toast.show { opacity: 1; transform: translateX(-50%); }
+
+  @media (max-width: 760px) {
+    .grid2 { grid-template-columns: 1fr; }
+    .entry { grid-template-columns: 18px 34px 40px 1fr; }
+    .entry .acts { grid-column: 1 / -1; justify-content: flex-end; }
+    .brand span { display: none; }
+  }
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <div class="brand"><img src="data:image/webp;base64,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" alt=""><b>MMA Ladder</b><span>Editor</span></div>
+    <button class="btn ghost" id="btnPreview" title="Otevře web s rozpracovanými daty">Náhled webu ↗</button>
+    <label class="btn ghost" title="Načíst existující data.js">Importovat<input type="file" id="importFile" accept=".js,.json" hidden></label>
+    <button class="btn primary" id="btnExport">Stáhnout data.js</button>
+  </div>
+</header>
+
+<main class="wrap">
+  <div class="notice" id="draftNotice" hidden></div>
+
+  <div class="meta-row">
+    <label class="field">Datum aktualizace<input type="date" id="updated"></label>
+    <button class="btn" id="btnSnapshot" title="Uloží aktuální pozice všech žebříčků jako výchozí pro šipky ▲▼">Nová aktualizace</button>
+    <span class="saved" id="saved">Koncept se ukládá automaticky</span>
+  </div>
+
+  <nav class="tabs">
+    <button class="tab on" data-tab="rank">Žebříčky</button>
+    <button class="tab" data-tab="fighters">Zápasníci</button>
+    <button class="tab" data-tab="setup">Země a organizace</button>
+  </nav>
+
+  <!-- RANKINGS -->
+  <section class="pane on" id="pane-rank">
+    <div class="toolbar">
+      <label class="field">Typ žebříčku
+        <select id="scope">
+          <option value="world">Světový</option>
+          <option value="country">Podle země</option>
+          <option value="org">Podle organizace</option>
+        </select>
+      </label>
+      <label class="field" id="subWrap">Země / organizace<select id="sub"></select></label>
+    </div>
+    <div class="divs" id="divs"></div>
+
+    <div class="panel">
+      <div class="panel-head">
+        <h3 id="listTitle"></h3>
+        <span class="spacer"></span>
+        <button class="btn sm" id="btnFill" hidden>Doplnit ze světového</button>
+        <button class="btn sm danger" id="btnClear">Vyprázdnit</button>
+      </div>
+      <div id="entries"></div>
+      <div class="add">
+        <input type="text" id="addInput" list="fighterList" placeholder="Přidat zápasníka – začni psát jméno…">
+        <datalist id="fighterList"></datalist>
+        <button class="btn" id="btnAdd">Přidat na konec</button>
+      </div>
+      <div class="newf" id="newFighter">
+        <label class="field" style="flex:1;min-width:180px">Nový zápasník<input type="text" id="nfName"></label>
+        <label class="field">Země<select id="nfCountry"></select></label>
+        <label class="field">Organizace<select id="nfOrg"></select></label>
+        <button class="btn primary" id="nfCreate">Vytvořit a přidat</button>
+      </div>
+    </div>
+    <p class="hint">
+      Pořadí měníš tažením za <b>⋮⋮</b>, šipkami nebo přepsáním čísla pozice. <b>C</b> označí šampiona – zobrazí se nad žebříčkem a nepočítá se do pořadí.
+      Před úpravami po turnaji klikni na <b>Nová aktualizace</b>: web pak u každého ukáže, o kolik míst stoupl nebo klesl. Nově přidaní dostanou štítek NEW.
+    </p>
+  </section>
+
+  <!-- FIGHTERS -->
+  <section class="pane" id="pane-fighters">
+    <div class="toolbar" style="margin-bottom:16px">
+      <input type="search" id="fSearch" placeholder="Hledat zápasníka…" style="flex:1;min-width:200px">
+      <button class="btn primary" id="btnNewFighter">+ Nový zápasník</button>
+    </div>
+    <div class="panel tablewrap">
+      <table>
+        <thead><tr><th style="width:34px"></th><th>Jméno</th><th>Přezdívka</th><th style="width:170px">Země</th><th style="width:150px">Organizace</th><th style="width:110px">Bilance</th><th>Žebříčky</th><th style="width:40px"></th></tr></thead>
+        <tbody id="fBody"></tbody>
+      </table>
+    </div>
+    <p class="hint">Bilance ve tvaru <b>21-4-0</b> (výhry-prohry-remízy). Změny se projeví ve všech žebříčcích, kde zápasník je.</p>
+  </section>
+
+  <!-- SETUP -->
+  <section class="pane" id="pane-setup">
+    <div class="grid2">
+      <div class="panel">
+        <div class="panel-head"><h3>Země</h3></div>
+        <div id="countryList"></div>
+        <div class="add"><select id="countryAdd" style="flex:1"></select><button class="btn" id="btnCountryAdd">Přidat žebříček země</button></div>
+      </div>
+      <div class="panel">
+        <div class="panel-head"><h3>Organizace</h3></div>
+        <div id="orgList"></div>
+        <div class="add"><input type="text" id="orgAdd" placeholder="Název, např. PFL Europe"><button class="btn" id="btnOrgAdd">Přidat</button></div>
+      </div>
+    </div>
+    <p class="hint">Zaškrtnuté <b>Žebříček</b> = organizace má na webu vlastní žebříček. Ostatní slouží jen jako štítek pod jménem zápasníka. Barva se ukazuje jako malý detail u názvu.</p>
+
+    <div class="panel" style="margin-top:18px">
+      <div class="panel-head"><h3>Váhové kategorie</h3></div>
+      <div id="divList"></div>
+    </div>
+  </section>
+</main>
+
+<div class="toast" id="toast"></div>
+
+<script src="common.js"></script>
+<script src="data.js"></script>
+<script>
+(function () {
+  const { esc, flag, countryName, slug, normalize, COUNTRIES } = MML;
+  const $ = id => document.getElementById(id);
+  const clone = o => JSON.parse(JSON.stringify(o));
+
+  let D;
+  const draft = MML.readDraft();
+  const fileData = normalize(clone(window.MMA_DATA || {}));
+  const strip = d => { const c = clone(d); delete c._savedAt; return c; };
+  if (draft && JSON.stringify(strip(draft)) !== JSON.stringify(fileData)) {
+    D = normalize(draft);
+    const n = $("draftNotice");
+    n.hidden = false;
+    n.innerHTML = `<span><strong>Pokračuješ v rozpracovaném konceptu</strong> z ${draft._savedAt ? new Date(draft._savedAt).toLocaleString("cs-CZ") : "dřívějška"}. Ještě není v data.js.</span><button class="btn sm danger" id="btnDiscard">Zahodit a načíst data.js</button>`;
+    $("btnDiscard").onclick = () => { if (confirm("Opravdu zahodit všechny neuložené změny?")) { MML.clearDraft(); location.reload(); } };
+  } else {
+    D = fileData;
+  }
+
+  let ui = { scope: "world", sub: null, div: (D.divisions[0] || {}).id, tab: "rank" };
+
+  /* ---------- helpers ---------- */
+  function toast(msg) { const t = $("toast"); t.textContent = msg; t.classList.add("show"); clearTimeout(toast.t); toast.t = setTimeout(() => t.classList.remove("show"), 1800); }
+  function save() {
+    D._savedAt = Date.now();
+    const ok = MML.writeDraft(D);
+    $("saved").textContent = ok ? "Koncept uložen " + new Date().toLocaleTimeString("cs-CZ", { hour: "2-digit", minute: "2-digit" }) : "Koncept se nepodařilo uložit v prohlížeči – stáhni data.js";
+  }
+  const orgById = id => D.orgs.find(o => o.id === id);
+  const rankedOrgs = () => D.orgs.filter(o => o.ranked);
+
+  function getList(scope, sub, div, create) {
+    const R = D.rankings;
+    if (scope === "world") { if (create && !R.world[div]) R.world[div] = []; return R.world[div] || []; }
+    if (!sub) return [];
+    if (create) { R[scope][sub] = R[scope][sub] || {}; R[scope][sub][div] = R[scope][sub][div] || []; }
+    return ((R[scope][sub] || {})[div]) || [];
+  }
+  function allLists(cb) {
+    for (const [div, l] of Object.entries(D.rankings.world)) cb(l, "world", null, div);
+    for (const sc of ["country", "org"])
+      for (const [sub, g] of Object.entries(D.rankings[sc]))
+        for (const [div, l] of Object.entries(g)) cb(l, sc, sub, div);
+  }
+  function fighterLabel(id) { const f = D.fighters[id]; return f ? `${f.name} (${countryName(f.country)})` : id; }
+  function countryOptions(sel, withEmpty) {
+    const entries = Object.entries(COUNTRIES).sort((a, b) => a[1].localeCompare(b[1], "cs"));
+    return (withEmpty ? `<option value="">–</option>` : "") + entries.map(([c, n]) => `<option value="${c}" ${c === sel ? "selected" : ""}>${esc(n)}</option>`).join("");
+  }
+  function orgOptions(sel) {
+    return `<option value="">–</option>` + D.orgs.map(o => `<option value="${esc(o.id)}" ${o.id === sel ? "selected" : ""}>${esc(o.name)}</option>`).join("");
+  }
+  function uniqueId(name) {
+    let base = slug(name) || "fighter", id = base, i = 2;
+    while (D.fighters[id]) id = base + "-" + i++;
+    return id;
+  }
+
+  /* ---------- tabs ---------- */
+  document.querySelectorAll(".tab").forEach(t => t.onclick = () => {
+    ui.tab = t.dataset.tab;
+    document.querySelectorAll(".tab").forEach(x => x.classList.toggle("on", x === t));
+    document.querySelectorAll(".pane").forEach(p => p.classList.toggle("on", p.id === "pane-" + ui.tab));
+    renderAll();
+  });
+
+  /* ---------- rankings pane ---------- */
+  function fixSub() {
+    if (ui.scope === "country" && !D.countries.some(c => c.code === ui.sub)) ui.sub = (D.countries[0] || {}).code || null;
+    if (ui.scope === "org" && !rankedOrgs().some(o => o.id === ui.sub)) ui.sub = (rankedOrgs()[0] || {}).id || null;
+    if (ui.scope === "world") ui.sub = null;
+  }
+
+  function renderRank() {
+    fixSub();
+    $("scope").value = ui.scope;
+    $("subWrap").style.display = ui.scope === "world" ? "none" : "";
+    $("sub").innerHTML = ui.scope === "country"
+      ? D.countries.map(c => `<option value="${esc(c.code)}">${esc(c.name || countryName(c.code))}</option>`).join("")
+      : rankedOrgs().map(o => `<option value="${esc(o.id)}">${esc(o.name)}</option>`).join("");
+    if (ui.sub) $("sub").value = ui.sub;
+
+    $("divs").innerHTML = D.divisions.map(d => {
+      const n = getList(ui.scope, ui.sub, d.id).length;
+      return `<button class="divbtn ${d.id === ui.div ? "on" : ""}" data-div="${esc(d.id)}">${esc(d.name)}<small>${n || ""}</small></button>`;
+    }).join("");
+
+    const div = D.divisions.find(d => d.id === ui.div) || {};
+    let title = ui.scope === "world" ? "Svět" : ui.scope === "country" ? flag(ui.sub) + esc(countryName(ui.sub)) : esc((orgById(ui.sub) || {}).name || "");
+    $("listTitle").innerHTML = `${title} <span style="color:var(--dim)">·</span> ${esc(div.name || "")}`;
+    $("btnFill").hidden = ui.scope === "world";
+    $("btnFill").textContent = ui.scope === "country" ? "Doplnit ze světového (podle země)" : "Doplnit ze světového (podle organizace)";
+
+    const noSub = ui.scope !== "world" && !ui.sub;
+    const list = getList(ui.scope, ui.sub, ui.div);
+    if (noSub) {
+      $("entries").innerHTML = `<div class="empty">Nejdřív přidej ${ui.scope === "country" ? "zemi" : "organizaci se žebříčkem"} v záložce Země a organizace.</div>`;
+    } else if (!list.length) {
+      $("entries").innerHTML = `<div class="empty">Žebříček je prázdný. Přidej prvního zápasníka níže.</div>`;
+    } else {
+      let pos = 0;
+      $("entries").innerHTML = list.map((e, i) => {
+        const f = D.fighters[e.f] || { name: e.f + " (smazán?)" };
+        if (!e.c) pos++;
+        const o = orgById(f.org);
+        let mv = `<span class="mv same">–</span>`;
+        if (e.c) mv = `<span class="mv same" style="color:var(--gold)">CHAMP</span>`;
+        else if (e.prev === 0 || e.prev === "new") mv = `<span class="mv new">NEW</span>`;
+        else if (e.prev != null && e.prev !== "") { const d = e.prev - pos; mv = d > 0 ? `<span class="mv up">▲${d}</span>` : d < 0 ? `<span class="mv down">▼${-d}</span>` : mv; }
+        return `<div class="entry" draggable="true" data-i="${i}">
+          <span class="grip" title="Přetáhni">⋮⋮</span>
+          <span class="pos ${e.c ? "c" : ""}">${e.c ? "C" : pos}</span>
+          ${mv}
+          <span class="who">${flag(f.country)}<span style="min-width:0"><div class="nm">${esc(f.name)}</div><div class="sm">${o ? `<i class="orgdot" style="background:${esc(o.color)}"></i>${esc(o.name)}` : ""}${f.record ? " · " + esc(f.record) : ""}</div></span></span>
+          <span class="acts">
+            <button class="icon-btn" data-act="up" title="Nahoru">↑</button>
+            <button class="icon-btn" data-act="down" title="Dolů">↓</button>
+            <input type="text" inputmode="numeric" data-act="pos" value="${i + 1}" title="Přesunout na řádek">
+            <button class="icon-btn ${e.c ? "on" : ""}" data-act="champ" title="Šampion">C</button>
+            <button class="icon-btn del" data-act="del" title="Odebrat ze žebříčku">✕</button>
+          </span>
+        </div>`;
+      }).join("");
+    }
+
+    $("fighterList").innerHTML = Object.keys(D.fighters).sort((a, b) => D.fighters[a].name.localeCompare(D.fighters[b].name, "cs"))
+      .map(id => `<option value="${esc(fighterLabel(id))}">`).join("");
+  }
+
+  function move(list, from, to) {
+    to = Math.max(0, Math.min(list.length - 1, to));
+    if (from === to) return;
+    const [x] = list.splice(from, 1); list.splice(to, 0, x);
+  }
+
+  $("scope").onchange = e => { ui.scope = e.target.value; renderRank(); };
+  $("sub").onchange = e => { ui.sub = e.target.value; renderRank(); };
+  $("divs").onclick = e => { const b = e.target.closest("[data-div]"); if (b) { ui.div = b.dataset.div; renderRank(); } };
+
+  $("entries").addEventListener("click", e => {
+    const b = e.target.closest("button[data-act]"); if (!b) return;
+    const i = +b.closest(".entry").dataset.i;
+    const list = getList(ui.scope, ui.sub, ui.div, true);
+    const act = b.dataset.act;
+    if (act === "up") move(list, i, i - 1);
+    if (act === "down") move(list, i, i + 1);
+    if (act === "champ") {
+      const was = !!list[i].c;
+      list.forEach(x => delete x.c);
+      if (!was) { list[i].c = true; move(list, i, 0); }
+    }
+    if (act === "del") list.splice(i, 1);
+    save(); renderRank();
+  });
+  $("entries").addEventListener("change", e => {
+    if (e.target.dataset.act !== "pos") return;
+    const i = +e.target.closest(".entry").dataset.i;
+    const n = parseInt(e.target.value, 10);
+    if (!isNaN(n)) { move(getList(ui.scope, ui.sub, ui.div, true), i, n - 1); save(); }
+    renderRank();
+  });
+  $("entries").addEventListener("keydown", e => { if (e.key === "Enter" && e.target.dataset.act === "pos") e.target.blur(); });
+
+  // drag & drop
+  let dragFrom = null;
+  $("entries").addEventListener("dragstart", e => { const r = e.target.closest(".entry"); if (!r) return; dragFrom = +r.dataset.i; r.classList.add("dragging"); e.dataTransfer.effectAllowed = "move"; });
+  $("entries").addEventListener("dragend", e => { document.querySelectorAll(".entry").forEach(x => x.classList.remove("dragging", "over")); });
+  $("entries").addEventListener("dragover", e => { const r = e.target.closest(".entry"); if (!r) return; e.preventDefault(); document.querySelectorAll(".entry.over").forEach(x => x.classList.remove("over")); r.classList.add("over"); });
+  $("entries").addEventListener("drop", e => {
+    const r = e.target.closest(".entry"); if (!r || dragFrom == null) return; e.preventDefault();
+    move(getList(ui.scope, ui.sub, ui.div, true), dragFrom, +r.dataset.i);
+    dragFrom = null; save(); renderRank();
+  });
+
+  function resolveFighter(text) {
+    text = text.trim(); if (!text) return null;
+    const ids = Object.keys(D.fighters);
+    return ids.find(id => fighterLabel(id) === text) || ids.find(id => D.fighters[id].name.toLowerCase() === text.toLowerCase()) || null;
+  }
+  function addToList(id) {
+    if (ui.scope !== "world" && !ui.sub) return toast("Nejdřív vyber zemi / organizaci");
+    const list = getList(ui.scope, ui.sub, ui.div, true);
+    if (list.some(e => e.f === id)) return toast("Už v tomto žebříčku je");
+    list.push({ f: id, prev: "new" });
+    save(); renderRank(); toast(D.fighters[id].name + " přidán");
+  }
+  $("btnAdd").onclick = () => {
+    const txt = $("addInput").value;
+    const id = resolveFighter(txt);
+    if (id) { addToList(id); $("addInput").value = ""; $("newFighter").classList.remove("open"); return; }
+    if (!txt.trim()) return;
+    $("nfName").value = txt.trim();
+    $("nfCountry").innerHTML = countryOptions(ui.scope === "country" ? ui.sub : "", true);
+    $("nfOrg").innerHTML = orgOptions(ui.scope === "org" ? ui.sub : "");
+    $("newFighter").classList.add("open");
+    $("nfName").focus();
+  };
+  $("addInput").addEventListener("keydown", e => { if (e.key === "Enter") $("btnAdd").click(); });
+  $("nfCreate").onclick = () => {
+    const name = $("nfName").value.trim(); if (!name) return;
+    const id = uniqueId(name);
+    D.fighters[id] = { name, country: $("nfCountry").value, org: $("nfOrg").value };
+    $("newFighter").classList.remove("open"); $("addInput").value = "";
+    addToList(id);
+  };
+  $("btnClear").onclick = () => {
+    const list = getList(ui.scope, ui.sub, ui.div); if (!list.length) return;
+    if (!confirm("Odebrat všechny zápasníky z tohoto žebříčku?")) return;
+    list.length = 0; save(); renderRank();
+  };
+  $("btnFill").onclick = () => {
+    if (!ui.sub) return;
+    const world = getList("world", null, ui.div);
+    const list = getList(ui.scope, ui.sub, ui.div, true);
+    let added = 0;
+    for (const e of world) {
+      const f = D.fighters[e.f]; if (!f) continue;
+      const match = ui.scope === "country" ? f.country === ui.sub : f.org === ui.sub;
+      if (match && !list.some(x => x.f === e.f)) { list.push({ f: e.f, prev: "new" }); added++; }
+    }
+    save(); renderRank(); toast(added ? `Doplněno ${added}` : "Ve světovém žebříčku nikdo další není");
+  };
+
+  $("btnSnapshot").onclick = () => {
+    if (!confirm("Uložit aktuální pozice všech žebříčků jako výchozí?\nŠipky ▲▼ se pak počítají od tohoto stavu a štítky NEW zmizí.")) return;
+    allLists(list => { let pos = 0; list.forEach(e => { if (!e.c) pos++; e.prev = e.c ? null : pos; if (e.prev == null) delete e.prev; }); });
+    const today = new Date(); const iso = today.getFullYear() + "-" + String(today.getMonth() + 1).padStart(2, "0") + "-" + String(today.getDate()).padStart(2, "0");
+    D.updated = iso; $("updated").value = iso;
+    save(); renderRank(); toast("Pozice uloženy – teď můžeš přeskládat");
+  };
+
+  /* ---------- fighters pane ---------- */
+  function rankSummary(id) {
+    const out = [];
+    allLists((l, sc, sub, div) => {
+      let pos = 0;
+      l.forEach(e => { if (!e.c) pos++; if (e.f === id) out.push(`${sc === "world" ? "Svět" : sc === "country" ? sub.toUpperCase() : (orgById(sub) || {}).name || sub} ${div.toUpperCase()} ${e.c ? "C" : "#" + pos}`); });
+    });
+    return out.join(", ") || "–";
+  }
+  function renderFighters() {
+    const q = $("fSearch").value.trim().toLowerCase();
+    const ids = Object.keys(D.fighters)
+      .filter(id => !q || D.fighters[id].name.toLowerCase().includes(q))
+      .sort((a, b) => D.fighters[a].name.localeCompare(D.fighters[b].name, "cs"));
+    $("fBody").innerHTML = ids.map(id => {
+      const f = D.fighters[id];
+      return `<tr data-id="${esc(id)}">
+        <td>${flag(f.country)}</td>
+        <td><input type="text" data-k="name" value="${esc(f.name)}"></td>
+        <td><input type="text" data-k="nick" value="${esc(f.nick || "")}"></td>
+        <td><select data-k="country">${countryOptions(f.country, true)}</select></td>
+        <td><select data-k="org">${orgOptions(f.org)}</select></td>
+        <td><input type="text" data-k="record" value="${esc(f.record || "")}" placeholder="0-0-0"></td>
+        <td class="ranks">${esc(rankSummary(id))}</td>
+        <td><button class="icon-btn del" data-del title="Smazat zápasníka">✕</button></td>
+      </tr>`;
+    }).join("") || `<tr><td colspan="8" class="empty">Nikdo nenalezen</td></tr>`;
+  }
+  $("fSearch").oninput = renderFighters;
+  $("fBody").addEventListener("change", e => {
+    const tr = e.target.closest("tr[data-id]"); const k = e.target.dataset.k; if (!tr || !k) return;
+    const f = D.fighters[tr.dataset.id];
+    const v = e.target.value.trim();
+    if (k === "name" && !v) { e.target.value = f.name; return; }
+    if (v) f[k] = v; else delete f[k];
+    save();
+    if (k === "country") tr.firstElementChild.innerHTML = flag(f.country);
+  });
+  $("fBody").addEventListener("click", e => {
+    if (!e.target.closest("[data-del]")) return;
+    const id = e.target.closest("tr").dataset.id;
+    if (!confirm(`Smazat ${D.fighters[id].name}? Zmizí i ze všech žebříčků.`)) return;
+    delete D.fighters[id];
+    allLists(l => { for (let i = l.length - 1; i >= 0; i--) if (l[i].f === id) l.splice(i, 1); });
+    save(); renderFighters();
+  });
+  $("btnNewFighter").onclick = () => {
+    const name = prompt("Jméno nového zápasníka:"); if (!name || !name.trim()) return;
+    const id = uniqueId(name.trim());
+    D.fighters[id] = { name: name.trim(), country: "", org: "" };
+    save(); $("fSearch").value = name.trim(); renderFighters();
+    const row = $("fBody").querySelector(`tr[data-id="${CSS.escape(id)}"] select[data-k=country]`); if (row) row.focus();
+  };
+
+  /* ---------- setup pane ---------- */
+  function renderSetup() {
+    $("countryList").innerHTML = D.countries.map((c, i) => `
+      <div class="item">${flag(c.code)}<div class="grow"><input type="text" data-ci="${i}" value="${esc(c.name || countryName(c.code))}"></div>
+      <button class="icon-btn" data-cmove="${i}" title="Posunout nahoru">↑</button>
+      <button class="icon-btn del" data-cdel="${i}" title="Odebrat žebříček země">✕</button></div>`).join("") || `<div class="empty">Žádná země</div>`;
+    $("countryAdd").innerHTML = Object.entries(COUNTRIES).filter(([c]) => !D.countries.some(x => x.code === c))
+      .sort((a, b) => a[1].localeCompare(b[1], "cs")).map(([c, n]) => `<option value="${c}">${esc(n)}</option>`).join("");
+
+    $("orgList").innerHTML = D.orgs.map((o, i) => `
+      <div class="item"><input type="color" data-ocolor="${i}" value="${esc(o.color || "#888888")}">
+      <div class="grow"><input type="text" data-oname="${i}" value="${esc(o.name)}"></div>
+      <label class="chk"><input type="checkbox" data-oranked="${i}" ${o.ranked ? "checked" : ""}>Žebříček</label>
+      <button class="icon-btn del" data-odel="${i}" title="Smazat organizaci">✕</button></div>`).join("") || `<div class="empty">Žádná organizace</div>`;
+
+    $("divList").innerHTML = D.divisions.map((d, i) => `
+      <div class="item"><div class="grow" style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+        <input type="text" data-dname="${i}" value="${esc(d.name)}"><input type="text" data-dlimit="${i}" value="${esc(d.limit || "")}" placeholder="Limit">
+      </div></div>`).join("");
+  }
+  $("pane-setup").addEventListener("change", e => {
+    const t = e.target, ds = t.dataset;
+    if (ds.ci != null) D.countries[+ds.ci].name = t.value.trim() || countryName(D.countries[+ds.ci].code);
+    else if (ds.ocolor != null) D.orgs[+ds.ocolor].color = t.value;
+    else if (ds.oname != null) D.orgs[+ds.oname].name = t.value.trim() || D.orgs[+ds.oname].name;
+    else if (ds.oranked != null) D.orgs[+ds.oranked].ranked = t.checked;
+    else if (ds.dname != null) D.divisions[+ds.dname].name = t.value.trim() || D.divisions[+ds.dname].name;
+    else if (ds.dlimit != null) D.divisions[+ds.dlimit].limit = t.value.trim();
+    else return;
+    save(); renderSetup();
+  });
+  $("pane-setup").addEventListener("click", e => {
+    const t = e.target.closest("button"); if (!t) return; const ds = t.dataset;
+    if (ds.cdel != null) {
+      const c = D.countries[+ds.cdel];
+      if (!confirm(`Odebrat žebříček ${c.name}? Smaže se i jeho pořadí.`)) return;
+      D.countries.splice(+ds.cdel, 1); delete D.rankings.country[c.code];
+    } else if (ds.cmove != null) {
+      const i = +ds.cmove; if (i === 0) return;
+      const [x] = D.countries.splice(i, 1); D.countries.splice(i - 1, 0, x);
+    } else if (ds.odel != null) {
+      const o = D.orgs[+ds.odel];
+      if (!confirm(`Smazat organizaci ${o.name}? Zápasníkům se štítek vymaže a smaže se i její žebříček.`)) return;
+      D.orgs.splice(+ds.odel, 1); delete D.rankings.org[o.id];
+      Object.values(D.fighters).forEach(f => { if (f.org === o.id) f.org = ""; });
+    } else return;
+    save(); renderSetup();
+  });
+  $("btnCountryAdd").onclick = () => {
+    const c = $("countryAdd").value; if (!c) return;
+    D.countries.push({ code: c, name: countryName(c) }); save(); renderSetup(); toast(countryName(c) + " přidáno");
+  };
+  $("btnOrgAdd").onclick = () => {
+    const name = $("orgAdd").value.trim(); if (!name) return;
+    let id = slug(name) || "org", i = 2; while (D.orgs.some(o => o.id === id)) id = slug(name) + "-" + i++;
+    D.orgs.push({ id, name, color: "#888888", ranked: false });
+    $("orgAdd").value = ""; save(); renderSetup();
+  };
+
+  /* ---------- header actions ---------- */
+  $("updated").value = D.updated || "";
+  $("updated").onchange = e => { D.updated = e.target.value; save(); };
+
+  $("btnPreview").onclick = () => { save(); window.open("index.html?preview#/" + (ui.scope === "world" ? "world/" + ui.div : ui.scope + "/" + ui.sub + "/" + ui.div), "_blank"); };
+
+  $("btnExport").onclick = () => {
+    const out = strip(D);
+    const text = "/* MMA Ladder – data file.\n   Edit via admin.html and replace this file with the exported one. */\nwindow.MMA_DATA = " + JSON.stringify(out, null, 2) + ";\n";
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(new Blob([text], { type: "text/javascript" }));
+    a.download = "data.js"; document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(() => URL.revokeObjectURL(a.href), 2000);
+    toast("data.js stažen – nahraď jím soubor v repozitáři");
+  };
+
+  $("importFile").onchange = e => {
+    const file = e.target.files[0]; if (!file) return;
+    file.text().then(t => {
+      const s = t.indexOf("{"), en = t.lastIndexOf("}");
+      const parsed = JSON.parse(t.slice(s, en + 1));
+      if (!parsed.fighters || !parsed.rankings) throw new Error("bad");
+      if (!confirm("Nahradit aktuální data importovaným souborem?")) return;
+      D = normalize(parsed); save(); $("updated").value = D.updated || ""; renderAll(); toast("Importováno");
+    }).catch(() => alert("Soubor se nepodařilo načíst. Musí to být data.js z MMA Ladder."));
+    e.target.value = "";
+  };
+
+  function renderAll() {
+    if (ui.tab === "rank") renderRank();
+    if (ui.tab === "fighters") renderFighters();
+    if (ui.tab === "setup") renderSetup();
+  }
+  renderAll();
+})();
+</script>
+</body>
+</html>
