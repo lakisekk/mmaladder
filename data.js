@@ -1,7 +1,7 @@
 /* MMA Ladder – data file.
    Edit via admin.html and replace this file with the exported one. */
 window.MMA_DATA = {
-  "updated": "2026-10-09",
+  "updated": "2026-10-10",
   "divisions": [
     {
       "id": "hw",
@@ -288,8 +288,7 @@ window.MMA_DATA = {
     },
     "viktor-pesta": {
       "name": "Viktor Pešta",
-      "country": "cz",
-      "org": "oktagon"
+      "country": "cz"
     },
     "martin-buday": {
       "name": "Martin Buday",
@@ -439,7 +438,7 @@ window.MMA_DATA = {
     },
     "jesus-samuel-chavarria": {
       "name": "Jesus Samuel Chavarría",
-      "country": "ar",
+      "country": "hn",
       "org": "oktagon"
     },
     "krzysztof-jotko": {
@@ -485,6 +484,246 @@ window.MMA_DATA = {
     "mick-stanton": {
       "name": "Mick Stanton",
       "country": "gb-eng",
+      "org": "oktagon"
+    },
+    "amiran-gogoladze": {
+      "name": "Amiran Gogoladze",
+      "country": "ge",
+      "org": "oktagon"
+    },
+    "jack-grant": {
+      "name": "Jack Grant",
+      "country": "gb-eng",
+      "org": "oktagon"
+    },
+    "ion-surdu": {
+      "name": "Ion Surdu",
+      "country": "md",
+      "org": "oktagon"
+    },
+    "ronald-paradeiser": {
+      "name": "Ronald Paradeiser",
+      "country": "sk",
+      "org": "oktagon"
+    },
+    "felix-klinkhammer": {
+      "name": "Felix Klinkhammer",
+      "country": "de",
+      "org": "oktagon"
+    },
+    "jessin-ayari": {
+      "name": "Jessin Ayari",
+      "country": "de",
+      "org": "oktagon"
+    },
+    "tyrone-pfeifer": {
+      "name": "Tyrone Pfeifer",
+      "country": "de",
+      "org": "oktagon"
+    },
+    "cihad-akipa": {
+      "name": "Cihad Akipa",
+      "country": "de",
+      "org": "oktagon"
+    },
+    "andrej-kalasnik": {
+      "name": "Andrej Kalašnik",
+      "country": "cz",
+      "org": "oktagon"
+    },
+    "mateusz-legierski": {
+      "name": "Mateusz Legierski",
+      "country": "pl",
+      "org": "oktagon"
+    },
+    "fedor-duric": {
+      "name": "Fedor Duric",
+      "country": "de",
+      "org": "oktagon"
+    },
+    "gokhan-aksu": {
+      "name": "Gökhan Aksu",
+      "country": "tr",
+      "org": "oktagon"
+    },
+    "niko-samsonidse": {
+      "name": "Niko Samsonidse",
+      "country": "de",
+      "org": "oktagon"
+    },
+    "ozan-aslaner": {
+      "name": "Ozan Aslaner",
+      "country": "de",
+      "org": "oktagon"
+    },
+    "arijan-topallaj": {
+      "name": "Arijan Topallaj",
+      "country": "de",
+      "org": "oktagon"
+    },
+    "tomas-mudroch": {
+      "name": "Tomáš Mudroch",
+      "country": "cz",
+      "org": "oktagon"
+    },
+    "denis-frimpong": {
+      "name": "Denis Frimpong",
+      "country": "ie",
+      "org": "oktagon"
+    },
+    "vladimir-lengal": {
+      "name": "Vladimír Lengál",
+      "country": "cz",
+      "org": "oktagon"
+    },
+    "tomas-ciganik": {
+      "name": "Tomáš Cigánik",
+      "country": "sk",
+      "org": "oktagon"
+    },
+    "mochamed-machaev": {
+      "name": "Mochamed Machaev",
+      "country": "at",
+      "org": "oktagon"
+    },
+    "max-holzer": {
+      "name": "Max Holzer",
+      "country": "de",
+      "org": "oktagon"
+    },
+    "zafar-mohsen": {
+      "name": "Zafar Mohsen",
+      "country": "de",
+      "org": "oktagon"
+    },
+    "gjoni-palokaj": {
+      "name": "Gjoni Palokaj",
+      "country": "de",
+      "org": "oktagon"
+    },
+    "khalid-taha": {
+      "name": "Khalid Taha",
+      "country": "de",
+      "org": "oktagon"
+    },
+    "richie-smullen": {
+      "name": "Richie Smullen",
+      "country": "ie",
+      "org": "oktagon"
+    },
+    "radek-rousal": {
+      "name": "Radek Roušal",
+      "country": "cz",
+      "org": "oktagon"
+    },
+    "jakub-batfalsky": {
+      "name": "Jakub Batfalský",
+      "country": "cz",
+      "org": "oktagon"
+    },
+    "james-hendin": {
+      "name": "James Hendin",
+      "country": "gb-eng",
+      "org": "oktagon"
+    },
+    "deniz-ilbay": {
+      "name": "Deniz Ilbay",
+      "country": "cz",
+      "org": "oktagon"
+    },
+    "igor-severino": {
+      "name": "Igor Severino",
+      "country": "br",
+      "org": "oktagon"
+    },
+    "jonas-magard": {
+      "name": "Jonas Magard",
+      "country": "dk",
+      "org": "oktagon"
+    },
+    "dastan-amangeldy": {
+      "name": "Dastan Amangeldy",
+      "country": "kz",
+      "org": "oktagon"
+    },
+    "raul-lemberanskij": {
+      "name": "Raul Lemberanskij",
+      "country": "de",
+      "org": "oktagon"
+    },
+    "khrushed-kakhorov": {
+      "name": "Khrushed Kakhorov",
+      "country": "de",
+      "org": "oktagon"
+    },
+    "wanderley-junior": {
+      "name": "Wanderley Junior",
+      "country": "br",
+      "org": "oktagon"
+    },
+    "elvis-silva": {
+      "name": "Elvis Silva",
+      "country": "br",
+      "org": "oktagon"
+    },
+    "roman-paulus": {
+      "name": "Roman Paulus",
+      "country": "sk",
+      "org": "oktagon"
+    },
+    "ali-gunduz": {
+      "name": "Ali Günduz",
+      "country": "de",
+      "org": "oktagon"
+    },
+    "harun-kurt": {
+      "name": "Harun Kurt",
+      "country": "de",
+      "org": "oktagon"
+    },
+    "abdullah-sultani": {
+      "name": "Abdullah Sultani",
+      "country": "de",
+      "org": "oktagon"
+    },
+    "zhalgas-zhumagulov": {
+      "name": "Zhalgas Zhumagulov",
+      "country": "kz",
+      "org": "oktagon"
+    },
+    "beno-adamia": {
+      "name": "Beno Adamia",
+      "country": "ge",
+      "org": "oktagon"
+    },
+    "david-dvorak": {
+      "name": "David Dvořák",
+      "country": "cz",
+      "org": "oktagon"
+    },
+    "matheus-severino": {
+      "name": "Matheus Severino",
+      "country": "br",
+      "org": "oktagon"
+    },
+    "mohamed-walid": {
+      "name": "Mohamed Walid",
+      "country": "de",
+      "org": "oktagon"
+    },
+    "aaron-aby": {
+      "name": "Aaron Aby",
+      "country": "gb-wls",
+      "org": "oktagon"
+    },
+    "shawn-marcos-da-silva": {
+      "name": "Shawn Marcos da Silva",
+      "country": "de",
+      "org": "oktagon"
+    },
+    "zoran-milic": {
+      "name": "Zoran Milic",
+      "country": "rs",
       "org": "oktagon"
     }
   },
@@ -580,19 +819,19 @@ window.MMA_DATA = {
       ],
       "lw": [
         {
-          "f": "ilia-topuria",
+          "f": "justin-gaethje",
           "prev": 1
         },
         {
-          "f": "arman-tsarukyan",
+          "f": "ilia-topuria",
           "prev": 2
         },
         {
-          "f": "charles-oliveira",
+          "f": "arman-tsarukyan",
           "prev": 3
         },
         {
-          "f": "justin-gaethje",
+          "f": "charles-oliveira",
           "prev": 4
         },
         {
@@ -624,11 +863,11 @@ window.MMA_DATA = {
       ],
       "bw": [
         {
-          "f": "merab-dvalishvili",
+          "f": "petr-yan",
           "prev": 1
         },
         {
-          "f": "petr-yan",
+          "f": "merab-dvalishvili",
           "prev": 2
         },
         {
@@ -646,11 +885,11 @@ window.MMA_DATA = {
       ],
       "flw": [
         {
-          "f": "alexandre-pantoja",
+          "f": "joshua-van",
           "prev": 1
         },
         {
-          "f": "joshua-van",
+          "f": "alexandre-pantoja",
           "prev": 2
         },
         {
@@ -881,27 +1120,416 @@ window.MMA_DATA = {
         ],
         "ww": [
           {
-            "f": "christian-jungwirth",
+            "f": "amiran-gogoladze",
             "prev": 1
+          },
+          {
+            "f": "jack-grant",
+            "prev": 2
+          },
+          {
+            "f": "ion-surdu",
+            "prev": 3
+          },
+          {
+            "f": "ronald-paradeiser",
+            "prev": 4
+          },
+          {
+            "f": "felix-klinkhammer",
+            "prev": 5
+          },
+          {
+            "f": "david-kozma",
+            "prev": 6
+          },
+          {
+            "f": "jessin-ayari",
+            "prev": 7
+          },
+          {
+            "f": "tyrone-pfeifer",
+            "prev": 8
+          },
+          {
+            "f": "cihad-akipa",
+            "prev": 9
+          },
+          {
+            "f": "andrej-kalasnik",
+            "prev": 10
           }
         ],
         "lw": [
           {
-            "f": "matej-penaz",
+            "f": "mateusz-legierski",
+            "c": true
+          },
+          {
+            "f": "ivan-buchinger",
             "prev": 1
+          },
+          {
+            "f": "fedor-duric",
+            "prev": 2
+          },
+          {
+            "f": "gokhan-aksu",
+            "prev": 3
+          },
+          {
+            "f": "niko-samsonidse",
+            "prev": 4
+          },
+          {
+            "f": "ozan-aslaner",
+            "prev": 5
+          },
+          {
+            "f": "arijan-topallaj",
+            "prev": 6
+          },
+          {
+            "f": "tomas-mudroch",
+            "prev": 7
+          },
+          {
+            "f": "denis-frimpong",
+            "prev": 8
+          },
+          {
+            "f": "vladimir-lengal",
+            "prev": 9
+          },
+          {
+            "f": "tomas-ciganik",
+            "prev": 10
           }
         ],
         "fw": [
           {
-            "f": "leo-brichta",
+            "f": "mochamed-machaev",
             "prev": 1
           },
           {
-            "f": "ivan-buchinger",
+            "f": "max-holzer",
             "prev": 2
+          },
+          {
+            "f": "zafar-mohsen",
+            "prev": 3
+          },
+          {
+            "f": "gjoni-palokaj",
+            "prev": 4
+          },
+          {
+            "f": "khalid-taha",
+            "prev": 5
+          },
+          {
+            "f": "richie-smullen",
+            "prev": 6
+          },
+          {
+            "f": "radek-rousal",
+            "prev": 7
+          },
+          {
+            "f": "jakub-batfalsky",
+            "prev": 8
+          },
+          {
+            "f": "james-hendin",
+            "prev": 9
+          },
+          {
+            "f": "deniz-ilbay",
+            "prev": 10
+          }
+        ],
+        "bw": [
+          {
+            "f": "igor-severino",
+            "c": true
+          },
+          {
+            "f": "jonas-magard",
+            "prev": 1
+          },
+          {
+            "f": "dastan-amangeldy",
+            "prev": 2
+          },
+          {
+            "f": "raul-lemberanskij",
+            "prev": 3
+          },
+          {
+            "f": "khrushed-kakhorov",
+            "prev": 4
+          },
+          {
+            "f": "wanderley-junior",
+            "prev": 5
+          },
+          {
+            "f": "elvis-silva",
+            "prev": 6
+          },
+          {
+            "f": "roman-paulus",
+            "prev": 7
+          },
+          {
+            "f": "ali-gunduz",
+            "prev": 8
+          },
+          {
+            "f": "harun-kurt",
+            "prev": 9
+          },
+          {
+            "f": "abdullah-sultani",
+            "prev": 10
+          }
+        ],
+        "flw": [
+          {
+            "f": "zhalgas-zhumagulov",
+            "c": true
+          },
+          {
+            "f": "beno-adamia",
+            "prev": 1
+          },
+          {
+            "f": "david-dvorak",
+            "prev": 2
+          },
+          {
+            "f": "matheus-severino",
+            "prev": 3
+          },
+          {
+            "f": "mohamed-walid",
+            "prev": 4
+          },
+          {
+            "f": "aaron-aby",
+            "prev": 5
+          },
+          {
+            "f": "shawn-marcos-da-silva",
+            "prev": 6
+          },
+          {
+            "f": "zoran-milic",
+            "prev": 7
           }
         ]
       }
+    },
+    "p4p": []
+  },
+  "fights": [],
+  "history": [
+    {
+      "date": "2026-10-09",
+      "r": {
+        "world/hw": [
+          "tom-aspinall",
+          "ciryl-gane",
+          "alexander-volkov",
+          "sergei-pavlovich",
+          "curtis-blaydes"
+        ],
+        "world/lhw": [
+          "alex-pereira",
+          "magomed-ankalaev",
+          "jiri-prochazka",
+          "carlos-ulberg",
+          "jamahal-hill"
+        ],
+        "world/mw": [
+          "khamzat-chimaev",
+          "dricus-du-plessis",
+          "nassourdine-imavov",
+          "reinier-de-ridder",
+          "sean-strickland"
+        ],
+        "world/ww": [
+          "islam-makhachev",
+          "jack-della-maddalena",
+          "belal-muhammad",
+          "shavkat-rakhmonov",
+          "ian-machado-garry"
+        ],
+        "world/lw": [
+          "justin-gaethje",
+          "ilia-topuria",
+          "arman-tsarukyan",
+          "charles-oliveira",
+          "max-holloway"
+        ],
+        "world/fw": [
+          "alexander-volkanovski",
+          "diego-lopes",
+          "movsar-evloev",
+          "jean-silva",
+          "lerone-murphy"
+        ],
+        "world/bw": [
+          "petr-yan",
+          "merab-dvalishvili",
+          "umar-nurmagomedov",
+          "sean-omalley",
+          "cory-sandhagen"
+        ],
+        "world/flw": [
+          "joshua-van",
+          "alexandre-pantoja",
+          "kai-kara-france",
+          "brandon-royval",
+          "tatsuro-taira"
+        ],
+        "country/cz/hw": [
+          "viktor-pesta"
+        ],
+        "country/cz/lhw": [
+          "jiri-prochazka"
+        ],
+        "country/cz/mw": [
+          "karlos-vemola",
+          "david-kozma",
+          "patrik-kincl"
+        ],
+        "country/cz/lw": [
+          "matej-penaz"
+        ],
+        "country/cz/fw": [
+          "leo-brichta"
+        ],
+        "country/sk/hw": [
+          "martin-buday"
+        ],
+        "country/sk/lhw": [
+          "attila-vegh"
+        ],
+        "country/sk/lw": [
+          "ludovit-klein"
+        ],
+        "country/sk/fw": [
+          "ivan-buchinger"
+        ],
+        "org/oktagon/hw": [
+          "!will-fleury",
+          "lazar-todev",
+          "kasim-aras",
+          "martin-buday",
+          "adam-palasz",
+          "michal-piwowarski",
+          "simon-biyong",
+          "patrick-vespaziani",
+          "marc-doussis",
+          "nicolaj-wagner",
+          "yevgeny-orlov"
+        ],
+        "org/oktagon/lhw": [
+          "!makhmud-muradov",
+          "will-fleury",
+          "daniel-skvor",
+          "karlos-vemola",
+          "pavol-langer",
+          "emilio-quissua",
+          "tomasz-narkun",
+          "robert-lau",
+          "frederic-vosgrone",
+          "vojtech-garba",
+          "jesus-samuel-chavarria"
+        ],
+        "org/oktagon/mw": [
+          "!krzysztof-jotko",
+          "makhmud-muradov",
+          "kerim-engizek",
+          "patrik-kincl",
+          "dominik-humburger",
+          "jaime-cordero",
+          "hojat-khajevand",
+          "piotr-wawrzyniak",
+          "matej-penaz",
+          "kamil-oniszczuk",
+          "robert-pukac",
+          "mick-stanton"
+        ],
+        "org/oktagon/ww": [
+          "amiran-gogoladze",
+          "jack-grant",
+          "ion-surdu",
+          "ronald-paradeiser",
+          "felix-klinkhammer",
+          "david-kozma",
+          "jessin-ayari",
+          "tyrone-pfeifer",
+          "cihad-akipa",
+          "andrej-kalasnik"
+        ],
+        "org/oktagon/lw": [
+          "!mateusz-legierski",
+          "ivan-buchinger",
+          "fedor-duric",
+          "gokhan-aksu",
+          "niko-samsonidse",
+          "ozan-aslaner",
+          "arijan-topallaj",
+          "tomas-mudroch",
+          "denis-frimpong",
+          "vladimir-lengal",
+          "tomas-ciganik"
+        ],
+        "org/oktagon/fw": [
+          "mochamed-machaev",
+          "max-holzer",
+          "zafar-mohsen",
+          "gjoni-palokaj",
+          "khalid-taha",
+          "richie-smullen",
+          "radek-rousal",
+          "jakub-batfalsky",
+          "james-hendin",
+          "deniz-ilbay"
+        ],
+        "org/oktagon/bw": [
+          "!igor-severino",
+          "jonas-magard",
+          "dastan-amangeldy",
+          "raul-lemberanskij",
+          "khrushed-kakhorov",
+          "wanderley-junior",
+          "elvis-silva",
+          "roman-paulus",
+          "ali-gunduz",
+          "harun-kurt",
+          "abdullah-sultani"
+        ],
+        "org/oktagon/flw": [
+          "!zhalgas-zhumagulov",
+          "beno-adamia",
+          "david-dvorak",
+          "matheus-severino",
+          "mohamed-walid",
+          "aaron-aby",
+          "shawn-marcos-da-silva",
+          "zoran-milic"
+        ]
+      }
     }
+  ],
+  "settings": {
+    "p4pPublic": false,
+    "siteUrl": "",
+    "domain": "",
+    "analyticsType": "",
+    "analyticsId": ""
   }
 };
