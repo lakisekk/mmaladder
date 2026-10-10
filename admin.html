@@ -115,13 +115,53 @@
   .item input[type=text] { width: 100%; }
   .chk { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; color: var(--muted); white-space: nowrap; }
 
+  .badge { display: inline-grid; place-items: center; min-width: 20px; height: 20px; padding: 0 6px; border-radius: 999px; background: #ffb020; color: #000; font-family: var(--body); font-size: 11px; font-weight: 800; letter-spacing: 0; vertical-align: 2px; margin-left: 4px; }
+  .warnbox { border: 1px solid rgba(255,176,32,.45); background: rgba(255,176,32,.06); border-radius: 12px; padding: 12px 16px; margin-bottom: 20px; }
+  .warnbox summary { cursor: pointer; font-weight: 700; color: #ffc457; }
+  .cgroup { border-top: 1px solid rgba(255,176,32,.2); margin-top: 12px; padding-top: 12px; }
+  .chead { font-size: 13px; color: var(--muted); }
+  .chead strong { color: var(--text); }
+  .cgroup ul { margin: 8px 0; padding-left: 18px; color: #d6d6d6; font-size: 13px; line-height: 1.6; }
+  .cgroup li.more { color: var(--muted); list-style: none; margin-left: -18px; }
+  .cacts { display: flex; gap: 6px; flex-wrap: wrap; }
+  .entry.warned { background: linear-gradient(90deg, rgba(255,176,32,.09), transparent 60%); }
+  .who-wrap { display: flex; align-items: center; gap: 10px; min-width: 0; }
+  .warn-ico { color: #ffb020; font-size: 15px; cursor: help; }
+  .champ-slot { display: grid; grid-template-columns: 44px 70px 1fr auto; align-items: center; gap: 10px; padding: 12px 16px; border-bottom: 1px solid var(--line); background: linear-gradient(90deg, rgba(217,180,90,.12), transparent 70%); }
+  .champ-slot:not(.set) { grid-template-columns: 44px auto 1fr auto; background: none; border-bottom: 1px dashed var(--line-2); }
+  .champ-slot .crown { width: 36px; height: 30px; border-radius: 6px; background: var(--gold); color: #000; font-family: var(--display); font-weight: 800; font-size: 16px; display: grid; place-items: center; justify-self: center; }
+  .champ-slot .crown.empty { background: transparent; color: var(--gold); border: 1px dashed var(--gold); opacity: .7; }
+  .champ-label { font-weight: 600; white-space: nowrap; }
+  .champ-label small { display: block; color: var(--muted); font-weight: 400; font-size: 11px; }
+  .champ-slot input { width: 100%; }
+  .fform { display: flex; flex-wrap: wrap; gap: 12px; padding: 16px; align-items: flex-end; }
+  .fform .grow2 { flex: 1; min-width: 200px; }
+  .fform .grow2 input { width: 100%; }
+  .fside { display: flex; gap: 8px; flex: 1 1 380px; align-items: flex-end; }
+  .fside select { max-width: 190px; }
+  .res { display: inline-grid; place-items: center; min-width: 24px; height: 20px; padding: 0 5px; border-radius: 4px; font-size: 10px; font-weight: 800; color: #000; }
+  .res-w { background: var(--up); } .res-l { background: var(--down); } .res-d, .res-nc { background: #8fa3b8; }
+  td .fname { display: flex; align-items: center; gap: 8px; }
+  td .outside { color: var(--muted); font-style: italic; }
+  .gfx { display: grid; grid-template-columns: 300px 1fr; gap: 24px; align-items: start; }
+  .gfx-side { display: grid; gap: 14px; }
+  .gfx-side select, .gfx-side .btn { width: 100%; justify-content: center; }
+  .gopts { display: grid; gap: 14px; }
+  .gfx-preview { background: repeating-conic-gradient(#111 0 25%, #0a0a0a 0 50%) 0 0 / 20px 20px; border: 1px solid var(--line); border-radius: 12px; padding: 18px; display: grid; place-items: center; }
+  .gfx-preview canvas { width: 100%; max-width: 420px; height: auto; box-shadow: 0 20px 60px rgba(0,0,0,.6); }
+  .item .field.grow { flex: 1; }
+  .item .field input { width: 100%; }
+  .chk.big { font-size: 14px; color: var(--text); gap: 10px; }
+  .pill { font-family: var(--body); font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; border: 1px dashed var(--line-2); color: var(--muted); padding: 3px 8px; border-radius: 999px; vertical-align: middle; }
   .toast { position: fixed; bottom: 22px; left: 50%; transform: translateX(-50%) translateY(20px); background: #fff; color: #000; font-weight: 600; padding: 10px 16px; border-radius: 8px; opacity: 0; transition: .2s; pointer-events: none; z-index: 99; }
   .toast.show { opacity: 1; transform: translateX(-50%); }
 
   @media (max-width: 760px) {
     .grid2 { grid-template-columns: 1fr; }
+    .gfx { grid-template-columns: 1fr; }
     .entry { grid-template-columns: 18px 34px 40px 1fr; }
-    .entry .acts { grid-column: 1 / -1; justify-content: flex-end; }
+    .entry .acts, .champ-slot .acts { grid-column: 1 / -1; justify-content: flex-end; }
+    .champ-slot, .champ-slot:not(.set) { grid-template-columns: 40px 1fr; }
     .brand span { display: none; }
   }
 </style>
@@ -146,19 +186,23 @@
   </div>
 
   <nav class="tabs">
-    <button class="tab on" data-tab="rank">Žebříčky</button>
+    <button class="tab on" data-tab="rank">Žebříčky <span class="badge" id="warnCount" hidden></span></button>
     <button class="tab" data-tab="fighters">Zápasníci</button>
-    <button class="tab" data-tab="setup">Země a organizace</button>
+    <button class="tab" data-tab="fights">Zápasy</button>
+    <button class="tab" data-tab="gfx">Grafiky</button>
+    <button class="tab" data-tab="setup">Nastavení</button>
   </nav>
 
   <!-- RANKINGS -->
   <section class="pane on" id="pane-rank">
+    <div class="warnbox" id="warnBox" hidden></div>
     <div class="toolbar">
       <label class="field">Typ žebříčku
         <select id="scope">
           <option value="world">Světový</option>
           <option value="country">Podle země</option>
           <option value="org">Podle organizace</option>
+          <option value="p4p">Pound-for-pound</option>
         </select>
       </label>
       <label class="field" id="subWrap">Země / organizace<select id="sub"></select></label>
@@ -186,7 +230,7 @@
       </div>
     </div>
     <p class="hint">
-      Pořadí měníš tažením za <b>⋮⋮</b>, šipkami nebo přepsáním čísla pozice. <b>C</b> označí šampiona – zobrazí se nad žebříčkem a nepočítá se do pořadí.
+      Pořadí měníš tažením za <b>⋮⋮</b>, šipkami nebo přepsáním čísla pozice. U žebříčků organizací můžeš volitelně nastavit <b>šampiona</b> – zobrazí se nad 1. místem a nepočítá se do pořadí. Tlačítko <b>C</b> udělá šampionem zápasníka ze seznamu.
       Před úpravami po turnaji klikni na <b>Nová aktualizace</b>: web pak u každého ukáže, o kolik míst stoupl nebo klesl. Nově přidaní dostanou štítek NEW.
     </p>
   </section>
@@ -204,6 +248,60 @@
       </table>
     </div>
     <p class="hint">Bilance ve tvaru <b>21-4-0</b> (výhry-prohry-remízy). Změny se projeví ve všech žebříčcích, kde zápasník je.</p>
+  </section>
+
+  <!-- FIGHTS -->
+  <section class="pane" id="pane-fights">
+    <div class="panel">
+      <div class="panel-head"><h3 id="fiTitle">Přidat zápas</h3><span class="spacer"></span><button class="btn sm ghost" id="fiCancel" hidden>Zrušit úpravu</button></div>
+      <div class="fform">
+        <label class="field">Datum<input type="date" id="fiDate"></label>
+        <label class="field grow2">Akce<input type="text" id="fiEvent" list="eventList" placeholder="např. OKTAGON 72"></label>
+        <datalist id="eventList"></datalist>
+        <div class="fside">
+          <label class="field grow2">Zápasník A<input type="text" id="fiA" list="fighterList" placeholder="Jméno"></label>
+          <label class="field">Země A (jen mimo databázi)<select id="fiAc"></select></label>
+        </div>
+        <div class="fside">
+          <label class="field grow2">Zápasník B<input type="text" id="fiB" list="fighterList" placeholder="Jméno"></label>
+          <label class="field">Země B (jen mimo databázi)<select id="fiBc"></select></label>
+        </div>
+        <label class="field">Výsledek<select id="fiWinner"><option value="a">Vyhrál A</option><option value="b">Vyhrál B</option><option value="draw">Remíza</option><option value="nc">No contest</option></select></label>
+        <label class="field">Způsob<input type="text" id="fiMethod" list="methodList" placeholder="KO/TKO"></label>
+        <datalist id="methodList"><option value="KO/TKO"><option value="Submission"><option value="Decision (U)"><option value="Decision (S)"><option value="Decision (M)"><option value="DQ"><option value="Doctor stoppage"><option value="Corner stoppage"></datalist>
+        <label class="field">Kolo<input type="text" id="fiRound" inputmode="numeric" style="width:70px"></label>
+        <button class="btn primary" id="fiSave">Uložit zápas</button>
+      </div>
+      <p class="hint" style="padding:0 16px 14px;margin:0">Aspoň jeden zápasník musí být v databázi. Soupeř mimo databázi se uloží jen jménem a zemí. Zápas se automaticky ukáže u obou zápasníků a ten nejnovější i u jména v žebříčku.</p>
+    </div>
+    <div class="toolbar" style="margin:18px 0 12px">
+      <input type="search" id="fiSearch" placeholder="Filtrovat podle jména nebo akce…" style="flex:1;min-width:200px">
+    </div>
+    <div class="panel tablewrap">
+      <table>
+        <thead><tr><th style="width:96px">Datum</th><th>Akce</th><th>Zápasník A</th><th style="width:70px">Výsledek</th><th>Zápasník B</th><th>Způsob</th><th style="width:50px">Kolo</th><th style="width:76px"></th></tr></thead>
+        <tbody id="fiBody"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- GRAPHICS -->
+  <section class="pane" id="pane-gfx">
+    <div class="gfx">
+      <div class="gfx-side">
+        <label class="field">Typ grafiky<select id="gType"><option value="rank">Žebříček</option><option value="movers">Biggest movers</option></select></label>
+        <div id="gRankOpts" class="gopts">
+          <label class="field">Žebříček<select id="gScope"><option value="world">Světový</option><option value="country">Podle země</option><option value="org">Podle organizace</option><option value="p4p">Pound-for-pound</option></select></label>
+          <label class="field" id="gSubWrap">Země / organizace<select id="gSub"></select></label>
+          <label class="field" id="gDivWrap">Váha<select id="gDiv"></select></label>
+          <label class="field">Počet míst<select id="gCount"><option>5</option><option selected>10</option><option>15</option></select></label>
+        </div>
+        <label class="field">Formát<select id="gFormat"><option value="1080x1350">Příspěvek 4:5 (1080×1350)</option><option value="1080x1080">Čtverec (1080×1080)</option><option value="1080x1920">Story (1080×1920)</option></select></label>
+        <button class="btn primary" id="gDownload">Stáhnout PNG</button>
+        <p class="hint">Grafika se kreslí z aktuálních dat v editoru. Vlajky se stahují z internetu. Když se nějaká nenačte, nakreslí se místo ní zkratka země.</p>
+      </div>
+      <div class="gfx-preview"><canvas id="gCanvas" width="1080" height="1350"></canvas></div>
+    </div>
   </section>
 
   <!-- SETUP -->
@@ -226,6 +324,24 @@
       <div class="panel-head"><h3>Váhové kategorie</h3></div>
       <div id="divList"></div>
     </div>
+
+    <div class="grid2" style="margin-top:18px">
+      <div class="panel">
+        <div class="panel-head"><h3>Web</h3></div>
+        <div class="item"><label class="chk big"><input type="checkbox" id="setP4p"> Zveřejnit Pound-for-pound žebříček</label></div>
+        <div class="item"><label class="field grow">Adresa webu (pro Google a sdílení)<input type="text" id="setUrl" placeholder="https://mmaladder.com"></label></div>
+        <div class="item" style="align-items:flex-end;flex-wrap:wrap">
+          <label class="field">Měření návštěvnosti<select id="setAnType"><option value="">Žádné</option><option value="cloudflare">Cloudflare Web Analytics</option><option value="goatcounter">GoatCounter</option><option value="ga4">Google Analytics 4</option></select></label>
+          <label class="field grow">ID / token<input type="text" id="setAnId" placeholder="např. G-XXXXXXX"></label>
+        </div>
+        <p class="hint" style="padding:0 16px 14px;margin:0">Skrytý P4P žebříček uvidíš jen v náhledu z editoru. Data jsou ale v data.js veřejná, takže tam nedávej nic tajného. Cloudflare a GoatCounter nepoužívají cookies, takže nepotřebuješ cookie lištu. Google Analytics ji podle GDPR potřebuje.</p>
+      </div>
+      <div class="panel">
+        <div class="panel-head"><h3>Historie aktualizací</h3></div>
+        <div id="histList"></div>
+        <p class="hint" style="padding:0 16px 14px;margin:0">Každé kliknutí na „Nová aktualizace“ uloží stav všech žebříčků. Z toho se kreslí grafy na profilech a funguje výběr „As of“ na webu.</p>
+      </div>
+    </div>
   </section>
 </main>
 
@@ -233,6 +349,7 @@
 
 <script src="common.js"></script>
 <script src="data.js"></script>
+<script src="render.js"></script>
 <script>
 (function () {
   const { esc, flag, countryName, slug, normalize, COUNTRIES } = MML;
@@ -267,6 +384,7 @@
 
   function getList(scope, sub, div, create) {
     const R = D.rankings;
+    if (scope === "p4p") return R.p4p;
     if (scope === "world") { if (create && !R.world[div]) R.world[div] = []; return R.world[div] || []; }
     if (!sub) return [];
     if (create) { R[scope][sub] = R[scope][sub] || {}; R[scope][sub][div] = R[scope][sub][div] || []; }
@@ -277,7 +395,101 @@
     for (const sc of ["country", "org"])
       for (const [sub, g] of Object.entries(D.rankings[sc]))
         for (const [div, l] of Object.entries(g)) cb(l, sc, sub, div);
+    cb(D.rankings.p4p, "p4p", null, null);
   }
+  // Champions exist only in organization rankings, always as the first row
+  const cleanChamps = () => allLists((l, sc) => l.forEach((e, i) => { if (e.c && (sc !== "org" || i > 0)) delete e.c; }));
+  cleanChamps();
+
+  /* ---------- consistency check between rankings ---------- */
+  function listLabel(sc, sub) {
+    if (sc === "world") return "Svět";
+    if (sc === "country") return countryName(sub);
+    return (orgById(sub) || {}).name || sub;
+  }
+  function divLists(divId) {
+    const out = [];
+    const push = (sc, sub, l) => {
+      if (!l || l.length < 2) return;
+      const idx = new Map(); let k = 0;
+      l.forEach(e => { if (!e.c) idx.set(e.f, k++); }); // champion title is not a ranking position
+      out.push({ sc, sub, idx, label: listLabel(sc, sub) });
+    };
+    push("world", null, D.rankings.world[divId]);
+    D.countries.forEach(c => push("country", c.code, (D.rankings.country[c.code] || {})[divId]));
+    rankedOrgs().forEach(o => push("org", o.id, (D.rankings.org[o.id] || {})[divId]));
+    return out;
+  }
+  function findConflicts() {
+    const out = [];
+    for (const d of D.divisions) {
+      const lists = divLists(d.id);
+      for (let i = 0; i < lists.length; i++) for (let j = i + 1; j < lists.length; j++) {
+        const A = lists[i], B = lists[j];
+        const common = [...A.idx.keys()].filter(f => B.idx.has(f));
+        const pairs = [];
+        for (let p = 0; p < common.length; p++) for (let q = p + 1; q < common.length; q++) {
+          const a = common[p], b = common[q];
+          if ((A.idx.get(a) - A.idx.get(b)) * (B.idx.get(a) - B.idx.get(b)) < 0) pairs.push([a, b]);
+        }
+        if (pairs.length) out.push({ div: d, A, B, pairs });
+      }
+    }
+    return out;
+  }
+  const nm = id => (D.fighters[id] || { name: id }).name;
+  function pairText(c, a, b) {
+    const hiA = c.A.idx.get(a) < c.A.idx.get(b) ? a : b, loA = hiA === a ? b : a;
+    return `<b>${esc(nm(hiA))}</b> je v ${esc(c.A.label)} nad <b>${esc(nm(loA))}</b> (#${c.A.idx.get(hiA) + 1} vs #${c.A.idx.get(loA) + 1}), ale v ${esc(c.B.label)} pod ním (#${c.B.idx.get(hiA) + 1} vs #${c.B.idx.get(loA) + 1}).`;
+  }
+  function conflictFightersFor(sc, sub, divId) {
+    const m = new Map();
+    for (const c of findConflicts()) {
+      if (c.div.id !== divId) continue;
+      const mine = (c.A.sc === sc && c.A.sub === sub) ? c.A : (c.B.sc === sc && c.B.sub === sub) ? c.B : null;
+      if (!mine) continue;
+      const other = mine === c.A ? c.B : c.A;
+      for (const [a, b] of c.pairs) {
+        const hi = mine.idx.get(a) < mine.idx.get(b) ? a : b, lo = hi === a ? b : a;
+        (m.get(hi) || m.set(hi, []).get(hi)).push(`Tady nad ${nm(lo)}, v ${other.label} pod ním`);
+        (m.get(lo) || m.set(lo, []).get(lo)).push(`Tady pod ${nm(hi)}, v ${other.label} nad ním`);
+      }
+    }
+    return m;
+  }
+  // Reorder the shared fighters of `target` so they follow `source`'s order; everyone else keeps their slot
+  function alignList(divId, target, source) {
+    const list = getList(target.sc, target.sub, divId, true);
+    const slots = [], entries = new Map();
+    list.forEach((e, i) => { if (!e.c && source.idx.has(e.f)) { slots.push(i); entries.set(e.f, e); } });
+    const ordered = [...entries.keys()].sort((a, b) => source.idx.get(a) - source.idx.get(b));
+    slots.forEach((slot, k) => { list[slot] = entries.get(ordered[k]); });
+  }
+  let lastConflicts = [];
+  function renderConflicts() {
+    const cs = lastConflicts = findConflicts();
+    const n = cs.reduce((s, c) => s + c.pairs.length, 0);
+    $("warnCount").textContent = n || "";
+    $("warnCount").hidden = !n;
+    const box = $("warnBox");
+    if (!n) { box.hidden = true; box.innerHTML = ""; return; }
+    box.hidden = false;
+    const wasOpen = box.querySelector("details") ? box.querySelector("details").open : true;
+    box.innerHTML = `<details ${wasOpen ? "open" : ""}><summary>⚠ ${n === 1 ? "1 nesoulad" : n < 5 ? n + " nesoulady" : n + " nesouladů"} mezi žebříčky – na webu by to vypadalo nelogicky</summary>
+      ${cs.map((c, ci) => `<div class="cgroup">
+        <div class="chead"><strong>${esc(c.div.name)}</strong>: ${esc(c.A.label)} × ${esc(c.B.label)}</div>
+        <ul>${c.pairs.slice(0, 5).map(([a, b]) => `<li>${pairText(c, a, b)}</li>`).join("")}${c.pairs.length > 5 ? `<li class="more">…a ${c.pairs.length - 5} dalších</li>` : ""}</ul>
+        <div class="cacts">
+          <button class="btn sm" data-align="${ci}" data-dir="AB">Srovnat ${esc(c.B.label)} podle ${esc(c.A.label)}</button>
+          <button class="btn sm" data-align="${ci}" data-dir="BA">Srovnat ${esc(c.A.label)} podle ${esc(c.B.label)}</button>
+          <button class="btn sm ghost" data-open="${ci}" data-which="A">Otevřít ${esc(c.A.label)}</button>
+          <button class="btn sm ghost" data-open="${ci}" data-which="B">Otevřít ${esc(c.B.label)}</button>
+        </div>
+      </div>`).join("")}
+      <p class="hint" style="margin:6px 0 0">„Srovnat“ přehodí jen zápasníky, kteří jsou v obou žebříčcích. Ostatní zůstanou na svých místech.</p>
+    </details>`;
+  }
+
   function fighterLabel(id) { const f = D.fighters[id]; return f ? `${f.name} (${countryName(f.country)})` : id; }
   function countryOptions(sel, withEmpty) {
     const entries = Object.entries(COUNTRIES).sort((a, b) => a[1].localeCompare(b[1], "cs"));
@@ -304,13 +516,14 @@
   function fixSub() {
     if (ui.scope === "country" && !D.countries.some(c => c.code === ui.sub)) ui.sub = (D.countries[0] || {}).code || null;
     if (ui.scope === "org" && !rankedOrgs().some(o => o.id === ui.sub)) ui.sub = (rankedOrgs()[0] || {}).id || null;
-    if (ui.scope === "world") ui.sub = null;
+    if (ui.scope === "world" || ui.scope === "p4p") ui.sub = null;
   }
 
   function renderRank() {
     fixSub();
     $("scope").value = ui.scope;
-    $("subWrap").style.display = ui.scope === "world" ? "none" : "";
+    $("subWrap").style.display = (ui.scope === "world" || ui.scope === "p4p") ? "none" : "";
+    $("divs").style.display = ui.scope === "p4p" ? "none" : "";
     $("sub").innerHTML = ui.scope === "country"
       ? D.countries.map(c => `<option value="${esc(c.code)}">${esc(c.name || countryName(c.code))}</option>`).join("")
       : rankedOrgs().map(o => `<option value="${esc(o.id)}">${esc(o.name)}</option>`).join("");
@@ -322,51 +535,95 @@
     }).join("");
 
     const div = D.divisions.find(d => d.id === ui.div) || {};
-    let title = ui.scope === "world" ? "Svět" : ui.scope === "country" ? flag(ui.sub) + esc(countryName(ui.sub)) : esc((orgById(ui.sub) || {}).name || "");
-    $("listTitle").innerHTML = `${title} <span style="color:var(--dim)">·</span> ${esc(div.name || "")}`;
-    $("btnFill").hidden = ui.scope === "world";
+    let title = ui.scope === "p4p" ? "Pound-for-pound" + (D.settings.p4pPublic ? "" : ' <span class="pill">skrytý</span>') : ui.scope === "world" ? "Svět" : ui.scope === "country" ? flag(ui.sub) + esc(countryName(ui.sub)) : esc((orgById(ui.sub) || {}).name || "");
+    $("listTitle").innerHTML = ui.scope === "p4p" ? title : `${title} <span style="color:var(--dim)">·</span> ${esc(div.name || "")}`;
+    $("btnFill").hidden = ui.scope === "world" || ui.scope === "p4p";
     $("btnFill").textContent = ui.scope === "country" ? "Doplnit ze světového (podle země)" : "Doplnit ze světového (podle organizace)";
 
-    const noSub = ui.scope !== "world" && !ui.sub;
+    const noSub = (ui.scope === "country" || ui.scope === "org") && !ui.sub;
     const list = getList(ui.scope, ui.sub, ui.div);
+    const canChamp = ui.scope === "org";
+    const hasChamp = canChamp && list.length && list[0].c;
+    const flagged = conflictFightersFor(ui.scope, ui.sub, ui.div);
+    const whoHtml = f => {
+      const o = orgById(f.org);
+      return `<span class="who">${flag(f.country)}<span style="min-width:0"><div class="nm">${esc(f.name)}</div><div class="sm">${o ? `<i class="orgdot" style="background:${esc(o.color)}"></i>${esc(o.name)}` : ""}${f.record ? " · " + esc(f.record) : ""}</div></span></span>`;
+    };
+
+    let champHtml = "";
+    if (!noSub && canChamp) {
+      if (hasChamp) {
+        const f = D.fighters[list[0].f] || { name: list[0].f };
+        champHtml = `<div class="champ-slot set">
+          <span class="crown">C</span>
+          <span class="mv same" style="color:var(--gold)">ŠAMPION</span>
+          ${whoHtml(f)}
+          <span class="acts">
+            <button class="btn sm" data-champ="demote" title="Zápasník zůstane v žebříčku jako #1">Sundat titul</button>
+            <button class="icon-btn del" data-champ="remove" title="Odebrat šampiona z žebříčku">✕</button>
+          </span>
+        </div>`;
+      } else {
+        champHtml = `<div class="champ-slot">
+          <span class="crown empty">C</span>
+          <span class="champ-label">Šampion <small>volitelné – zobrazí se nad 1. místem</small></span>
+          <input type="text" id="champInput" list="fighterList" placeholder="Jméno šampiona…">
+          <button class="btn sm" id="btnSetChamp">Nastavit</button>
+        </div>`;
+      }
+    }
+
     if (noSub) {
       $("entries").innerHTML = `<div class="empty">Nejdřív přidej ${ui.scope === "country" ? "zemi" : "organizaci se žebříčkem"} v záložce Země a organizace.</div>`;
-    } else if (!list.length) {
-      $("entries").innerHTML = `<div class="empty">Žebříček je prázdný. Přidej prvního zápasníka níže.</div>`;
+    } else if (!list.length || (hasChamp && list.length === 1)) {
+      $("entries").innerHTML = champHtml + `<div class="empty">Žebříček je prázdný. Přidej prvního zápasníka níže.</div>`;
     } else {
       let pos = 0;
-      $("entries").innerHTML = list.map((e, i) => {
+      $("entries").innerHTML = champHtml + list.map((e, i) => {
+        if (hasChamp && i === 0) return "";
         const f = D.fighters[e.f] || { name: e.f + " (smazán?)" };
-        if (!e.c) pos++;
-        const o = orgById(f.org);
+        pos++;
         let mv = `<span class="mv same">–</span>`;
-        if (e.c) mv = `<span class="mv same" style="color:var(--gold)">CHAMP</span>`;
-        else if (e.prev === 0 || e.prev === "new") mv = `<span class="mv new">NEW</span>`;
+        if (e.prev === 0 || e.prev === "new") mv = `<span class="mv new">NEW</span>`;
         else if (e.prev != null && e.prev !== "") { const d = e.prev - pos; mv = d > 0 ? `<span class="mv up">▲${d}</span>` : d < 0 ? `<span class="mv down">▼${-d}</span>` : mv; }
-        return `<div class="entry" draggable="true" data-i="${i}">
+        const warn = flagged.get(e.f);
+        return `<div class="entry ${warn ? "warned" : ""}" draggable="true" data-i="${i}">
           <span class="grip" title="Přetáhni">⋮⋮</span>
-          <span class="pos ${e.c ? "c" : ""}">${e.c ? "C" : pos}</span>
+          <span class="pos">${pos}</span>
           ${mv}
-          <span class="who">${flag(f.country)}<span style="min-width:0"><div class="nm">${esc(f.name)}</div><div class="sm">${o ? `<i class="orgdot" style="background:${esc(o.color)}"></i>${esc(o.name)}` : ""}${f.record ? " · " + esc(f.record) : ""}</div></span></span>
+          <span class="who-wrap">${whoHtml(f)}${warn ? `<span class="warn-ico" title="${esc(warn.join("\n"))}">⚠</span>` : ""}</span>
           <span class="acts">
             <button class="icon-btn" data-act="up" title="Nahoru">↑</button>
             <button class="icon-btn" data-act="down" title="Dolů">↓</button>
-            <input type="text" inputmode="numeric" data-act="pos" value="${i + 1}" title="Přesunout na řádek">
-            <button class="icon-btn ${e.c ? "on" : ""}" data-act="champ" title="Šampion">C</button>
+            <input type="text" inputmode="numeric" data-act="pos" value="${pos}" title="Přesunout na pozici">
+            ${canChamp ? `<button class="icon-btn" data-act="champ" title="Udělat šampionem">C</button>` : ""}
             <button class="icon-btn del" data-act="del" title="Odebrat ze žebříčku">✕</button>
           </span>
         </div>`;
       }).join("");
     }
+    renderConflicts();
 
     $("fighterList").innerHTML = Object.keys(D.fighters).sort((a, b) => D.fighters[a].name.localeCompare(D.fighters[b].name, "cs"))
       .map(id => `<option value="${esc(fighterLabel(id))}">`).join("");
   }
 
+  // index of first non-champion row (champion is always row 0 of an org list)
+  const firstSlot = list => (list.length && list[0].c) ? 1 : 0;
   function move(list, from, to) {
-    to = Math.max(0, Math.min(list.length - 1, to));
+    to = Math.max(firstSlot(list), Math.min(list.length - 1, to));
     if (from === to) return;
     const [x] = list.splice(from, 1); list.splice(to, 0, x);
+  }
+  function setChampion(list, id) {
+    const old = list.findIndex(e => e.c);
+    if (old >= 0) delete list[old].c;          // previous champion stays as a ranked fighter
+    let i = list.findIndex(e => e.f === id);
+    let entry;
+    if (i >= 0) entry = list.splice(i, 1)[0];
+    else entry = { f: id, prev: "new" };
+    entry.c = true;
+    list.unshift(entry);
   }
 
   $("scope").onchange = e => { ui.scope = e.target.value; renderRank(); };
@@ -374,17 +631,23 @@
   $("divs").onclick = e => { const b = e.target.closest("[data-div]"); if (b) { ui.div = b.dataset.div; renderRank(); } };
 
   $("entries").addEventListener("click", e => {
+    const list = getList(ui.scope, ui.sub, ui.div, true);
+    const cb = e.target.closest("[data-champ], #btnSetChamp");
+    if (cb) {
+      if (cb.id === "btnSetChamp") {
+        const id = resolveFighter($("champInput").value);
+        if (!id) return toast("Zápasníka nejdřív vytvoř (přidej ho do žebříčku nebo v záložce Zápasníci)");
+        setChampion(list, id);
+      } else if (cb.dataset.champ === "demote") delete list[0].c;
+      else if (cb.dataset.champ === "remove") list.shift();
+      save(); renderRank(); return;
+    }
     const b = e.target.closest("button[data-act]"); if (!b) return;
     const i = +b.closest(".entry").dataset.i;
-    const list = getList(ui.scope, ui.sub, ui.div, true);
     const act = b.dataset.act;
     if (act === "up") move(list, i, i - 1);
     if (act === "down") move(list, i, i + 1);
-    if (act === "champ") {
-      const was = !!list[i].c;
-      list.forEach(x => delete x.c);
-      if (!was) { list[i].c = true; move(list, i, 0); }
-    }
+    if (act === "champ" && ui.scope === "org") setChampion(list, list[i].f);
     if (act === "del") list.splice(i, 1);
     save(); renderRank();
   });
@@ -392,10 +655,14 @@
     if (e.target.dataset.act !== "pos") return;
     const i = +e.target.closest(".entry").dataset.i;
     const n = parseInt(e.target.value, 10);
-    if (!isNaN(n)) { move(getList(ui.scope, ui.sub, ui.div, true), i, n - 1); save(); }
+    const list = getList(ui.scope, ui.sub, ui.div, true);
+    if (!isNaN(n)) { move(list, i, n - 1 + firstSlot(list)); save(); }
     renderRank();
   });
-  $("entries").addEventListener("keydown", e => { if (e.key === "Enter" && e.target.dataset.act === "pos") e.target.blur(); });
+  $("entries").addEventListener("keydown", e => {
+    if (e.key === "Enter" && e.target.dataset.act === "pos") e.target.blur();
+    if (e.key === "Enter" && e.target.id === "champInput") $("btnSetChamp").click();
+  });
 
   // drag & drop
   let dragFrom = null;
@@ -414,7 +681,7 @@
     return ids.find(id => fighterLabel(id) === text) || ids.find(id => D.fighters[id].name.toLowerCase() === text.toLowerCase()) || null;
   }
   function addToList(id) {
-    if (ui.scope !== "world" && !ui.sub) return toast("Nejdřív vyber zemi / organizaci");
+    if ((ui.scope === "country" || ui.scope === "org") && !ui.sub) return toast("Nejdřív vyber zemi / organizaci");
     const list = getList(ui.scope, ui.sub, ui.div, true);
     if (list.some(e => e.f === id)) return toast("Už v tomto žebříčku je");
     list.push({ f: id, prev: "new" });
@@ -457,9 +724,28 @@
     save(); renderRank(); toast(added ? `Doplněno ${added}` : "Ve světovém žebříčku nikdo další není");
   };
 
+  $("warnBox").addEventListener("click", e => {
+    const a = e.target.closest("[data-align]"), o = e.target.closest("[data-open]");
+    if (a) {
+      const c = lastConflicts[+a.dataset.align]; if (!c) return;
+      const [target, source] = a.dataset.dir === "AB" ? [c.B, c.A] : [c.A, c.B];
+      alignList(c.div.id, target, source);
+      save(); renderRank(); toast(`${target.label} srovnán podle ${source.label}`);
+    } else if (o) {
+      const c = lastConflicts[+o.dataset.open]; if (!c) return;
+      const t = o.dataset.which === "A" ? c.A : c.B;
+      ui.scope = t.sc; ui.sub = t.sub; ui.div = c.div.id; renderRank();
+      $("listTitle").scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  });
+
   $("btnSnapshot").onclick = () => {
-    if (!confirm("Uložit aktuální pozice všech žebříčků jako výchozí?\nŠipky ▲▼ se pak počítají od tohoto stavu a štítky NEW zmizí.")) return;
-    allLists(list => { let pos = 0; list.forEach(e => { if (!e.c) pos++; e.prev = e.c ? null : pos; if (e.prev == null) delete e.prev; }); });
+    if (!confirm("Začít novou aktualizaci?\n\n• Současný stav všech žebříčků se uloží do historie (grafy na profilech, výběr „As of“).\n• Šipky ▲▼ se budou počítat od tohoto stavu a štítky NEW zmizí.\n• Datum aktualizace se nastaví na dnešek.")) return;
+    const histDate = D.updated || new Date().toISOString().slice(0, 10);
+    const snap = MLR.snapshot(D);
+    const hi = D.history.findIndex(h => h.date === histDate);
+    if (hi >= 0) D.history[hi] = { date: histDate, r: snap }; else D.history.push({ date: histDate, r: snap });
+    allLists(list => { let pos = 0; list.forEach(e => { if (e.c) { delete e.prev; return; } e.prev = ++pos; }); });
     const today = new Date(); const iso = today.getFullYear() + "-" + String(today.getMonth() + 1).padStart(2, "0") + "-" + String(today.getDate()).padStart(2, "0");
     D.updated = iso; $("updated").value = iso;
     save(); renderRank(); toast("Pozice uloženy – teď můžeš přeskládat");
@@ -470,7 +756,7 @@
     const out = [];
     allLists((l, sc, sub, div) => {
       let pos = 0;
-      l.forEach(e => { if (!e.c) pos++; if (e.f === id) out.push(`${sc === "world" ? "Svět" : sc === "country" ? sub.toUpperCase() : (orgById(sub) || {}).name || sub} ${div.toUpperCase()} ${e.c ? "C" : "#" + pos}`); });
+      l.forEach(e => { if (!e.c) pos++; if (e.f === id) out.push(sc === "p4p" ? `P4P #${pos}` : `${sc === "world" ? "Svět" : sc === "country" ? sub.toUpperCase() : (orgById(sub) || {}).name || sub} ${div.toUpperCase()} ${e.c ? "C" : "#" + pos}`); });
     });
     return out.join(", ") || "–";
   }
@@ -507,6 +793,8 @@
     if (!e.target.closest("[data-del]")) return;
     const id = e.target.closest("tr").dataset.id;
     if (!confirm(`Smazat ${D.fighters[id].name}? Zmizí i ze všech žebříčků.`)) return;
+    const gone = D.fighters[id];
+    D.fights.forEach(f => ["a", "b"].forEach(s => { if (f[s] === id) { f[s] = null; f[s + "Name"] = gone.name; f[s + "Country"] = gone.country || ""; } }));
     delete D.fighters[id];
     allLists(l => { for (let i = l.length - 1; i >= 0; i--) if (l[i].f === id) l.splice(i, 1); });
     save(); renderFighters();
@@ -582,9 +870,15 @@
   $("updated").value = D.updated || "";
   $("updated").onchange = e => { D.updated = e.target.value; save(); };
 
-  $("btnPreview").onclick = () => { save(); window.open("index.html?preview#/" + (ui.scope === "world" ? "world/" + ui.div : ui.scope + "/" + ui.sub + "/" + ui.div), "_blank"); };
+  $("btnPreview").onclick = () => {
+    save();
+    const p = ui.tab === "rank" ? MLR.path(D, { type: "board", scope: ui.scope, sub: ui.sub, div: ui.div }) : "";
+    window.open("index.html?preview#/" + p, "_blank");
+  };
 
   $("btnExport").onclick = () => {
+    const n = findConflicts().reduce((s, c) => s + c.pairs.length, 0);
+    if (n && !confirm(`Žebříčky mají ${n} nesoulad(ů) v pořadí (viz upozornění nahoře v záložce Žebříčky).\nStáhnout data.js i tak?`)) return;
     const out = strip(D);
     const text = "/* MMA Ladder – data file.\n   Edit via admin.html and replace this file with the exported one. */\nwindow.MMA_DATA = " + JSON.stringify(out, null, 2) + ";\n";
     const a = document.createElement("a");
@@ -601,15 +895,301 @@
       const parsed = JSON.parse(t.slice(s, en + 1));
       if (!parsed.fighters || !parsed.rankings) throw new Error("bad");
       if (!confirm("Nahradit aktuální data importovaným souborem?")) return;
-      D = normalize(parsed); save(); $("updated").value = D.updated || ""; renderAll(); toast("Importováno");
+      D = normalize(parsed); cleanChamps(); save(); $("updated").value = D.updated || ""; renderAll(); toast("Importováno");
     }).catch(() => alert("Soubor se nepodařilo načíst. Musí to být data.js z MMA Ladder."));
     e.target.value = "";
   };
 
+  /* ---------- fights pane ---------- */
+  let editingFight = null;
+  const today = () => { const t = new Date(); return t.getFullYear() + "-" + String(t.getMonth() + 1).padStart(2, "0") + "-" + String(t.getDate()).padStart(2, "0"); };
+  function syncSide(s) {
+    const id = resolveFighter($("fi" + s).value);
+    const sel = $("fi" + s + "c");
+    if (id) { sel.value = D.fighters[id].country || ""; sel.disabled = true; } else sel.disabled = false;
+  }
+  function readSide(s) {
+    const txt = $("fi" + s).value.trim();
+    const id = resolveFighter(txt);
+    return id ? { id } : { name: txt, country: $("fi" + s + "c").value };
+  }
+  function fightSideHtml(f, s) {
+    const x = MLR.side(D, f, s);
+    return `<span class="fname">${flag(x.country)}${x.id ? esc(x.name) : `<span class="outside" title="Mimo databázi">${esc(x.name)}</span>`}</span>`;
+  }
+  function resetFightForm(keepEvent) {
+    editingFight = null;
+    $("fiTitle").textContent = "Přidat zápas"; $("fiCancel").hidden = true;
+    ["fiA", "fiB", "fiMethod", "fiRound"].forEach(k => $(k).value = "");
+    if (!keepEvent) { $("fiEvent").value = ""; $("fiDate").value = today(); }
+    $("fiWinner").value = "a";
+    ["A", "B"].forEach(s => { $("fi" + s + "c").value = ""; $("fi" + s + "c").disabled = false; });
+  }
+  function renderFights() {
+    if (!$("fiAc").options.length) {
+      $("fiAc").innerHTML = $("fiBc").innerHTML = countryOptions("", true);
+      $("fiDate").value = today();
+    }
+    $("fighterList").innerHTML = Object.keys(D.fighters).sort((a, b) => D.fighters[a].name.localeCompare(D.fighters[b].name, "cs"))
+      .map(id => `<option value="${esc(fighterLabel(id))}">`).join("");
+    $("eventList").innerHTML = [...new Set(D.fights.map(f => f.event).filter(Boolean))].map(e => `<option value="${esc(e)}">`).join("");
+    const q = $("fiSearch").value.trim().toLowerCase();
+    const list = D.fights.filter(f => !q || [f.event, MLR.side(D, f, "a").name, MLR.side(D, f, "b").name].join(" ").toLowerCase().includes(q))
+      .sort((a, b) => String(b.date).localeCompare(String(a.date)));
+    $("fiBody").innerHTML = list.map(f => {
+      const r = f.winner === "a" ? "W" : f.winner === "b" ? "L" : f.winner === "draw" ? "D" : "NC";
+      return `<tr data-id="${esc(f.id)}">
+        <td>${esc(f.date || "")}</td><td>${esc(f.event || "")}</td>
+        <td>${fightSideHtml(f, "a")}</td>
+        <td><span class="res res-${r.toLowerCase()}" title="Výsledek z pohledu zápasníka A">${r}</span></td>
+        <td>${fightSideHtml(f, "b")}</td>
+        <td>${esc(f.method || "")}</td><td>${esc(f.round || "")}</td>
+        <td style="white-space:nowrap"><button class="icon-btn" data-fedit title="Upravit">✎</button> <button class="icon-btn del" data-fdel title="Smazat">✕</button></td>
+      </tr>`;
+    }).join("") || `<tr><td colspan="8" class="empty">${D.fights.length ? "Nic nenalezeno" : "Zatím žádné zápasy. Přidej první nahoře."}</td></tr>`;
+  }
+  ["A", "B"].forEach(s => $("fi" + s).addEventListener("input", () => syncSide(s)));
+  $("fiSearch").oninput = renderFights;
+  $("fiCancel").onclick = () => resetFightForm();
+  $("fiSave").onclick = () => {
+    const A = readSide("A"), B = readSide("B");
+    if (!(A.id || A.name) || !(B.id || B.name)) return toast("Vyplň oba zápasníky");
+    if (!A.id && !B.id) return toast("Aspoň jeden zápasník musí být v databázi");
+    if (A.id && A.id === B.id) return toast("Zápasník nemůže bojovat sám se sebou");
+    const f = { id: editingFight || "f" + Date.now().toString(36), date: $("fiDate").value, event: $("fiEvent").value.trim(), winner: $("fiWinner").value, method: $("fiMethod").value.trim(), round: $("fiRound").value.trim() };
+    [["a", A], ["b", B]].forEach(([k, x]) => { if (x.id) f[k] = x.id; else { f[k] = null; f[k + "Name"] = x.name; f[k + "Country"] = x.country; } });
+    Object.keys(f).forEach(k => { if (f[k] === "") delete f[k]; });
+    const i = D.fights.findIndex(x => x.id === f.id);
+    if (i >= 0) D.fights[i] = f; else D.fights.push(f);
+    save(); toast(i >= 0 ? "Zápas upraven" : "Zápas přidán");
+    resetFightForm(true); renderFights(); $("fiA").focus();
+  };
+  $("fiBody").addEventListener("click", e => {
+    const tr = e.target.closest("tr[data-id]"); if (!tr) return;
+    const f = D.fights.find(x => x.id === tr.dataset.id); if (!f) return;
+    if (e.target.closest("[data-fdel]")) {
+      if (!confirm("Smazat tento zápas?")) return;
+      D.fights.splice(D.fights.indexOf(f), 1); save(); renderFights();
+    } else if (e.target.closest("[data-fedit]")) {
+      editingFight = f.id;
+      $("fiTitle").textContent = "Upravit zápas"; $("fiCancel").hidden = false;
+      $("fiDate").value = f.date || ""; $("fiEvent").value = f.event || ""; $("fiWinner").value = f.winner || "a";
+      $("fiMethod").value = f.method || ""; $("fiRound").value = f.round || "";
+      ["a", "b"].forEach(k => {
+        const S = k.toUpperCase();
+        $("fi" + S).value = f[k] && D.fighters[f[k]] ? fighterLabel(f[k]) : (f[k + "Name"] || "");
+        $("fi" + S + "c").value = f[k] && D.fighters[f[k]] ? (D.fighters[f[k]].country || "") : (f[k + "Country"] || "");
+        syncSide(S);
+      });
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  });
+
+  /* ---------- graphics (Instagram) ---------- */
+  const imgCache = new Map();
+  function loadImg(src, cors) {
+    if (imgCache.has(src)) return imgCache.get(src);
+    const p = new Promise(res => { const i = new Image(); if (cors) i.crossOrigin = "anonymous"; i.onload = () => res(i); i.onerror = () => res(null); i.src = src; });
+    imgCache.set(src, p); return p;
+  }
+  const flagImg = code => code ? loadImg(`https://flagcdn.com/w160/${code}.png`, true) : Promise.resolve(null);
+  function renderGfxControls() {
+    const sc = $("gScope").value;
+    $("gSubWrap").style.display = sc === "country" || sc === "org" ? "" : "none";
+    $("gDivWrap").style.display = sc === "p4p" ? "none" : "";
+    const subs = sc === "country" ? D.countries.map(c => [c.code, c.name || countryName(c.code)]) : sc === "org" ? rankedOrgs().map(o => [o.id, o.name]) : [];
+    const keep = $("gSub").value;
+    $("gSub").innerHTML = subs.map(([v, n]) => `<option value="${esc(v)}">${esc(n)}</option>`).join("");
+    if (subs.some(s => s[0] === keep)) $("gSub").value = keep;
+    if (!$("gDiv").options.length) $("gDiv").innerHTML = D.divisions.map(d => `<option value="${esc(d.id)}">${esc(d.name)}</option>`).join("");
+    $("gRankOpts").style.display = $("gType").value === "rank" ? "" : "none";
+  }
+  function fitFont(ctx, text, weight, family, size, maxW) {
+    let s = size;
+    do { ctx.font = `${weight} ${s}px ${family}`; if (ctx.measureText(text).width <= maxW) break; s -= 2; } while (s > 10);
+    return s;
+  }
+  function spaced(ctx, text, x, y, spacing, align) {
+    const w = [...text].reduce((a, ch) => a + ctx.measureText(ch).width + spacing, -spacing);
+    let cx = align === "right" ? x - w : align === "center" ? x - w / 2 : x;
+    const prev = ctx.textAlign; ctx.textAlign = "left";
+    for (const ch of text) { ctx.fillText(ch, cx, y); cx += ctx.measureText(ch).width + spacing; }
+    ctx.textAlign = prev; return w;
+  }
+  function rrect(ctx, x, y, w, h, r) { ctx.beginPath(); ctx.moveTo(x + r, y); ctx.arcTo(x + w, y, x + w, y + h, r); ctx.arcTo(x + w, y + h, x, y + h, r); ctx.arcTo(x, y + h, x, y, r); ctx.arcTo(x, y, x + w, y, r); ctx.closePath(); }
+  async function drawFlag(ctx, code, x, y, w, h) {
+    const img = await flagImg(code);
+    ctx.save(); rrect(ctx, x, y, w, h, 5); ctx.clip();
+    if (img) {
+      const ir = img.width / img.height, r = w / h;
+      let sw = img.width, sh = img.height, sx = 0, sy = 0;
+      if (ir > r) { sw = img.height * r; sx = (img.width - sw) / 2; } else { sh = img.width / r; sy = (img.height - sh) / 2; }
+      ctx.drawImage(img, sx, sy, sw, sh, x, y, w, h);
+    } else {
+      ctx.fillStyle = "#222"; ctx.fillRect(x, y, w, h);
+      ctx.fillStyle = "#999"; ctx.font = `700 ${Math.round(h * .42)}px Inter, Arial`; ctx.textAlign = "center"; ctx.textBaseline = "middle";
+      ctx.fillText((code || "").toUpperCase(), x + w / 2, y + h / 2); ctx.textAlign = "left"; ctx.textBaseline = "alphabetic";
+    }
+    ctx.restore();
+    ctx.strokeStyle = "rgba(255,255,255,.18)"; ctx.lineWidth = 1.5; rrect(ctx, x, y, w, h, 5); ctx.stroke();
+  }
+  const siteHost = () => { try { return new URL(D.settings.siteUrl).hostname.replace(/^www\./, ""); } catch (e) { return "mmaladder.com"; } };
+  let gfxToken = 0;
+  async function drawGfx() {
+    const token = ++gfxToken;
+    const [W, H] = $("gFormat").value.split("x").map(Number);
+    const cv = $("gCanvas");
+    try { await Promise.all([document.fonts.load('800 100px "Barlow Condensed"'), document.fonts.load('italic 800 60px "Barlow Condensed"'), document.fonts.load('700 30px Inter'), document.fonts.load('600 30px Inter')]); } catch (e) {}
+    const mark = await loadImg(document.querySelector(".brand img").src, false);
+    // draw into an offscreen canvas so a slow flag never leaves a half-drawn preview
+    const off = document.createElement("canvas"); off.width = W; off.height = H;
+    const c = off.getContext("2d");
+    const BC = '"Barlow Condensed", "Arial Narrow", Arial', IN = 'Inter, Arial';
+    const P = 76;
+    c.fillStyle = "#000"; c.fillRect(0, 0, W, H);
+    const g = c.createRadialGradient(W * .85, 0, 0, W * .85, 0, W * .9); g.addColorStop(0, "rgba(255,255,255,.07)"); g.addColorStop(1, "rgba(255,255,255,0)");
+    c.fillStyle = g; c.fillRect(0, 0, W, H);
+
+    // header
+    if (mark) c.drawImage(mark, P, P - 6, 70, 70);
+    c.fillStyle = "#fff"; c.font = `italic 800 46px ${BC}`; c.textBaseline = "alphabetic";
+    c.fillText("MMA", P + 88, P + 46);
+    const mmaW = c.measureText("MMA").width;
+    c.font = `600 24px ${BC}`; c.fillStyle = "#9a9a9a"; spaced(c, "LADDER", P + 96 + mmaW, P + 44, 7);
+    c.font = `600 24px ${IN}`; c.fillStyle = "#8a8a8a"; c.textAlign = "right";
+    c.fillText(MML.fmtDate(D.updated).toUpperCase(), W - P, P + 42); c.textAlign = "left";
+
+    let y = P + 150;
+    const type = $("gType").value;
+    let rowsData = [], label = "", heading = "", labelIcon = null;
+    if (type === "rank") {
+      const sc = $("gScope").value, sub = $("gSub").value || null, div = $("gDiv").value;
+      const list = MLR.rows(D, sc, MLR.getList(D, sc, sub, div));
+      const n = +$("gCount").value;
+      const champ = list.filter(r => r.champ);
+      rowsData = champ.concat(list.filter(r => !r.champ).slice(0, n));
+      label = (sc === "p4p" ? "All divisions" : MLR.scopeLabel(D, sc, sub)) + " · Rankings";
+      heading = sc === "p4p" ? "Pound-for-Pound" : (D.divisions.find(d => d.id === div) || {}).name || "";
+      labelIcon = sc === "country" ? { flag: sub } : sc === "org" ? { color: (orgById(sub) || {}).color } : null;
+    } else {
+      label = "Since the previous update"; heading = "Biggest movers";
+    }
+    // title block
+    let lx = P;
+    if (labelIcon && labelIcon.flag) { await drawFlag(c, labelIcon.flag, P, y - 26, 44, 30); lx += 58; }
+    if (labelIcon && labelIcon.color) { c.fillStyle = labelIcon.color; c.beginPath(); c.arc(P + 9, y - 10, 9, 0, Math.PI * 2); c.fill(); lx += 30; }
+    c.fillStyle = "#a8a8a8"; c.font = `700 26px ${IN}`; spaced(c, label.toUpperCase(), lx, y, 4);
+    y += 20;
+    const hs = fitFont(c, heading.toUpperCase(), 800, BC, H > 1400 ? 150 : 132, W - 2 * P);
+    c.fillStyle = "#fff"; c.font = `800 ${hs}px ${BC}`; c.textBaseline = "top"; c.fillText(heading.toUpperCase(), P - 4, y); c.textBaseline = "alphabetic";
+    y += hs * 0.92 + 28;
+    c.fillStyle = "#2a2a2a"; c.fillRect(P, y, W - 2 * P, 2);
+    y += 6;
+    const footerY = H - P - 10;
+    const avail = footerY - 40 - y;
+
+    if (type === "rank") {
+      if (!rowsData.length) { c.fillStyle = "#777"; c.font = `600 34px ${IN}`; c.fillText("No fighters ranked yet.", P, y + 80); }
+      const rowH = Math.min(H > 1400 ? 120 : 104, avail / Math.max(rowsData.length, 1));
+      for (let i = 0; i < rowsData.length; i++) {
+        const r = rowsData[i], f = r.fighter, top = y + i * rowH, mid = top + rowH / 2;
+        if (r.champ) { const gg = c.createLinearGradient(P, 0, W - P, 0); gg.addColorStop(0, "rgba(217,180,90,.22)"); gg.addColorStop(1, "rgba(217,180,90,0)"); c.fillStyle = gg; c.fillRect(P, top, W - 2 * P, rowH); }
+        else if (r.pos === 1) { const gg = c.createLinearGradient(P, 0, W - P, 0); gg.addColorStop(0, "rgba(255,255,255,.08)"); gg.addColorStop(1, "rgba(255,255,255,0)"); c.fillStyle = gg; c.fillRect(P, top, W - 2 * P, rowH); }
+        const fs = Math.round(rowH * .5);
+        if (r.champ) { c.fillStyle = "#d9b45a"; rrect(c, P + 14, mid - rowH * .22, 62, rowH * .44, 8); c.fill(); c.fillStyle = "#000"; c.font = `800 ${Math.round(rowH * .3)}px ${BC}`; c.textAlign = "center"; c.textBaseline = "middle"; c.fillText("C", P + 45, mid + 1); }
+        else { c.fillStyle = "#fff"; c.font = `800 ${fs}px ${BC}`; c.textAlign = "center"; c.textBaseline = "middle"; c.fillText(String(r.pos), P + 45, mid + 2); }
+        // movement
+        c.font = `700 ${Math.round(rowH * .2)}px ${IN}`;
+        const mx = P + 128;
+        if (r.champ) { c.fillStyle = "#d9b45a"; c.font = `700 ${Math.round(rowH * .15)}px ${IN}`; c.fillText("CHAMP", mx, mid); }
+        else if (r.move.t === "up") { c.fillStyle = "#2ecc71"; c.fillText("▲ " + r.move.n, mx, mid); }
+        else if (r.move.t === "down") { c.fillStyle = "#ff4d4d"; c.fillText("▼ " + r.move.n, mx, mid); }
+        else if (r.move.t === "new") { c.fillStyle = "#fff"; rrect(c, mx - 30, mid - rowH * .11, 60, rowH * .22, 5); c.fill(); c.fillStyle = "#000"; c.font = `800 ${Math.round(rowH * .13)}px ${IN}`; c.fillText("NEW", mx, mid + 1); }
+        else { c.fillStyle = "#555"; c.fillText("–", mx, mid); }
+        c.textAlign = "left";
+        const fw = Math.round(rowH * .56), fh = Math.round(fw * .7);
+        await drawFlag(c, f.country, P + 188, mid - fh / 2, fw, fh);
+        const nx = P + 188 + fw + 26;
+        const recW = f.record ? 170 : 0;
+        const ns = fitFont(c, f.name, 700, IN, Math.round(rowH * .3), W - P - recW - nx - 10);
+        c.fillStyle = "#fff"; c.font = `700 ${ns}px ${IN}`; c.textBaseline = "alphabetic"; c.fillText(f.name, nx, mid + 2);
+        const o = orgById(f.org);
+        if (o) { c.fillStyle = o.color || "#888"; c.fillRect(nx, mid + rowH * .13, rowH * .09, rowH * .09); c.fillStyle = "#bdbdbd"; c.font = `700 ${Math.round(rowH * .15)}px ${IN}`; spaced(c, o.name.toUpperCase(), nx + rowH * .15, mid + rowH * .22, 2); }
+        if (f.record) { c.fillStyle = "#d8d8d8"; c.font = `600 ${Math.round(rowH * .3)}px ${BC}`; c.textAlign = "right"; c.textBaseline = "middle"; c.fillText(f.record, W - P - 10, mid); c.textAlign = "left"; }
+        c.textBaseline = "alphabetic";
+        if (i < rowsData.length - 1) { c.fillStyle = "#1c1c1c"; c.fillRect(P, top + rowH - 1, W - 2 * P, 2); }
+      }
+    } else {
+      const m = MLR.movers(D, false);
+      const groups = [["RISING", m.up, "#2ecc71"], ["FALLING", m.down, "#ff4d4d"]].filter(x => x[1].length);
+      if (!groups.length) { c.fillStyle = "#777"; c.font = `600 34px ${IN}`; c.fillText("No movement since the last update.", P, y + 80); }
+      const total = groups.reduce((s, g) => s + g[1].length, 0) + groups.length * .7;
+      const rowH = Math.min(124, avail / Math.max(total, 1));
+      let yy = y + 10;
+      for (const [title, items, col] of groups) {
+        c.fillStyle = "#6a6a6a"; c.font = `700 ${Math.round(rowH * .2)}px ${IN}`; spaced(c, title, P, yy + rowH * .42, 5);
+        yy += rowH * .7;
+        for (const x of items) {
+          const f = x.r.fighter, mid = yy + rowH / 2;
+          c.fillStyle = "#0e0e0e"; rrect(c, P, yy + 6, W - 2 * P, rowH - 12, 14); c.fill();
+          c.fillStyle = col; c.font = `800 ${Math.round(rowH * .42)}px ${BC}`; c.textBaseline = "middle"; c.fillText((x.delta > 0 ? "▲ " : "▼ ") + Math.abs(x.delta), P + 28, mid + 2);
+          const fw = Math.round(rowH * .5), fh = Math.round(fw * .7);
+          await drawFlag(c, f.country, P + 170, mid - fh / 2, fw, fh);
+          const nx = P + 170 + fw + 24;
+          const ns = fitFont(c, f.name, 700, IN, Math.round(rowH * .27), W - P - nx - 30);
+          c.fillStyle = "#fff"; c.font = `700 ${ns}px ${IN}`; c.textBaseline = "alphabetic"; c.fillText(f.name, nx, mid);
+          const where = (x.scope === "p4p" ? "Pound-for-Pound" : MLR.scopeLabel(D, x.scope, x.sub) + " · " + ((D.divisions.find(d => d.id === x.div) || {}).name || "")) + " · now #" + x.r.pos;
+          c.fillStyle = "#9a9a9a"; c.font = `600 ${fitFont(c, where, 600, IN, Math.round(rowH * .17), W - P - nx - 30)}px ${IN}`; c.fillText(where, nx, mid + rowH * .25);
+          yy += rowH;
+        }
+        yy += rowH * .2;
+      }
+    }
+    // footer
+    c.fillStyle = "#2a2a2a"; c.fillRect(P, footerY - 34, W - 2 * P, 2);
+    c.fillStyle = "#fff"; c.font = `700 24px ${IN}`; spaced(c, siteHost().toUpperCase(), P, footerY + 6, 5);
+    c.fillStyle = "#6a6a6a"; c.font = `600 22px ${IN}`; spaced(c, "THE HOME OF MMA RANKINGS", W - P, footerY + 6, 4, "right");
+
+    if (token !== gfxToken) return;
+    cv.width = W; cv.height = H; cv.getContext("2d").drawImage(off, 0, 0);
+  }
+  function renderGfx() { renderGfxControls(); drawGfx(); }
+  ["gType", "gScope", "gSub", "gDiv", "gCount", "gFormat"].forEach(id => $(id).addEventListener("change", renderGfx));
+  $("gDownload").onclick = () => {
+    const name = $("gType").value === "movers" ? "movers" : [$("gScope").value, $("gScope").value === "p4p" ? "" : $("gSub").value, $("gScope").value === "p4p" ? "" : $("gDiv").value].filter(Boolean).join("-");
+    try {
+      $("gCanvas").toBlob(b => {
+        const a = document.createElement("a"); a.href = URL.createObjectURL(b); a.download = `mmaladder-${name}-${D.updated || "export"}.png`;
+        document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(a.href), 2000);
+      }, "image/png");
+    } catch (e) { alert("Obrázek se nepodařilo uložit (prohlížeč zablokoval vlajky). Zkus to znovu nebo jiný prohlížeč."); }
+  };
+
+  /* ---------- site settings + history ---------- */
+  function renderSiteSettings() {
+    $("setP4p").checked = !!D.settings.p4pPublic;
+    $("setUrl").value = D.settings.siteUrl || "";
+    $("setAnType").value = D.settings.analyticsType || "";
+    $("setAnId").value = D.settings.analyticsId || "";
+    const h = [...D.history].sort((a, b) => String(b.date).localeCompare(String(a.date)));
+    $("histList").innerHTML = h.map(x => `<div class="item"><div class="grow"><b>${esc(MML.fmtDate(x.date))}</b> <span style="color:var(--muted);font-size:12px">· ${Object.keys(x.r).length} žebříčků</span></div><button class="icon-btn del" data-hdel="${esc(x.date)}" title="Smazat tento stav">✕</button></div>`).join("") || `<div class="empty">Zatím prázdné. První záznam vznikne po kliknutí na „Nová aktualizace“.</div>`;
+  }
+  $("setP4p").onchange = e => { D.settings.p4pPublic = e.target.checked; save(); toast(e.target.checked ? "P4P bude veřejný" : "P4P je skrytý"); };
+  $("setUrl").onchange = e => { let v = e.target.value.trim(); if (v && !/^https?:\/\//.test(v)) v = "https://" + v; D.settings.siteUrl = v.replace(/\/+$/, ""); e.target.value = D.settings.siteUrl; save(); };
+  $("setAnType").onchange = e => { D.settings.analyticsType = e.target.value; save(); };
+  $("setAnId").onchange = e => { D.settings.analyticsId = e.target.value.trim(); save(); };
+  $("histList").addEventListener("click", e => {
+    const b = e.target.closest("[data-hdel]"); if (!b) return;
+    if (!confirm("Smazat tento stav z historie? Zmizí z grafů na profilech.")) return;
+    D.history = D.history.filter(h => h.date !== b.dataset.hdel); save(); renderSiteSettings();
+  });
+
   function renderAll() {
     if (ui.tab === "rank") renderRank();
     if (ui.tab === "fighters") renderFighters();
-    if (ui.tab === "setup") renderSetup();
+    if (ui.tab === "fights") renderFights();
+    if (ui.tab === "gfx") renderGfx();
+    if (ui.tab === "setup") { renderSetup(); renderSiteSettings(); }
   }
   renderAll();
 })();
