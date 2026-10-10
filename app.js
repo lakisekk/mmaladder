@@ -41,11 +41,13 @@
   }
 
   function navigate(p) {
-    const wasFighter = route && route.type === "fighter";
+    // stay in place when switching between rankings; jump to top for fighter / info pages
+    const boardish = r => r && (r.type === "board" || r.type === "home");
+    const wasFighter = !(boardish(route) && boardish(MLR.parse(D, p, preview)));
     if (built) { history.pushState(null, "", link(p)); render(); }
     else if (location.hash === "#/" + p) render();
-    else { location.hash = "#/" + p; return void (pendingScroll = wasFighter || p.startsWith("fighter/")); }
-    if (wasFighter || p.startsWith("fighter/")) window.scrollTo(0, 0);
+    else { location.hash = "#/" + p; return void (pendingScroll = wasFighter); }
+    if (wasFighter) window.scrollTo(0, 0);
   }
   let pendingScroll = false;
 
@@ -151,7 +153,26 @@
     if (a && window.goatcounter && window.goatcounter.count) goatcounter.count({ path: "partner-click-" + a.dataset.ad, event: true });
   });
 
+  /* newsletter (configured in the editor → Nastavení → Newsletter; off by default) */
+  function renderNewsletter() {
+    const N = D.newsletter, box = $("newsletter");
+    const action = (N.action || "").trim();
+    if (!N.enabled || !/^https:\/\//i.test(action)) { box.hidden = true; return; }
+    box.innerHTML = `<div class="nl-box">
+      <div><h2>${esc(N.title)}</h2><p>${esc(N.text)}</p></div>
+      <form class="nl-form" action="${esc(action)}" method="post" target="_blank">
+        <input type="email" name="${esc(N.field || "email")}" required placeholder="Your email" aria-label="Email address" autocomplete="email">
+        <button type="submit">${esc(N.button || "Subscribe")}</button>
+      </form>
+      ${N.consent ? `<p class="nl-consent">${esc(N.consent)}</p>` : ""}
+    </div>`;
+    box.hidden = false;
+  }
+  if (!D.about.enabled) $("aboutLink").remove();
+  else if (!built) $("aboutLink").setAttribute("href", "#/how-we-rank");
+
   render();
   renderAds();
+  renderNewsletter();
   analytics();
 })();

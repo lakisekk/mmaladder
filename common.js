@@ -257,6 +257,8 @@ window.MML = (function () {
     "zw": "Zimbabwe"
   };
 
+  const ABOUT_DEFAULT = "## What we rank\nMMA Ladder ranks active professional MMA fighters in eight men's weight classes: worldwide, by country and by organization.\n\n## What matters\n- **Who you beat.** A win over a ranked, proven opponent counts far more than a win over an unknown one.\n- **When you did it.** Recent results weigh more than old ones. Long inactivity slowly costs places.\n- **How you won.** Finishes and dominant performances matter, but a win is a win.\n- **Level of competition.** Results are weighted by the strength of the opponent and the organization.\n- **Big fights.** Title fights and main events carry extra weight.\n\n## How it works\nEvery ranking starts from the same model built on fight results. The final order is then reviewed by our team, because no formula sees everything: injuries, short-notice fights, weight misses or controversial decisions. The exact formula and its weights are not public, so the rankings can't be gamed.\n\n## Updates\nRankings are updated after every major event. Arrows show how many places a fighter moved since the previous update.\n\n## Independence\nRankings are not for sale. Promoters, sponsors and betting partners have no influence on placements.";
+
   function esc(s) {
     return String(s == null ? "" : s).replace(/[&<>"']/g, c =>
       ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
@@ -302,6 +304,8 @@ window.MML = (function () {
     d.settings = Object.assign({ p4pPublic: false, siteUrl: "", domain: "", analyticsType: "", analyticsId: "" }, d.settings || {});
     d.ads = Object.assign({ enabled: false, disclaimer: "18+ · Ministerstvo financí varuje: Účastí na hazardní hře může vzniknout závislost.", items: [] }, d.ads || {});
     d.ads.items = Array.isArray(d.ads.items) ? d.ads.items : [];
+    d.newsletter = Object.assign({ enabled: false, action: "", field: "email", title: "Rankings in your inbox", text: "One short email after every major event: new rankings, biggest movers and upsets.", button: "Subscribe", consent: "By subscribing you agree to receive emails from MMA Ladder. Unsubscribe anytime." }, d.newsletter || {});
+    d.about = Object.assign({ enabled: true, body: ABOUT_DEFAULT }, d.about || {});
     return d;
   }
 

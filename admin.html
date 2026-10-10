@@ -160,6 +160,14 @@
   .ad-fields input, .ad-fields select { width: 100%; }
   .ad-acts { display: grid; gap: 8px; justify-items: end; }
   @media (max-width: 760px) { .ad-row { grid-template-columns: 1fr; } .ad-fields { grid-template-columns: 1fr; } .ad-acts { justify-items: start; grid-auto-flow: column; } }
+  .vplay { display: grid; grid-template-columns: auto 1fr auto; gap: 10px; align-items: center; }
+  .vplay input { width: 100%; accent-color: #fff; }
+  .vplay span { font-size: 12px; color: var(--muted); font-variant-numeric: tabular-nums; min-width: 48px; text-align: right; }
+  .vprog { height: 6px; border-radius: 3px; background: var(--line-2); overflow: hidden; }
+  .vprog div { height: 100%; width: 0; background: #fff; transition: width .1s; }
+  #vCanvas { max-width: 340px; }
+  textarea { width: 100%; border-radius: 8px; border: 1px solid var(--line-2); background: var(--panel); color: var(--text); padding: 10px 12px; font: 13px/1.55 ui-monospace, SFMono-Regular, Consolas, monospace; outline: none; resize: vertical; }
+  textarea:focus { border-color: #fff; }
   .toast { position: fixed; bottom: 22px; left: 50%; transform: translateX(-50%) translateY(20px); background: #fff; color: #000; font-weight: 600; padding: 10px 16px; border-radius: 8px; opacity: 0; transition: .2s; pointer-events: none; z-index: 99; }
   .toast.show { opacity: 1; transform: translateX(-50%); }
 
@@ -197,6 +205,7 @@
     <button class="tab" data-tab="fighters">Zápasníci</button>
     <button class="tab" data-tab="fights">Zápasy</button>
     <button class="tab" data-tab="gfx">Grafiky</button>
+    <button class="tab" data-tab="vid">Videa</button>
     <button class="tab" data-tab="setup">Nastavení</button>
   </nav>
 
@@ -311,6 +320,35 @@
     </div>
   </section>
 
+  <!-- VIDEO -->
+  <section class="pane" id="pane-vid">
+    <div class="gfx">
+      <div class="gfx-side">
+        <label class="field">Typ videa<select id="vType"><option value="rank">Odpočet žebříčku</option><option value="movers">Biggest movers</option></select></label>
+        <div id="vRankOpts" class="gopts">
+          <label class="field">Žebříček<select id="vScope"><option value="world">Světový</option><option value="country">Podle země</option><option value="org">Podle organizace</option><option value="p4p">Pound-for-pound</option></select></label>
+          <label class="field" id="vSubWrap">Země / organizace<select id="vSub"></select></label>
+          <label class="field" id="vDivWrap">Váha<select id="vDiv"></select></label>
+          <label class="field">Počet míst<select id="vCount"><option>5</option><option selected>10</option></select></label>
+          <label class="chk big"><input type="checkbox" id="vPhoto"> Nechat místo na fotku (#1 a šampion)</label>
+        </div>
+        <div class="vplay">
+          <button class="btn" id="vPlay">▶ Přehrát náhled</button>
+          <input type="range" id="vSeek" min="0" max="1000" value="0">
+          <span id="vTime">0.0 s</span>
+        </div>
+        <button class="btn primary" id="vExport">Stáhnout video (MP4)</button>
+        <div class="vprog" id="vProg" hidden><div></div></div>
+        <p class="hint">
+          Video 1080×1920 na výšku pro Reels, TikTok a Stories. Hudbu přidej až v aplikaci (Instagram/TikTok), trendující zvuky zvyšují dosah.
+          Čárkovaný rámeček „FOTO“ je vidět jen v náhledu, ve staženém videu je místo prázdné a černé, takže tam v CapCutu snadno vložíš fotku zápasníka (ideálně s odstraněným pozadím).
+          Funguje nejlépe v Chrome nebo Edge.
+        </p>
+      </div>
+      <div class="gfx-preview"><canvas id="vCanvas" width="1080" height="1920"></canvas></div>
+    </div>
+  </section>
+
   <!-- SETUP -->
   <section class="pane" id="pane-setup">
     <div class="grid2">
@@ -361,6 +399,30 @@
         Odkazy se automaticky označí jako sponzorované, takže ti nepokazí hodnocení v Googlu.
       </p>
     </div>
+
+    <div class="grid2" style="margin-top:18px">
+      <div class="panel">
+        <div class="panel-head"><h3>Newsletter</h3><span class="spacer"></span><label class="chk big"><input type="checkbox" id="nlOn"> Zobrazovat na webu</label></div>
+        <div class="item"><label class="field grow">Adresa formuláře (form action od poskytovatele)<input type="text" id="nlAction" placeholder="https://…"></label></div>
+        <div class="item"><label class="field grow">Název pole pro e-mail<input type="text" id="nlField" placeholder="email"></label></div>
+        <div class="item"><label class="field grow">Nadpis<input type="text" id="nlTitle"></label></div>
+        <div class="item"><label class="field grow">Text<input type="text" id="nlText"></label></div>
+        <div class="item"><label class="field grow">Tlačítko<input type="text" id="nlButton"></label></div>
+        <div class="item"><label class="field grow">Souhlas (GDPR)<input type="text" id="nlConsent"></label></div>
+        <p class="hint" style="padding:0 16px 14px;margin:0">
+          Zatím vypnuto. Web je statický, takže e-maily neukládá sám. Až budeš chtít, založ si účet u poskytovatele (např. <b>Brevo</b>, <b>MailerLite</b> nebo <b>Buttondown</b>, všechny mají bezplatný tarif), vytvoř tam vložený formulář a zkopíruj sem jeho adresu („form action“) a název pole pro e-mail. Poskytovatel pak řeší potvrzení přihlášení i odhlašování.
+          Box se ukáže pod obsahem na každé stránce, jen když je zaškrtnuto a adresa začíná na https://.
+        </p>
+      </div>
+      <div class="panel">
+        <div class="panel-head"><h3>How we rank</h3><span class="spacer"></span><label class="chk big"><input type="checkbox" id="abOn"> Zobrazovat na webu</label></div>
+        <div class="item"><textarea id="abBody" rows="22"></textarea></div>
+        <p class="hint" style="padding:0 16px 14px;margin:0">
+          Text stránky (anglicky). <b>## Nadpis</b> = nadpis sekce, <b>- text</b> = odrážka, <b>**text**</b> = tučně, prázdný řádek = nový odstavec.
+          Piš principy, ne čísla. Všechno, co je v data.js, je veřejné.
+        </p>
+      </div>
+    </div>
   </section>
 </main>
 
@@ -369,6 +431,8 @@
 <script src="common.js"></script>
 <script src="data.js"></script>
 <script src="render.js"></script>
+<script src="vendor/mp4-muxer.js"></script>
+<script src="video.js"></script>
 <script>
 (function () {
   const { esc, flag, countryName, slug, normalize, COUNTRIES } = MML;
@@ -379,7 +443,8 @@
   const draft = MML.readDraft();
   const fileData = normalize(clone(window.MMA_DATA || {}));
   const strip = d => { const c = clone(d); delete c._savedAt; return c; };
-  if (draft && JSON.stringify(strip(draft)) !== JSON.stringify(fileData)) {
+  // compare both sides normalized, so a draft from an older editor version isn't mistaken for unsaved work
+  if (draft && JSON.stringify(normalize(strip(draft))) !== JSON.stringify(normalize(clone(fileData)))) {
     D = normalize(draft);
     const n = $("draftNotice");
     n.hidden = false;
@@ -1246,12 +1311,102 @@
     D.ads.items.splice(+e.target.closest("[data-ai]").dataset.ai, 1); save(); renderAds();
   });
 
+  /* ---------- video ---------- */
+  let vScene = null, vT = 0, vPlaying = false, vBuildToken = 0, vExporting = false;
+  function vOpts() {
+    const sc = $("vScope").value;
+    return { type: $("vType").value, scope: sc, sub: $("vSub").value || null, div: $("vDiv").value, count: +$("vCount").value, photo: $("vPhoto").checked, markSrc: document.querySelector(".brand img").src };
+  }
+  function renderVidControls() {
+    const sc = $("vScope").value;
+    $("vSubWrap").style.display = sc === "country" || sc === "org" ? "" : "none";
+    $("vDivWrap").style.display = sc === "p4p" ? "none" : "";
+    const subs = sc === "country" ? D.countries.map(c => [c.code, c.name || countryName(c.code)]) : sc === "org" ? rankedOrgs().map(o => [o.id, o.name]) : [];
+    const keep = $("vSub").value;
+    $("vSub").innerHTML = subs.map(([v, n]) => `<option value="${esc(v)}">${esc(n)}</option>`).join("");
+    if (subs.some(x => x[0] === keep)) $("vSub").value = keep;
+    if (!$("vDiv").options.length) $("vDiv").innerHTML = D.divisions.map(d => `<option value="${esc(d.id)}">${esc(d.name)}</option>`).join("");
+    $("vRankOpts").style.display = $("vType").value === "rank" ? "" : "none";
+  }
+  function vFrame() {
+    if (!vScene) return;
+    MLV.draw($("vCanvas").getContext("2d"), vScene, vT, true);
+    $("vSeek").value = Math.round(vT / vScene.duration * 1000);
+    $("vTime").textContent = vT.toFixed(1) + " s";
+  }
+  async function renderVid(keepTime) {
+    renderVidControls();
+    const token = ++vBuildToken;
+    const sc = await MLV.build(D, vOpts());
+    if (token !== vBuildToken) return;
+    vScene = sc;
+    if (!keepTime) vT = sc.type === "rank" ? Math.min(sc.duration, (sc.tHero1 || 3) + 1.2) : Math.min(sc.duration, sc.tIntro + 3);
+    vT = Math.min(vT, sc.duration);
+    vFrame();
+  }
+  function vStop() { vPlaying = false; $("vPlay").textContent = "▶ Přehrát náhled"; }
+  $("vPlay").onclick = () => {
+    if (!vScene) return;
+    if (vPlaying) return vStop();
+    vPlaying = true; $("vPlay").textContent = "❚❚ Pauza";
+    if (vT >= vScene.duration - .05) vT = 0;
+    let last = performance.now();
+    const tick = now => {
+      if (!vPlaying) return;
+      vT += (now - last) / 1000; last = now;
+      if (vT >= vScene.duration) { vT = vScene.duration; vFrame(); return vStop(); }
+      vFrame(); requestAnimationFrame(tick);
+    };
+    requestAnimationFrame(tick);
+  };
+  $("vSeek").oninput = e => { if (!vScene) return; vStop(); vT = e.target.value / 1000 * vScene.duration; vFrame(); };
+  ["vType", "vScope", "vSub", "vDiv", "vCount", "vPhoto"].forEach(id => $(id).addEventListener("change", () => { vStop(); renderVid(false); }));
+  $("vExport").onclick = async () => {
+    if (vExporting || !vScene) return;
+    vStop(); vExporting = true;
+    const btn = $("vExport"), bar = $("vProg");
+    btn.disabled = true; btn.textContent = "Vytvářím video…"; bar.hidden = false;
+    try {
+      const sc = await MLV.build(D, vOpts());
+      const { blob, ext } = await MLV.exportMp4(sc, p => { bar.firstElementChild.style.width = Math.round(p * 100) + "%"; });
+      const o = vOpts();
+      const name = o.type === "movers" ? "movers" : [o.scope, o.scope === "p4p" ? "" : o.sub, o.scope === "p4p" ? "" : o.div].filter(Boolean).join("-");
+      const a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = `mmaladder-${name}-${D.updated || "video"}.${ext}`;
+      document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(a.href), 5000);
+      toast(ext === "mp4" ? "Video staženo" : "Video staženo jako WebM – tvůj prohlížeč neumí MP4");
+    } catch (e) {
+      console.error(e);
+      alert("Video se nepodařilo vytvořit: " + (e && e.message ? e.message : e) + "\nZkus Chrome nebo Edge.");
+    } finally {
+      vExporting = false; btn.disabled = false; btn.textContent = "Stáhnout video (MP4)";
+      setTimeout(() => { bar.hidden = true; bar.firstElementChild.style.width = "0"; }, 800);
+    }
+  };
+
+  /* ---------- newsletter + how we rank ---------- */
+  const nlMap = { nlAction: "action", nlField: "field", nlTitle: "title", nlText: "text", nlButton: "button", nlConsent: "consent" };
+  function renderTexts() {
+    $("nlOn").checked = !!D.newsletter.enabled;
+    Object.entries(nlMap).forEach(([id, k]) => { $(id).value = D.newsletter[k] || ""; });
+    $("abOn").checked = !!D.about.enabled;
+    if (document.activeElement !== $("abBody")) $("abBody").value = D.about.body || "";
+  }
+  $("nlOn").onchange = e => {
+    if (e.target.checked && !/^https:\/\//i.test(D.newsletter.action || "")) toast("Nejdřív vyplň adresu formuláře – bez ní se box nezobrazí");
+    D.newsletter.enabled = e.target.checked; save();
+  };
+  Object.entries(nlMap).forEach(([id, k]) => $(id).addEventListener("change", e => { D.newsletter[k] = e.target.value.trim(); save(); }));
+  $("abOn").onchange = e => { D.about.enabled = e.target.checked; save(); };
+  $("abBody").addEventListener("input", () => { D.about.body = $("abBody").value; clearTimeout(renderTexts.t); renderTexts.t = setTimeout(save, 500); });
+
   function renderAll() {
     if (ui.tab === "rank") renderRank();
     if (ui.tab === "fighters") renderFighters();
     if (ui.tab === "fights") renderFights();
     if (ui.tab === "gfx") renderGfx();
-    if (ui.tab === "setup") { renderSetup(); renderSiteSettings(); renderAds(); }
+    if (ui.tab !== "vid") vStop();
+    if (ui.tab === "vid") renderVid(true);
+    if (ui.tab === "setup") { renderSetup(); renderSiteSettings(); renderAds(); renderTexts(); }
   }
   renderAll();
 })();

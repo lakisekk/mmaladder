@@ -72,3 +72,19 @@ Editor → **Nastavení → Reklamy**:
 
 Na monitoru od šířky 1600 px se ukážou max. 2 bannery vpravo, jinde 1 banner pod obsahem. Pod bannerem je vždy povinné upozornění (18+ a varování MF), jeho text jde upravit.
 Odkazy jsou označené `rel="sponsored"`, takže je Google nebere jako placené SEO odkazy.
+
+## Videa
+
+Editor → **Videa**: odpočet žebříčku (#10 → #1 → šampion) nebo Biggest movers jako MP4 1080×1920 pro Reels, TikTok a Stories.
+- **Nechat místo na fotku**: u #1 a šampiona zůstane horní část prázdná. Fotku zápasníka tam vložíš v CapCutu (ideálně s odstraněným pozadím). Čárkovaný rámeček je vidět jen v náhledu.
+- Hudbu přidávej až v aplikaci, ne do videa.
+- Nejlépe funguje v Chrome nebo Edge. Video se vytvoří rychleji, než trvá.
+- Potřebuje soubory `video.js` a `vendor/mp4-muxer.js`.
+
+## Newsletter
+
+Ve výchozím stavu vypnutý. Editor → **Nastavení → Newsletter**: adresa formuláře od poskytovatele (Brevo, MailerLite, Buttondown…) a zaškrtnout **Zobrazovat na webu**.
+
+## How we rank
+
+Editor → **Nastavení → How we rank**: text stránky `/how-we-rank/`. Piš principy, ne vzorce – všechno v repozitáři je veřejné.

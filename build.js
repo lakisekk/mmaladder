@@ -42,6 +42,7 @@ function htmlFor(pg, canonicalPath) {
     .replace("<!--SITE-->", `<script>window.__SITE__ = ${JSON.stringify({ base: BASE })};</script>`);
   // inserted last and via a function so "$" in names can never be read as a replacement pattern
   h = h.replace("<!--APP-->", () => pg.html);
+  if (!D.about.enabled) h = h.replace(/<a href="how-we-rank\/"[^>]*>How we rank<\/a>/, "");
   return h;
 }
 

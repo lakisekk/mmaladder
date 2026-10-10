@@ -41,6 +41,7 @@ window.MLR = (function () {
       return o && d ? { type: "board", scope: "org", sub: o.id, div: d.id } : { type: "notfound" };
     }
     if (p[0] === "p4p") return p4pOn(D, preview) ? { type: "board", scope: "p4p" } : { type: "notfound" };
+    if (p[0] === "how-we-rank") return D.about.enabled ? { type: "about" } : { type: "notfound" };
     if (p[0] === "fighter" && D.fighters[p[1]]) return { type: "fighter", id: p[1] };
     return { type: "notfound" };
   }
@@ -48,6 +49,7 @@ window.MLR = (function () {
   function path(D, r) {
     const d = r.div && D.divisions.find(x => x.id === r.div);
     if (r.type === "fighter") return "fighter/" + r.id;
+    if (r.type === "about") return "how-we-rank";
     if (r.type === "home") return "";
     if (r.scope === "p4p") return "p4p";
     if (r.scope === "world") return "world/" + divSlug(d);
@@ -63,6 +65,7 @@ window.MLR = (function () {
     D.countries.forEach(c => D.divisions.forEach(d => out.push({ type: "board", scope: "country", sub: c.code, div: d.id })));
     rankedOrgs(D).forEach(o => D.divisions.forEach(d => out.push({ type: "board", scope: "org", sub: o.id, div: d.id })));
     if (D.settings.p4pPublic) out.push({ type: "board", scope: "p4p" });
+    if (D.about.enabled) out.push({ type: "about" });
     Object.keys(D.fighters).forEach(id => out.push({ type: "fighter", id }));
     return out;
   }
@@ -424,12 +427,39 @@ window.MLR = (function () {
     return { title, desc, html, path: path(D, r), jsonld };
   }
 
+  // tiny, safe markdown: "## heading", "- item", **bold**, blank line = new paragraph
+  function md(text) {
+    const inline = s => esc(s).replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>");
+    const out = []; let list = null, para = [];
+    const flushP = () => { if (para.length) { out.push(`<p>${inline(para.join(" "))}</p>`); para = []; } };
+    const flushL = () => { if (list) { out.push(`<ul>${list.map(li => `<li>${inline(li)}</li>`).join("")}</ul>`); list = null; } };
+    String(text || "").split(/\r?\n/).forEach(line => {
+      const l = line.trim();
+      if (!l) { flushP(); flushL(); }
+      else if (l.startsWith("## ")) { flushP(); flushL(); out.push(`<h2>${inline(l.slice(3))}</h2>`); }
+      else if (/^[-*] /.test(l)) { flushP(); (list = list || []).push(l.slice(2)); }
+      else { flushL(); para.push(l); }
+    });
+    flushP(); flushL();
+    return out.join("\n");
+  }
+  function aboutPage(D, ctx) {
+    const html = `<section class="wrap about">
+      <nav class="crumbs">${a(ctx.link, "", "Rankings")}<span>/</span><span>How we rank</span></nav>
+      <h1>How we rank</h1>
+      <div class="prose">${md(D.about.body)}</div>
+      <p class="muted small">Last updated ${esc(fmtDate(D.updated))}.</p>
+    </section>`;
+    return { title: "How We Rank · MMA Ladder", desc: "How MMA Ladder ranks fighters: quality of opposition, recency, performance and level of competition, reviewed by our team.", html, path: "how-we-rank" };
+  }
+
   function notFoundPage(D, ctx) {
     return { title: "Page not found · MMA Ladder", desc: "Page not found.", html: `<section class="wrap nf"><h1>Not found</h1><p class="muted">This page doesn't exist. ${a(ctx.link, "", "Back to rankings")}</p></section>`, path: "404" };
   }
 
   function page(D, r, ctx) {
     if (r.type === "fighter") return fighterPage(D, r, ctx);
+    if (r.type === "about") return aboutPage(D, ctx);
     if (r.type === "home" || r.type === "board") return boardPage(D, r, ctx);
     return notFoundPage(D, ctx);
   }
