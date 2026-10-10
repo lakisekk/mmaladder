@@ -168,6 +168,10 @@
   #vCanvas { max-width: 340px; }
   textarea { width: 100%; border-radius: 8px; border: 1px solid var(--line-2); background: var(--panel); color: var(--text); padding: 10px 12px; font: 13px/1.55 ui-monospace, SFMono-Regular, Consolas, monospace; outline: none; resize: vertical; }
   textarea:focus { border-color: #fff; }
+  .soc-row td { background: #090909; }
+  .soc-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; padding: 8px 0 10px; }
+  .soc-grid input { width: 100%; }
+  @media (max-width: 760px) { .soc-grid { grid-template-columns: 1fr; } }
   .toast { position: fixed; bottom: 22px; left: 50%; transform: translateX(-50%) translateY(20px); background: #fff; color: #000; font-weight: 600; padding: 10px 16px; border-radius: 8px; opacity: 0; transition: .2s; pointer-events: none; z-index: 99; }
   .toast.show { opacity: 1; transform: translateX(-50%); }
 
@@ -259,7 +263,7 @@
     </div>
     <div class="panel tablewrap">
       <table>
-        <thead><tr><th style="width:34px"></th><th>Jméno</th><th>Přezdívka</th><th style="width:170px">Země</th><th style="width:150px">Organizace</th><th style="width:110px">Bilance</th><th>Žebříčky</th><th style="width:40px"></th></tr></thead>
+        <thead><tr><th style="width:34px"></th><th>Jméno</th><th>Přezdívka</th><th style="width:170px">Země</th><th style="width:150px">Organizace</th><th style="width:110px">Bilance</th><th>Žebříčky</th><th style="width:84px">Sítě</th><th style="width:40px"></th></tr></thead>
         <tbody id="fBody"></tbody>
       </table>
     </div>
@@ -375,6 +379,7 @@
         <div class="panel-head"><h3>Web</h3></div>
         <div class="item"><label class="chk big"><input type="checkbox" id="setP4p"> Zveřejnit Pound-for-pound žebříček</label></div>
         <div class="item"><label class="field grow">Adresa webu (pro Google a sdílení)<input type="text" id="setUrl" placeholder="https://mmaladder.com"></label></div>
+        <div class="item"><label class="field grow">Instagram MMA Ladder (výzva „Jsi tento zápasník?“ na profilech)<input type="text" id="setIg" placeholder="mmaladder"></label></div>
         <div class="item" style="align-items:flex-end;flex-wrap:wrap">
           <label class="field">Měření návštěvnosti<select id="setAnType"><option value="">Žádné</option><option value="cloudflare">Cloudflare Web Analytics</option><option value="goatcounter">GoatCounter</option><option value="ga4">Google Analytics 4</option></select></label>
           <label class="field grow">ID / token<input type="text" id="setAnId" placeholder="např. G-XXXXXXX"></label>
@@ -845,6 +850,7 @@
     });
     return out.join(", ") || "–";
   }
+  let openSoc = null;
   function renderFighters() {
     const q = $("fSearch").value.trim().toLowerCase();
     const ids = Object.keys(D.fighters)
@@ -860,12 +866,26 @@
         <td><select data-k="org">${orgOptions(f.org)}</select></td>
         <td><input type="text" data-k="record" value="${esc(f.record || "")}" placeholder="0-0-0"></td>
         <td class="ranks">${esc(rankSummary(id))}</td>
+        <td><button class="btn sm ${openSoc === id ? "primary" : ""}" data-soc>${Object.values(f.socials || {}).filter(Boolean).length || "+"} sítě</button></td>
         <td><button class="icon-btn del" data-del title="Smazat zápasníka">✕</button></td>
-      </tr>`;
-    }).join("") || `<tr><td colspan="8" class="empty">Nikdo nenalezen</td></tr>`;
+      </tr>${openSoc === id ? `<tr class="soc-row" data-sid="${esc(id)}"><td></td><td colspan="8"><div class="soc-grid">
+        ${MML.SOCIALS.map(s => `<label class="field">${esc(s.label)}<input type="text" data-sk="${s.k}" value="${esc((f.socials || {})[s.k] || "")}" placeholder="${s.k === "web" ? "www.example.com" : "@uzivatel nebo odkaz"}"></label>`).join("")}
+      </div></td></tr>` : ""}`;
+    }).join("") || `<tr><td colspan="9" class="empty">Nikdo nenalezen</td></tr>`;
   }
   $("fSearch").oninput = renderFighters;
   $("fBody").addEventListener("change", e => {
+    const sr = e.target.closest("tr[data-sid]");
+    if (sr && e.target.dataset.sk) {
+      const f = D.fighters[sr.dataset.sid]; f.socials = f.socials || {};
+      const v = e.target.value.trim();
+      if (v) f.socials[e.target.dataset.sk] = v; else delete f.socials[e.target.dataset.sk];
+      if (!Object.keys(f.socials).length) delete f.socials;
+      save();
+      const btn = $("fBody").querySelector(`tr[data-id="${CSS.escape(sr.dataset.sid)}"] [data-soc]`);
+      if (btn) btn.textContent = (Object.values(f.socials || {}).filter(Boolean).length || "+") + " sítě";
+      return;
+    }
     const tr = e.target.closest("tr[data-id]"); const k = e.target.dataset.k; if (!tr || !k) return;
     const f = D.fighters[tr.dataset.id];
     const v = e.target.value.trim();
@@ -875,6 +895,12 @@
     if (k === "country") tr.firstElementChild.innerHTML = flag(f.country);
   });
   $("fBody").addEventListener("click", e => {
+    if (e.target.closest("[data-soc]")) {
+      const id = e.target.closest("tr[data-id]").dataset.id;
+      openSoc = openSoc === id ? null : id; renderFighters();
+      const first = $("fBody").querySelector(".soc-row input"); if (first) first.focus();
+      return;
+    }
     if (!e.target.closest("[data-del]")) return;
     const id = e.target.closest("tr").dataset.id;
     if (!confirm(`Smazat ${D.fighters[id].name}? Zmizí i ze všech žebříčků.`)) return;
@@ -1254,6 +1280,7 @@
   function renderSiteSettings() {
     $("setP4p").checked = !!D.settings.p4pPublic;
     $("setUrl").value = D.settings.siteUrl || "";
+    $("setIg").value = D.settings.instagram || "";
     $("setAnType").value = D.settings.analyticsType || "";
     $("setAnId").value = D.settings.analyticsId || "";
     const h = [...D.history].sort((a, b) => String(b.date).localeCompare(String(a.date)));
@@ -1261,6 +1288,7 @@
   }
   $("setP4p").onchange = e => { D.settings.p4pPublic = e.target.checked; save(); toast(e.target.checked ? "P4P bude veřejný" : "P4P je skrytý"); };
   $("setUrl").onchange = e => { let v = e.target.value.trim(); if (v && !/^https?:\/\//.test(v)) v = "https://" + v; D.settings.siteUrl = v.replace(/\/+$/, ""); e.target.value = D.settings.siteUrl; save(); };
+  $("setIg").onchange = e => { D.settings.instagram = e.target.value.trim().replace(/^@+/, "").replace(/^https?:\/\/(www\.)?instagram\.com\//i, "").replace(/\/.*$/, ""); e.target.value = D.settings.instagram; save(); };
   $("setAnType").onchange = e => { D.settings.analyticsType = e.target.value; save(); };
   $("setAnId").onchange = e => { D.settings.analyticsId = e.target.value.trim(); save(); };
   $("histList").addEventListener("click", e => {

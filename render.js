@@ -21,7 +21,9 @@ window.MLR = (function () {
       record: "Record", lastFight: "Last fight", standings: "Current standings", rankHistory: "Ranking history", fightHistory: "Fight history",
       kindWorld: "Global ranking", kindCountry: "National ranking", kindOrg: "Organization ranking", kindP4p: "All divisions",
       unranked: "Currently unranked.", chartGrows: "The chart grows with every rankings update.", noHistory: "No ranking history yet.",
-      noFights: "No fights recorded yet.", howWeRank: "How we rank", lastUpdated: "Last updated {d}.",
+      noFights: "No fights recorded yet.", follow: "Follow",
+      claimTitle: "Are you {name}?", claimText: "Message us on Instagram {ig} and we'll add your socials, photo and anything that's missing.",
+      claimFix: "Something missing or wrong? Message us on Instagram {ig}.", claimBtn: "Message {ig}", howWeRank: "How we rank", lastUpdated: "Last updated {d}.",
       notFound: "Not found", notFoundText: "This page doesn't exist.", back: "Back to rankings", unknown: "Unknown",
       resW: "W", resL: "L", resD: "D", resNC: "NC", mmaRankings: "MMA rankings",
       tHome: "MMA Ladder · MMA Rankings — World, Country & Organization", tP4p: "Pound-for-Pound MMA Rankings · MMA Ladder",
@@ -41,7 +43,9 @@ window.MLR = (function () {
       record: "Bilance", lastFight: "Poslední zápas", standings: "Aktuální umístění", rankHistory: "Vývoj umístění", fightHistory: "Historie zápasů",
       kindWorld: "Světový žebříček", kindCountry: "Národní žebříček", kindOrg: "Žebříček organizace", kindP4p: "Všechny váhy",
       unranked: "Momentálně bez umístění.", chartGrows: "Graf se rozroste s každou aktualizací žebříčků.", noHistory: "Zatím bez historie.",
-      noFights: "Zatím žádné zapsané zápasy.", howWeRank: "Jak hodnotíme", lastUpdated: "Naposledy aktualizováno {d}.",
+      noFights: "Zatím žádné zapsané zápasy.", follow: "Sleduj",
+      claimTitle: "Jsi {name}?", claimText: "Napiš nám na Instagram {ig} a doplníme tvoje sociální sítě, fotku a všechno, co chybí.",
+      claimFix: "Něco chybí nebo nesedí? Napiš nám na Instagram {ig}.", claimBtn: "Napsat {ig}", howWeRank: "Jak hodnotíme", lastUpdated: "Naposledy aktualizováno {d}.",
       notFound: "Stránka nenalezena", notFoundText: "Tato stránka neexistuje.", back: "Zpět na žebříčky", unknown: "Neznámý",
       resW: "V", resL: "P", resD: "R", resNC: "NC", mmaRankings: "MMA žebříček",
       tHome: "MMA Ladder · MMA žebříčky — svět, země a organizace", tP4p: "Pound-for-Pound MMA žebříček · MMA Ladder",
@@ -61,7 +65,9 @@ window.MLR = (function () {
       record: "Bilanz", lastFight: "Letzter Kampf", standings: "Aktuelle Platzierungen", rankHistory: "Ranking-Verlauf", fightHistory: "Kampfhistorie",
       kindWorld: "Weltrangliste", kindCountry: "Nationale Rangliste", kindOrg: "Organisations-Ranking", kindP4p: "Alle Gewichtsklassen",
       unranked: "Derzeit ohne Platzierung.", chartGrows: "Das Diagramm wächst mit jedem Ranking-Update.", noHistory: "Noch kein Verlauf.",
-      noFights: "Noch keine Kämpfe erfasst.", howWeRank: "So ranken wir", lastUpdated: "Zuletzt aktualisiert am {d}.",
+      noFights: "Noch keine Kämpfe erfasst.", follow: "Folgen",
+      claimTitle: "Bist du {name}?", claimText: "Schreib uns auf Instagram {ig} und wir ergänzen deine Social-Media-Profile, dein Foto und alles, was fehlt.",
+      claimFix: "Fehlt etwas oder stimmt etwas nicht? Schreib uns auf Instagram {ig}.", claimBtn: "{ig} schreiben", howWeRank: "So ranken wir", lastUpdated: "Zuletzt aktualisiert am {d}.",
       notFound: "Nicht gefunden", notFoundText: "Diese Seite existiert nicht.", back: "Zurück zu den Rankings", unknown: "Unbekannt",
       resW: "S", resL: "N", resD: "U", resNC: "NC", mmaRankings: "MMA-Ranking",
       tHome: "MMA Ladder · MMA-Rankings — Welt, Länder & Organisationen", tP4p: "Pound-for-Pound MMA-Ranking · MMA Ladder",
@@ -484,7 +490,16 @@ window.MLR = (function () {
     const desc = `${f.name}${f.nick ? ` “${f.nick}”` : ""} (${cn(f.country) || "MMA"}${o ? ", " + o.name : ""})` +
       (st.length ? ": " + st.slice(0, 3).map(s => (s.rank === "C" ? t("champion") + " " : "#" + s.rank + " ") + (s.scope === "p4p" ? "P4P" : scopeLabel(D, s.scope, s.sub) + " " + dnId(D, s.div))).join(", ") : "") +
       (f.record ? `. ${t("record")} ${f.record}` : "") + ". " + t("dFighter");
-    const jsonld = { "@context": "https://schema.org", "@type": "Person", name: f.name, nationality: countryName(f.country) || undefined, alternateName: f.nick || undefined, memberOf: o ? { "@type": "SportsOrganization", name: o.name } : undefined };
+    const socials = (window.MML.SOCIALS || []).map(s => ({ s, url: window.MML.socialUrl(s.k, (f.socials || {})[s.k]) })).filter(x => x.url);
+    const socialHtml = socials.length ? `<div class="socials"><small>${esc(t("follow"))}</small>${socials.map(x =>
+      `<a class="soc" href="${esc(x.url)}" target="_blank" rel="noopener nofollow me">${esc(x.s.label)}<span aria-hidden="true">↗</span></a>`).join("")}</div>` : "";
+    const ig = String(D.settings.instagram || "").replace(/^@+/, "").trim();
+    const igTag = ig ? "@" + ig : "";
+    const claimHtml = !ig ? "" : socials.length
+      ? `<p class="claim-small">${esc(t("claimFix", { ig: igTag })).replace(esc(igTag), `<a href="https://ig.me/m/${esc(ig)}" target="_blank" rel="noopener">${esc(igTag)}</a>`)}</p>`
+      : `<div class="claim"><div><strong>${esc(t("claimTitle", { name: f.name }))}</strong><p>${esc(t("claimText", { ig: igTag }))}</p></div>
+          <a class="claim-btn" href="https://ig.me/m/${esc(ig)}" target="_blank" rel="noopener">${esc(t("claimBtn", { ig: igTag }))}</a></div>`;
+    const jsonld = { "@context": "https://schema.org", "@type": "Person", name: f.name, sameAs: socials.length ? socials.map(x => x.url) : undefined, nationality: countryName(f.country) || undefined, alternateName: f.nick || undefined, memberOf: o ? { "@type": "SportsOrganization", name: o.name } : undefined };
 
     const html = `<section class="fighter wrap">
       <nav class="crumbs">${a(ctx.link, "", esc(t("rankings")))}<span>/</span><span>${esc(f.name)}</span></nav>
@@ -499,12 +514,15 @@ window.MLR = (function () {
           <div class="fact"><small>${esc(t("record"))}</small><div>${esc(f.record || "–")}</div></div>
           ${lf ? `<div class="fact"><small>${esc(t("lastFight"))}</small><div>${resultBadge(lf.res)} ${esc(lf.opp.name)}${lf.method ? ` <span class="muted">· ${esc(lf.method)}</span>` : ""}</div></div>` : ""}
         </div>
+        ${socialHtml}
       </div>
+      ${socials.length ? "" : claimHtml}
       <div class="f-grid">
         <div class="f-card"><h2>${esc(t("standings"))}</h2>${stHtml}</div>
         <div class="f-card"><h2>${esc(t("rankHistory"))}</h2>${histHtml}</div>
       </div>
       <div class="f-card"><h2>${esc(t("fightHistory"))}</h2>${fightsHtml}</div>
+      ${socials.length ? claimHtml : ""}
     </section>`;
     return { title, desc, html, path: path(D, r), jsonld };
   }
