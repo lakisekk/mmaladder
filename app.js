@@ -13,7 +13,28 @@
   $("year").textContent = new Date().getFullYear();
 
   const link = p => built ? base + (p ? p + "/" : "") : "#/" + p;
-  const ctx = { link, preview };
+  /* language: ?lang=cs in the URL wins, then the saved choice, else English */
+  const UI = {
+    en: { search: "Find a fighter", noFighter: "No fighter found", asOfNote: "Showing the ranking as it stood on {d}.", nobody: "Nobody was ranked here on that date.", email: "Your email", preview: "Preview of your unsaved draft from the editor", foot: "independent MMA rankings. World, national and organization ladders across every men's weight class, updated after each event." },
+    cs: { search: "Najít zápasníka", noFighter: "Nikdo nenalezen", asOfNote: "Žebříček ke dni {d}.", nobody: "K tomuto datu tu nikdo nebyl.", email: "Tvůj e-mail", preview: "Náhled neuloženého konceptu z editoru", foot: "nezávislé MMA žebříčky. Světové, národní a organizační žebříčky ve všech mužských vahách, aktualizované po každém turnaji." },
+    de: { search: "Kämpfer suchen", noFighter: "Kein Kämpfer gefunden", asOfNote: "Ranking vom {d}.", nobody: "An diesem Datum war hier niemand gerankt.", email: "Deine E-Mail", preview: "Vorschau deines ungespeicherten Entwurfs aus dem Editor", foot: "unabhängige MMA-Rankings. Welt-, Länder- und Organisations-Rankings in allen Gewichtsklassen der Männer, aktualisiert nach jedem Event." }
+  };
+  let lang = "en";
+  try { lang = localStorage.getItem("mmaladder_lang") || "en"; } catch (e) {}
+  const qLang = (location.search.match(/[?&]lang=(en|cs|de)\b/) || [])[1];
+  if (qLang) lang = qLang;
+  if (!UI[lang]) lang = "en";
+  const u = k => UI[lang][k] || UI.en[k];
+  function applyStatic() {
+    document.documentElement.lang = lang;
+    $("q").placeholder = u("search"); $("q").setAttribute("aria-label", u("search"));
+    $("previewBar").textContent = u("preview");
+    $("footTxt").textContent = u("foot");
+    const al = $("aboutLink"); if (al) al.textContent = MLR.t("howWeRank");
+    document.querySelectorAll("#lang [data-lang]").forEach(b => { b.classList.toggle("on", b.dataset.lang === lang); b.setAttribute("aria-pressed", b.dataset.lang === lang); });
+  }
+  MLR.setLang(lang);
+  const ctx = { link, preview, lang };
 
   function currentPath() {
     if (built) {
@@ -78,8 +99,8 @@
     if (note) note.remove();
     if (!s.value) { render(); return; }
     const rows = MLR.historyRows(D, key, s.value) || [];
-    listEl.innerHTML = MLR.listHtml(D, rows, ctx, { noMoves: true, emptyText: "Nobody was ranked here on that date." });
-    listEl.insertAdjacentHTML("beforebegin", `<div class="history-note">Showing the ranking as it stood on ${esc(MML.fmtDate(s.value))}.</div>`);
+    listEl.innerHTML = MLR.listHtml(D, rows, ctx, { noMoves: true, emptyText: u("nobody") });
+    listEl.insertAdjacentHTML("beforebegin", `<div class="history-note">${esc(u("asOfNote").replace("{d}", MML.fmtDate(s.value, lang)))}</div>`);
   });
 
   /* search */
@@ -96,8 +117,8 @@
     active = 0;
     box.innerHTML = hits.length ? hits.map(([id, f], i) => {
       const o = MLR.orgById(D, f.org);
-      return `<button data-id="${esc(id)}" class="${i === 0 ? "active" : ""}">${flag(f.country)}<span><span class="r-name">${esc(f.name)}</span><span class="r-sub">${esc(countryName(f.country))}${o ? " · " + esc(o.name) : ""}</span></span></button>`;
-    }).join("") : `<div class="empty">No fighter found</div>`;
+      return `<button data-id="${esc(id)}" class="${i === 0 ? "active" : ""}">${flag(f.country)}<span><span class="r-name">${esc(f.name)}</span><span class="r-sub">${esc(MML.countryNameL(f.country, lang))}${o ? " · " + esc(o.name) : ""}</span></span></button>`;
+    }).join("") : `<div class="empty">${esc(u("noFighter"))}</div>`;
     box.classList.add("open");
   }
   function pick(id) { $("q").value = ""; $("results").classList.remove("open"); $("q").blur(); navigate("fighter/" + id); }
@@ -161,7 +182,7 @@
     box.innerHTML = `<div class="nl-box">
       <div><h2>${esc(N.title)}</h2><p>${esc(N.text)}</p></div>
       <form class="nl-form" action="${esc(action)}" method="post" target="_blank">
-        <input type="email" name="${esc(N.field || "email")}" required placeholder="Your email" aria-label="Email address" autocomplete="email">
+        <input type="email" name="${esc(N.field || "email")}" required placeholder="${esc(u("email"))}" aria-label="${esc(u("email"))}" autocomplete="email">
         <button type="submit">${esc(N.button || "Subscribe")}</button>
       </form>
       ${N.consent ? `<p class="nl-consent">${esc(N.consent)}</p>` : ""}
@@ -171,6 +192,16 @@
   if (!D.about.enabled) $("aboutLink").remove();
   else if (!built) $("aboutLink").setAttribute("href", "#/how-we-rank");
 
+  $("lang").addEventListener("click", e => {
+    const b = e.target.closest("[data-lang]"); if (!b || b.dataset.lang === lang) return;
+    lang = b.dataset.lang;
+    try { localStorage.setItem("mmaladder_lang", lang); } catch (err) {}
+    MLR.setLang(lang); ctx.lang = lang;
+    if (qLang) history.replaceState(null, "", location.href.replace(/([?&])lang=(en|cs|de)&?/, "$1").replace(/[?&]$/, ""));
+    applyStatic(); render(); renderNewsletter();
+  });
+
+  applyStatic();
   render();
   renderAds();
   renderNewsletter();

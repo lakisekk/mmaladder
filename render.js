@@ -3,6 +3,87 @@
 window.MLR = (function () {
   const { esc, flag, countryName, slug, fmtDate } = window.MML;
 
+  /* ---------- languages ---------- */
+  let LANG = "en";
+  const DIV_EN = { hw: "Heavyweight", lhw: "Light Heavyweight", mw: "Middleweight", ww: "Welterweight", lw: "Lightweight", fw: "Featherweight", bw: "Bantamweight", flw: "Flyweight" };
+  const DIV_NAMES = {
+    cs: { hw: "Těžká váha", lhw: "Polotěžká váha", mw: "Střední váha", ww: "Welterová váha", lw: "Lehká váha", fw: "Pérová váha", bw: "Bantamová váha", flw: "Muší váha" },
+    de: { hw: "Schwergewicht", lhw: "Halbschwergewicht", mw: "Mittelgewicht", ww: "Weltergewicht", lw: "Leichtgewicht", fw: "Federgewicht", bw: "Bantamgewicht", flw: "Fliegengewicht" }
+  };
+  const TX = {
+    en: {
+      world: "World", byCountry: "By Country", byOrg: "By Organization", p4p: "Pound-for-Pound", hidden: "hidden",
+      scopeTag: "{x} Ranking", heroTitle: "The home of <em>MMA</em> rankings", updated: "Updated {d}",
+      stats: "{n} ranked fighters · {d} divisions", movers: "Biggest movers", since: "Since the previous update",
+      rising: "Rising", falling: "Falling", now: "now #{n}", emptyDiv: "No fighters ranked in this division yet.",
+      allWeights: "All weight classes", asOf: "As of", current: "current", hiddenNotice: "This ranking is hidden from the public. Only visible in preview.",
+      champ: "CHAMP", champion: "CHAMPION", isNew: "NEW", rankings: "Rankings", country: "Country", organization: "Organization",
+      record: "Record", lastFight: "Last fight", standings: "Current standings", rankHistory: "Ranking history", fightHistory: "Fight history",
+      kindWorld: "Global ranking", kindCountry: "National ranking", kindOrg: "Organization ranking", kindP4p: "All divisions",
+      unranked: "Currently unranked.", chartGrows: "The chart grows with every rankings update.", noHistory: "No ranking history yet.",
+      noFights: "No fights recorded yet.", howWeRank: "How we rank", lastUpdated: "Last updated {d}.",
+      notFound: "Not found", notFoundText: "This page doesn't exist.", back: "Back to rankings", unknown: "Unknown",
+      resW: "W", resL: "L", resD: "D", resNC: "NC", mmaRankings: "MMA rankings",
+      tHome: "MMA Ladder · MMA Rankings — World, Country & Organization", tP4p: "Pound-for-Pound MMA Rankings · MMA Ladder",
+      tWorld: "{div} MMA Rankings (World) · MMA Ladder", tCountry: "{x} {div} MMA Rankings · MMA Ladder", tOrg: "{x} {div} Rankings · MMA Ladder",
+      dHome: "The home of MMA rankings. World, national and organization rankings in every men's weight class, with fighter profiles, ranking history and fight results.",
+      dBoard: "Current {x} MMA rankings{top}. Updated {d}.", tFighter: "{name} – MMA Ranking & Record · MMA Ladder",
+      dFighter: "Ranking history and fight results on MMA Ladder.", tAbout: "How We Rank · MMA Ladder",
+      dAbout: "How MMA Ladder ranks fighters: who would beat whom, built on data and reviewed by people.", tNotFound: "Page not found · MMA Ladder"
+    },
+    cs: {
+      world: "Svět", byCountry: "Podle země", byOrg: "Podle organizace", p4p: "Pound-for-Pound", hidden: "skrytý",
+      scopeTag: "{x} · žebříček", heroTitle: "Domov <em>MMA</em> žebříčků", updated: "Aktualizováno {d}",
+      stats: "{n} hodnocených zápasníků · {d} vah", movers: "Největší posuny", since: "Od poslední aktualizace",
+      rising: "Stoupají", falling: "Klesají", now: "nyní #{n}", emptyDiv: "V této váze zatím nikdo není.",
+      allWeights: "Všechny váhy", asOf: "Stav k", current: "aktuální", hiddenNotice: "Tento žebříček je pro veřejnost skrytý. Vidíš ho jen v náhledu.",
+      champ: "ŠAMPION", champion: "ŠAMPION", isNew: "NOVĚ", rankings: "Žebříčky", country: "Země", organization: "Organizace",
+      record: "Bilance", lastFight: "Poslední zápas", standings: "Aktuální umístění", rankHistory: "Vývoj umístění", fightHistory: "Historie zápasů",
+      kindWorld: "Světový žebříček", kindCountry: "Národní žebříček", kindOrg: "Žebříček organizace", kindP4p: "Všechny váhy",
+      unranked: "Momentálně bez umístění.", chartGrows: "Graf se rozroste s každou aktualizací žebříčků.", noHistory: "Zatím bez historie.",
+      noFights: "Zatím žádné zapsané zápasy.", howWeRank: "Jak hodnotíme", lastUpdated: "Naposledy aktualizováno {d}.",
+      notFound: "Stránka nenalezena", notFoundText: "Tato stránka neexistuje.", back: "Zpět na žebříčky", unknown: "Neznámý",
+      resW: "V", resL: "P", resD: "R", resNC: "NC", mmaRankings: "MMA žebříček",
+      tHome: "MMA Ladder · MMA žebříčky — svět, země a organizace", tP4p: "Pound-for-Pound MMA žebříček · MMA Ladder",
+      tWorld: "{div} – světový MMA žebříček · MMA Ladder", tCountry: "{div} – MMA žebříček {x} · MMA Ladder", tOrg: "{div} – žebříček {x} · MMA Ladder",
+      dHome: "Domov MMA žebříčků. Světové, národní a organizační žebříčky ve všech mužských vahách, s profily zápasníků, vývojem umístění a výsledky.",
+      dBoard: "Aktuální MMA žebříček: {x}{top}. Aktualizováno {d}.", tFighter: "{name} – MMA umístění a bilance · MMA Ladder",
+      dFighter: "Vývoj umístění a výsledky zápasů na MMA Ladder.", tAbout: "Jak hodnotíme · MMA Ladder",
+      dAbout: "Jak MMA Ladder hodnotí zápasníky: kdo by koho porazil, postaveno na datech a ověřeno lidmi.", tNotFound: "Stránka nenalezena · MMA Ladder"
+    },
+    de: {
+      world: "Welt", byCountry: "Nach Land", byOrg: "Nach Organisation", p4p: "Pound-for-Pound", hidden: "ausgeblendet",
+      scopeTag: "{x} · Ranking", heroTitle: "Das Zuhause der <em>MMA</em>-Rankings", updated: "Aktualisiert am {d}",
+      stats: "{n} gerankte Kämpfer · {d} Gewichtsklassen", movers: "Größte Veränderungen", since: "Seit dem letzten Update",
+      rising: "Aufsteiger", falling: "Absteiger", now: "jetzt #{n}", emptyDiv: "In dieser Gewichtsklasse ist noch niemand gerankt.",
+      allWeights: "Alle Gewichtsklassen", asOf: "Stand", current: "aktuell", hiddenNotice: "Dieses Ranking ist öffentlich ausgeblendet. Nur in der Vorschau sichtbar.",
+      champ: "CHAMP", champion: "CHAMPION", isNew: "NEU", rankings: "Rankings", country: "Land", organization: "Organisation",
+      record: "Bilanz", lastFight: "Letzter Kampf", standings: "Aktuelle Platzierungen", rankHistory: "Ranking-Verlauf", fightHistory: "Kampfhistorie",
+      kindWorld: "Weltrangliste", kindCountry: "Nationale Rangliste", kindOrg: "Organisations-Ranking", kindP4p: "Alle Gewichtsklassen",
+      unranked: "Derzeit ohne Platzierung.", chartGrows: "Das Diagramm wächst mit jedem Ranking-Update.", noHistory: "Noch kein Verlauf.",
+      noFights: "Noch keine Kämpfe erfasst.", howWeRank: "So ranken wir", lastUpdated: "Zuletzt aktualisiert am {d}.",
+      notFound: "Nicht gefunden", notFoundText: "Diese Seite existiert nicht.", back: "Zurück zu den Rankings", unknown: "Unbekannt",
+      resW: "S", resL: "N", resD: "U", resNC: "NC", mmaRankings: "MMA-Ranking",
+      tHome: "MMA Ladder · MMA-Rankings — Welt, Länder & Organisationen", tP4p: "Pound-for-Pound MMA-Ranking · MMA Ladder",
+      tWorld: "{div} – MMA-Weltrangliste · MMA Ladder", tCountry: "{div} – MMA-Ranking {x} · MMA Ladder", tOrg: "{div} – Ranking {x} · MMA Ladder",
+      dHome: "Das Zuhause der MMA-Rankings. Welt-, Länder- und Organisations-Rankings in allen Gewichtsklassen der Männer, mit Kämpferprofilen, Verlauf und Ergebnissen.",
+      dBoard: "Aktuelles MMA-Ranking: {x}{top}. Aktualisiert am {d}.", tFighter: "{name} – MMA-Ranking & Bilanz · MMA Ladder",
+      dFighter: "Ranking-Verlauf und Kampfergebnisse auf MMA Ladder.", tAbout: "So ranken wir · MMA Ladder",
+      dAbout: "Wie MMA Ladder Kämpfer rankt: Wer würde wen schlagen – auf Daten gebaut und von Menschen geprüft.", tNotFound: "Seite nicht gefunden · MMA Ladder"
+    }
+  };
+  function t(k, v) {
+    let s = (TX[LANG] && TX[LANG][k] != null) ? TX[LANG][k] : (TX.en[k] != null ? TX.en[k] : k);
+    if (v) Object.keys(v).forEach(n => { s = s.split("{" + n + "}").join(v[n]); });
+    return s;
+  }
+  const dn = d => !d ? "" : ((LANG !== "en" && DIV_EN[d.id] === d.name && DIV_NAMES[LANG] && DIV_NAMES[LANG][d.id]) || d.name);
+  const dnId = (D, id) => dn(D.divisions.find(d => d.id === id));
+  const cn = code => window.MML.countryNameL(code, LANG);
+  const fd = iso => fmtDate(iso, LANG);
+  function setLang(l) { LANG = TX[l] ? l : "en"; }
+  const getLang = () => LANG;
+
   /* ---------- lookups ---------- */
   const divSlug = d => slug(d.name);
   const findDiv = (D, s) => D.divisions.find(d => d.id === s || divSlug(d) === s);
@@ -20,9 +101,9 @@ window.MLR = (function () {
   }
 
   function scopeLabel(D, scope, sub) {
-    if (scope === "world") return "World";
-    if (scope === "p4p") return "Pound-for-Pound";
-    if (scope === "country") { const c = D.countries.find(x => x.code === sub); return (c && c.name) || countryName(sub); }
+    if (scope === "world") return t("world");
+    if (scope === "p4p") return t("p4p");
+    if (scope === "country") { if (LANG !== "en") return cn(sub); const c = D.countries.find(x => x.code === sub); return (c && c.name) || countryName(sub); }
     const o = orgById(D, sub); return o ? o.name : sub;
   }
 
@@ -89,7 +170,7 @@ window.MLR = (function () {
   function side(D, fight, s) {
     const id = fight[s];
     if (id && D.fighters[id]) return { id, name: D.fighters[id].name, country: D.fighters[id].country };
-    return { id: null, name: fight[s + "Name"] || "Unknown", country: fight[s + "Country"] || "" };
+    return { id: null, name: fight[s + "Name"] || t("unknown"), country: fight[s + "Country"] || "" };
   }
   function fightsOf(D, id) {
     return D.fights.filter(f => f.a === id || f.b === id).map(f => {
@@ -101,7 +182,7 @@ window.MLR = (function () {
   const lastFight = (D, id) => fightsOf(D, id)[0] || null;
   function resultBadge(res) {
     if (!res) return "";
-    return `<span class="res res-${res.toLowerCase()}">${esc(res)}</span>`;
+    return `<span class="res res-${res.toLowerCase()}">${esc(t("res" + res))}</span>`;
   }
   function lastFightLine(lf) {
     if (!lf) return "";
@@ -121,9 +202,9 @@ window.MLR = (function () {
   }
   function keyInfo(D, key) {
     const p = key.split("/");
-    if (p[0] === "p4p") return { scope: "p4p", label: "Pound-for-Pound" };
-    if (p[0] === "world") return { scope: "world", div: p[1], label: "World · " + ((D.divisions.find(d => d.id === p[1]) || {}).name || p[1]) };
-    return { scope: p[0], sub: p[1], div: p[2], label: scopeLabel(D, p[0], p[1]) + " · " + ((D.divisions.find(d => d.id === p[2]) || {}).name || p[2]) };
+    if (p[0] === "p4p") return { scope: "p4p", label: t("p4p") };
+    if (p[0] === "world") return { scope: "world", div: p[1], label: t("world") + " · " + (dnId(D, p[1]) || p[1]) };
+    return { scope: p[0], sub: p[1], div: p[2], label: scopeLabel(D, p[0], p[1]) + " · " + (dnId(D, p[2]) || p[2]) };
   }
   function keyVisible(D, key, preview) {
     const i = keyInfo(D, key);
@@ -188,8 +269,8 @@ window.MLR = (function () {
     const flush = () => { if (seg.length > 1) paths += `<polyline points="${seg.join(" ")}" class="ln"/>`; seg = []; };
     pts.forEach((p, i) => { if (p.rank == null) flush(); else seg.push(x(i) + "," + y(p.rank)); });
     flush();
-    const dots = pts.map((p, i) => p.rank == null ? "" : `<circle cx="${x(i)}" cy="${y(p.rank)}" r="${i === pts.length - 1 ? 5 : 3.5}" class="${p.rank === 0 ? "dc" : "d"}"><title>${esc(fmtDate(p.date))}: ${p.rank === 0 ? "Champion" : "#" + p.rank}</title></circle>`).join("");
-    const lbl = (i, anchor) => `<text x="${x(i)}" y="${H - 10}" class="tl" text-anchor="${anchor}">${esc(fmtDate(pts[i].date))}</text>`;
+    const dots = pts.map((p, i) => p.rank == null ? "" : `<circle cx="${x(i)}" cy="${y(p.rank)}" r="${i === pts.length - 1 ? 5 : 3.5}" class="${p.rank === 0 ? "dc" : "d"}"><title>${esc(fd(p.date))}: ${p.rank === 0 ? t("champion") : "#" + p.rank}</title></circle>`).join("");
+    const lbl = (i, anchor) => `<text x="${x(i)}" y="${H - 10}" class="tl" text-anchor="${anchor}">${esc(fd(pts[i].date))}</text>`;
     const xl = pts.length === 1 ? lbl(0, "middle") : lbl(0, "start") + lbl(pts.length - 1, "end");
     return `<svg viewBox="0 0 ${W} ${H}" class="chart" role="img" aria-label="Ranking history: ${esc(series.label)}">${grid}${paths}${dots}${xl}</svg>`;
   }
@@ -225,14 +306,14 @@ window.MLR = (function () {
   function moveHtml(m) {
     if (m.t === "up") return `<span class="move up">▲ ${m.n}</span>`;
     if (m.t === "down") return `<span class="move down">▼ ${m.n}</span>`;
-    if (m.t === "new") return `<span class="move new">NEW</span>`;
+    if (m.t === "new") return `<span class="move new">${t("isNew")}</span>`;
     return `<span class="move same">–</span>`;
   }
   const a = (link, p, inner, cls, extra) => `<a href="${esc(link(p))}" data-r="${esc(p)}"${cls ? ` class="${cls}"` : ""}${extra || ""}>${inner}</a>`;
 
   function listHtml(D, list, ctx, opts) {
     opts = opts || {};
-    if (!list.length) return `<div class="empty-state"><div>${opts.emptyText || "No fighters ranked in this division yet."}</div></div>`;
+    if (!list.length) return `<div class="empty-state"><div>${opts.emptyText || t("emptyDiv")}</div></div>`;
     return list.map((r, i) => {
       const f = r.fighter;
       const lf = lastFight(D, r.f);
@@ -241,7 +322,7 @@ window.MLR = (function () {
       if (f.record) bits.push(`<span class="rec-inline">${esc(f.record)}</span>`);
       const sub = bits.filter(Boolean).join(`<span class="sep">·</span>`);
       const rank = r.champ ? `<span class="rank c">C</span>` : `<span class="rank">${r.pos}</span>`;
-      const mv = r.champ ? `<span class="move champ">CHAMP</span>` : opts.noMoves ? `<span class="move same"></span>` : moveHtml(r.move);
+      const mv = r.champ ? `<span class="move champ">${t("champ")}</span>` : opts.noMoves ? `<span class="move same"></span>` : moveHtml(r.move);
       const extra = opts.divOf ? `<span class="divtag">${esc(opts.divOf(r.f))}</span>` : "";
       return a(ctx.link, "fighter/" + r.f, `
         ${rank}${mv}
@@ -256,16 +337,16 @@ window.MLR = (function () {
     const defC = (D.countries[0] || {}).code, defO = (rankedOrgs(D)[0] || {}).id;
     const tab = (sc, label, p) => a(ctx.link, p, label, scope === sc ? "on" : "");
     let html = `<nav class="scopes" aria-label="Ranking type">
-      ${tab("world", "World", path(D, { scope: "world", div }))}
-      ${D.countries.length ? tab("country", "By Country", path(D, { scope: "country", sub: scope === "country" ? r.sub : defC, div })) : ""}
-      ${rankedOrgs(D).length ? tab("org", "By Organization", path(D, { scope: "org", sub: scope === "org" ? r.sub : defO, div })) : ""}
-      ${p4pOn(D, ctx.preview) ? tab("p4p", "P4P" + (!D.settings.p4pPublic ? " · hidden" : ""), "p4p") : ""}
+      ${tab("world", t("world"), path(D, { scope: "world", div }))}
+      ${D.countries.length ? tab("country", t("byCountry"), path(D, { scope: "country", sub: scope === "country" ? r.sub : defC, div })) : ""}
+      ${rankedOrgs(D).length ? tab("org", t("byOrg"), path(D, { scope: "org", sub: scope === "org" ? r.sub : defO, div })) : ""}
+      ${p4pOn(D, ctx.preview) ? tab("p4p", "P4P" + (!D.settings.p4pPublic ? " · " + t("hidden") : ""), "p4p") : ""}
     </nav>`;
-    if (scope === "country") html += `<div class="subs">${D.countries.map(c => a(ctx.link, path(D, { scope: "country", sub: c.code, div }), flag(c.code) + esc(c.name || countryName(c.code)), "sub" + (c.code === r.sub ? " on" : ""))).join("")}</div>`;
+    if (scope === "country") html += `<div class="subs">${D.countries.map(c => a(ctx.link, path(D, { scope: "country", sub: c.code, div }), flag(c.code) + esc(LANG === "en" ? (c.name || countryName(c.code)) : cn(c.code)), "sub" + (c.code === r.sub ? " on" : ""))).join("")}</div>`;
     if (scope === "org") html += `<div class="subs">${rankedOrgs(D).map(o => a(ctx.link, path(D, { scope: "org", sub: o.id, div }), `<span class="swatch" style="background:${esc(o.color || "#888")}"></span>${esc(o.name)}`, "sub" + (o.id === r.sub ? " on" : ""))).join("")}</div>`;
     if (scope !== "p4p") html += `<nav class="divs" aria-label="Weight classes">${D.divisions.map(d => {
       const n = rows(D, scope, getList(D, scope, r.sub, d.id)).length;
-      return a(ctx.link, path(D, { scope, sub: r.sub, div: d.id }), `${esc(d.name)}${n ? `<sup>${n}</sup>` : ""}`, "div-btn" + (d.id === div ? " on" : ""));
+      return a(ctx.link, path(D, { scope, sub: r.sub, div: d.id }), `${esc(dn(d))}${n ? `<sup>${n}</sup>` : ""}`, "div-btn" + (d.id === div ? " on" : ""));
     }).join("")}</nav>`;
     return `<section class="controls wrap">${html}</section>`;
   }
@@ -275,14 +356,14 @@ window.MLR = (function () {
     if (scope === "country") icon = flag(sub);
     else if (scope === "org") { const o = orgById(D, sub); icon = `<span class="swatch" style="background:${esc(o ? o.color : "#888")}"></span>`; }
     else icon = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg>`;
-    return icon + esc(scopeLabel(D, scope, sub)) + " Ranking";
+    return icon + esc(t("scopeTag", { x: scopeLabel(D, scope, sub) }));
   }
 
   function historySelect(D, key) {
     const dates = D.history.filter(h => h.r[key] && h.r[key].length && String(h.date) < String(D.updated)).map(h => h.date).sort().reverse();
     if (!dates.length) return "";
-    return `<label class="asof">As of
-      <select data-history="${esc(key)}"><option value="">${esc(fmtDate(D.updated))} (current)</option>${dates.map(d => `<option value="${esc(d)}">${esc(fmtDate(d))}</option>`).join("")}</select></label>`;
+    return `<label class="asof">${esc(t("asOf"))}
+      <select data-history="${esc(key)}"><option value="">${esc(fd(D.updated))} (${esc(t("current"))})</option>${dates.map(d => `<option value="${esc(d)}">${esc(fd(d))}</option>`).join("")}</select></label>`;
   }
 
   function moversHtml(D, ctx) {
@@ -290,16 +371,16 @@ window.MLR = (function () {
     if (!m.up.length && !m.down.length) return "";
     const card = x => {
       const f = x.r.fighter, up = x.delta > 0;
-      const where = x.scope === "p4p" ? "Pound-for-Pound" : scopeLabel(D, x.scope, x.sub) + " · " + ((D.divisions.find(d => d.id === x.div) || {}).name || "");
+      const where = x.scope === "p4p" ? t("p4p") : scopeLabel(D, x.scope, x.sub) + " · " + dnId(D, x.div);
       return a(ctx.link, "fighter/" + x.r.f, `
         <span class="mv-delta ${up ? "up" : "down"}">${up ? "▲" : "▼"} ${Math.abs(x.delta)}</span>
-        <span class="mv-who">${flag(f.country)}<span><span class="mv-name">${esc(f.name)}</span><span class="mv-where">${esc(where)} · now #${x.r.pos}</span></span></span>`, "mover");
+        <span class="mv-who">${flag(f.country)}<span><span class="mv-name">${esc(f.name)}</span><span class="mv-where">${esc(where)} · ${esc(t("now", { n: x.r.pos }))}</span></span></span>`, "mover");
     };
     return `<section class="movers wrap">
-      <div class="sec-head"><h2>Biggest movers</h2><span>Since the previous update</span></div>
+      <div class="sec-head"><h2>${esc(t("movers"))}</h2><span>${esc(t("since"))}</span></div>
       <div class="mv-grid">
-        ${m.up.length ? `<div class="mv-col"><h3>Rising</h3>${m.up.map(card).join("")}</div>` : ""}
-        ${m.down.length ? `<div class="mv-col"><h3>Falling</h3>${m.down.map(card).join("")}</div>` : ""}
+        ${m.up.length ? `<div class="mv-col"><h3>${esc(t("rising"))}</h3>${m.up.map(card).join("")}</div>` : ""}
+        ${m.down.length ? `<div class="mv-col"><h3>${esc(t("falling"))}</h3>${m.down.map(card).join("")}</div>` : ""}
       </div></section>`;
   }
 
@@ -311,34 +392,35 @@ window.MLR = (function () {
     const key = scope === "p4p" ? "p4p" : scope === "world" ? "world/" + r.div : scope + "/" + r.sub + "/" + r.div;
     const isHome = r.type === "home";
     const label = scopeLabel(D, scope, r.sub);
-    const heading = scope === "p4p" ? "Pound-for-Pound" : div.name;
+    const heading = scope === "p4p" ? t("p4p") : dn(div);
     const divOf = scope === "p4p" ? (id => {
-      for (const d of D.divisions) { const p = rows(D, "world", getList(D, "world", null, d.id)).find(x => x.f === id); if (p) return d.name; }
+      for (const d of D.divisions) { const p = rows(D, "world", getList(D, "world", null, d.id)).find(x => x.f === id); if (p) return dn(d); }
       return "";
     }) : null;
 
-    const title = isHome ? "MMA Ladder · MMA Rankings — World, Country & Organization"
-      : scope === "p4p" ? "Pound-for-Pound MMA Rankings · MMA Ladder"
-      : scope === "world" ? `${div.name} MMA Rankings (World) · MMA Ladder`
-      : scope === "country" ? `${label} ${div.name} MMA Rankings · MMA Ladder`
-      : `${label} ${div.name} Rankings · MMA Ladder`;
+    const title = isHome ? t("tHome")
+      : scope === "p4p" ? t("tP4p")
+      : scope === "world" ? t("tWorld", { div: dn(div) })
+      : t(scope === "country" ? "tCountry" : "tOrg", { x: label, div: dn(div) });
     const top = list.slice(0, 5).map(x => (x.champ ? "C " : "#" + x.pos + " ") + x.fighter.name).join(", ");
-    const desc = isHome ? "The home of MMA rankings. World, national and organization rankings in every men's weight class, with fighter profiles, ranking history and fight results."
-      : `Current ${scope === "p4p" ? "pound-for-pound" : (label === "World" ? "world " : label + " ") + div.name.toLowerCase()} MMA rankings${top ? ": " + top : ""}. Updated ${fmtDate(D.updated)}.`;
+    const what = LANG === "en"
+      ? (scope === "p4p" ? "pound-for-pound" : (scope === "world" ? "world " : label + " ") + dn(div).toLowerCase())
+      : (scope === "p4p" ? t("p4p") : label + " · " + dn(div));
+    const desc = isHome ? t("dHome") : t("dBoard", { x: what, top: top ? ": " + top : "", d: fd(D.updated) });
 
     const hero = isHome ? `<section class="hero wrap">
-        <h1>The home of <em>MMA</em> rankings</h1>
-        <p><span><span class="dot"></span>Updated ${esc(fmtDate(D.updated))}</span><span>${countRanked(D, ctx.preview)} ranked fighters · ${D.divisions.length} divisions</span></p>
+        <h1>${t("heroTitle")}</h1>
+        <p><span><span class="dot"></span>${esc(t("updated", { d: fd(D.updated) }))}</span><span>${esc(t("stats", { n: countRanked(D, ctx.preview), d: D.divisions.length }))}</span></p>
       </section>${moversHtml(D, ctx)}` : "";
     const H = isHome ? "h2" : "h1";
     const html = `${hero}${controls(D, r, ctx)}
       <section class="board wrap">
         <div class="board-head">
-          <div><${H} class="board-title">${esc(heading)}${!isHome ? `<span class="sr"> ${esc(scope === "p4p" ? "MMA rankings" : label + " MMA rankings")}</span>` : ""}</${H}>
-          <div class="meta">${esc(scope === "p4p" ? "All weight classes" : div.limit || "")}${!isHome ? ` · Updated ${esc(fmtDate(D.updated))}` : ""}</div></div>
+          <div><${H} class="board-title">${esc(heading)}${!isHome ? `<span class="sr"> ${esc(scope === "p4p" ? t("mmaRankings") : label + " " + t("mmaRankings"))}</span>` : ""}</${H}>
+          <div class="meta">${esc(scope === "p4p" ? t("allWeights") : div.limit || "")}${!isHome ? ` · ${esc(t("updated", { d: fd(D.updated) }))}` : ""}</div></div>
           <div class="head-right">${historySelect(D, key)}<span class="scope-tag">${scopeTagHtml(D, scope, r.sub)}</span></div>
         </div>
-        ${scope === "p4p" && !D.settings.p4pPublic ? `<div class="notice-hidden">This ranking is hidden from the public. Only visible in preview.</div>` : ""}
+        ${scope === "p4p" && !D.settings.p4pPublic ? `<div class="notice-hidden">${esc(t("hiddenNotice"))}</div>` : ""}
         <div class="list" data-list="${esc(key)}">${listHtml(D, list, ctx, { divOf })}</div>
       </section>`;
     return { title, desc, html, path: path(D, r) };
@@ -378,51 +460,51 @@ window.MLR = (function () {
     const stHtml = st.length ? st.map(s => {
       const p = s.scope === "p4p" ? "p4p" : path(D, { scope: s.scope, sub: s.sub, div: s.div });
       const icon = s.scope === "country" ? flag(s.sub) : s.scope === "org" ? `<span class="swatch" style="background:${esc((orgById(D, s.sub) || {}).color || "#888")}"></span>` : "";
-      const t = s.scope === "p4p" ? "Pound-for-Pound" : `${scopeLabel(D, s.scope, s.sub)} · ${(D.divisions.find(d => d.id === s.div) || {}).name || ""}`;
-      const kind = s.scope === "p4p" ? "All divisions" : s.scope === "world" ? "Global ranking" : s.scope === "country" ? "National ranking" : "Organization ranking";
-      return a(ctx.link, p, `<span><span class="st-title">${icon}${esc(t)}</span><span class="st-sub">${kind}</span></span>
-        <span class="st-rank ${s.rank === "C" ? "c" : ""}">${s.rank === "C" ? "CHAMPION" : "#" + s.rank}</span>`, "standing");
-    }).join("") : `<p class="muted">Currently unranked.</p>`;
+      const ttl = s.scope === "p4p" ? t("p4p") : `${scopeLabel(D, s.scope, s.sub)} · ${dnId(D, s.div)}`;
+      const kind = t(s.scope === "p4p" ? "kindP4p" : s.scope === "world" ? "kindWorld" : s.scope === "country" ? "kindCountry" : "kindOrg");
+      return a(ctx.link, p, `<span><span class="st-title">${icon}${esc(ttl)}</span><span class="st-sub">${esc(kind)}</span></span>
+        <span class="st-rank ${s.rank === "C" ? "c" : ""}">${s.rank === "C" ? esc(t("champion")) : "#" + s.rank}</span>`, "standing");
+    }).join("") : `<p class="muted">${esc(t("unranked"))}</p>`;
 
     const multiPoint = hist.some(h => h.points.filter(p => p.rank != null).length > 1);
     const histHtml = hist.length ? `
       <div class="chart-tabs">${hist.map((h, i) => `<button data-chart="${i}" class="${i === 0 ? "on" : ""}">${esc(h.label)}</button>`).join("")}</div>
       ${hist.map((h, i) => `<div class="chart-wrap" data-chart-pane="${i}" ${i ? "hidden" : ""}>${chartSvg(h)}</div>`).join("")}
-      ${!multiPoint ? `<p class="muted small">The chart grows with every rankings update.</p>` : ""}` : `<p class="muted">No ranking history yet.</p>`;
+      ${!multiPoint ? `<p class="muted small">${esc(t("chartGrows"))}</p>` : ""}` : `<p class="muted">${esc(t("noHistory"))}</p>`;
 
     const fightsHtml = fights.length ? `<div class="fights">${fights.map(x => `
       <div class="fight">
         ${resultBadge(x.res)}
         <span class="f-opp">${flag(x.opp.country)}${x.opp.id ? a(ctx.link, "fighter/" + x.opp.id, esc(x.opp.name)) : `<span>${esc(x.opp.name)}</span>`}</span>
         <span class="f-meth">${esc([x.method, x.round ? "R" + x.round : ""].filter(Boolean).join(" · "))}</span>
-        <span class="f-ev">${esc(x.event)}<small>${esc(fmtDate(x.date))}</small></span>
-      </div>`).join("")}</div>` : `<p class="muted">No fights recorded yet.</p>`;
+        <span class="f-ev">${esc(x.event)}<small>${esc(fd(x.date))}</small></span>
+      </div>`).join("")}</div>` : `<p class="muted">${esc(t("noFights"))}</p>`;
 
-    const title = `${f.name} – MMA Ranking & Record · MMA Ladder`;
-    const desc = `${f.name}${f.nick ? ` “${f.nick}”` : ""} (${countryName(f.country) || "MMA"}${o ? ", " + o.name : ""})` +
-      (st.length ? ": " + st.slice(0, 3).map(s => (s.rank === "C" ? "Champion " : "#" + s.rank + " ") + (s.scope === "p4p" ? "P4P" : scopeLabel(D, s.scope, s.sub) + " " + ((D.divisions.find(d => d.id === s.div) || {}).name || ""))).join(", ") : "") +
-      (f.record ? `. Record ${f.record}` : "") + ". Ranking history and fight results on MMA Ladder.";
+    const title = t("tFighter", { name: f.name });
+    const desc = `${f.name}${f.nick ? ` “${f.nick}”` : ""} (${cn(f.country) || "MMA"}${o ? ", " + o.name : ""})` +
+      (st.length ? ": " + st.slice(0, 3).map(s => (s.rank === "C" ? t("champion") + " " : "#" + s.rank + " ") + (s.scope === "p4p" ? "P4P" : scopeLabel(D, s.scope, s.sub) + " " + dnId(D, s.div))).join(", ") : "") +
+      (f.record ? `. ${t("record")} ${f.record}` : "") + ". " + t("dFighter");
     const jsonld = { "@context": "https://schema.org", "@type": "Person", name: f.name, nationality: countryName(f.country) || undefined, alternateName: f.nick || undefined, memberOf: o ? { "@type": "SportsOrganization", name: o.name } : undefined };
 
     const html = `<section class="fighter wrap">
-      <nav class="crumbs">${a(ctx.link, "", "Rankings")}<span>/</span><span>${esc(f.name)}</span></nav>
+      <nav class="crumbs">${a(ctx.link, "", esc(t("rankings")))}<span>/</span><span>${esc(f.name)}</span></nav>
       <div class="f-hero">
         ${f.country ? `<img class="bgflag" src="https://flagcdn.com/w640/${esc(f.country)}.png" alt="" onerror="this.remove()">` : ""}
         ${flag(f.country, "flag-lg")}
         <h1>${esc(f.name)}</h1>
         ${f.nick ? `<div class="nickbig">“${esc(f.nick)}”</div>` : ""}
         <div class="facts">
-          <div class="fact"><small>Country</small><div>${esc(countryName(f.country)) || "–"}</div></div>
-          <div class="fact"><small>Organization</small><div>${o ? orgTag(D, f.org) : "–"}</div></div>
-          <div class="fact"><small>Record</small><div>${esc(f.record || "–")}</div></div>
-          ${lf ? `<div class="fact"><small>Last fight</small><div>${resultBadge(lf.res)} ${esc(lf.opp.name)}${lf.method ? ` <span class="muted">· ${esc(lf.method)}</span>` : ""}</div></div>` : ""}
+          <div class="fact"><small>${esc(t("country"))}</small><div>${esc(cn(f.country)) || "–"}</div></div>
+          <div class="fact"><small>${esc(t("organization"))}</small><div>${o ? orgTag(D, f.org) : "–"}</div></div>
+          <div class="fact"><small>${esc(t("record"))}</small><div>${esc(f.record || "–")}</div></div>
+          ${lf ? `<div class="fact"><small>${esc(t("lastFight"))}</small><div>${resultBadge(lf.res)} ${esc(lf.opp.name)}${lf.method ? ` <span class="muted">· ${esc(lf.method)}</span>` : ""}</div></div>` : ""}
         </div>
       </div>
       <div class="f-grid">
-        <div class="f-card"><h2>Current standings</h2>${stHtml}</div>
-        <div class="f-card"><h2>Ranking history</h2>${histHtml}</div>
+        <div class="f-card"><h2>${esc(t("standings"))}</h2>${stHtml}</div>
+        <div class="f-card"><h2>${esc(t("rankHistory"))}</h2>${histHtml}</div>
       </div>
-      <div class="f-card"><h2>Fight history</h2>${fightsHtml}</div>
+      <div class="f-card"><h2>${esc(t("fightHistory"))}</h2>${fightsHtml}</div>
     </section>`;
     return { title, desc, html, path: path(D, r), jsonld };
   }
@@ -444,25 +526,27 @@ window.MLR = (function () {
     return out.join("\n");
   }
   function aboutPage(D, ctx) {
+    const body = (LANG !== "en" && (D.about["body_" + LANG] || "").trim()) ? D.about["body_" + LANG] : D.about.body;
     const html = `<section class="wrap about">
-      <nav class="crumbs">${a(ctx.link, "", "Rankings")}<span>/</span><span>How we rank</span></nav>
-      <h1>How we rank</h1>
-      <div class="prose">${md(D.about.body)}</div>
-      <p class="muted small">Last updated ${esc(fmtDate(D.updated))}.</p>
+      <nav class="crumbs">${a(ctx.link, "", esc(t("rankings")))}<span>/</span><span>${esc(t("howWeRank"))}</span></nav>
+      <h1>${esc(t("howWeRank"))}</h1>
+      <div class="prose">${md(body)}</div>
+      <p class="muted small">${esc(t("lastUpdated", { d: fd(D.updated) }))}</p>
     </section>`;
-    return { title: "How We Rank · MMA Ladder", desc: "How MMA Ladder ranks fighters: quality of opposition, recency, performance and level of competition, reviewed by our team.", html, path: "how-we-rank" };
+    return { title: t("tAbout"), desc: t("dAbout"), html, path: "how-we-rank" };
   }
 
   function notFoundPage(D, ctx) {
-    return { title: "Page not found · MMA Ladder", desc: "Page not found.", html: `<section class="wrap nf"><h1>Not found</h1><p class="muted">This page doesn't exist. ${a(ctx.link, "", "Back to rankings")}</p></section>`, path: "404" };
+    return { title: t("tNotFound"), desc: t("notFound"), html: `<section class="wrap nf"><h1>${esc(t("notFound"))}</h1><p class="muted">${esc(t("notFoundText"))} ${a(ctx.link, "", esc(t("back")))}</p></section>`, path: "404" };
   }
 
   function page(D, r, ctx) {
+    if (ctx && ctx.lang) setLang(ctx.lang);
     if (r.type === "fighter") return fighterPage(D, r, ctx);
     if (r.type === "about") return aboutPage(D, ctx);
     if (r.type === "home" || r.type === "board") return boardPage(D, r, ctx);
     return notFoundPage(D, ctx);
   }
 
-  return { parse, path, allRoutes, page, rows, getList, listHtml, historyRows, snapshot, timeline, movers, scopeLabel, fightsOf, lastFight, side, divSlug, rankedOrgs, orgById };
+  return { setLang, getLang, t, dn, parse, path, allRoutes, page, rows, getList, listHtml, historyRows, snapshot, timeline, movers, scopeLabel, fightsOf, lastFight, side, divSlug, rankedOrgs, orgById };
 })();

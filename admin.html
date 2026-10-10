@@ -416,9 +416,10 @@
       </div>
       <div class="panel">
         <div class="panel-head"><h3>How we rank</h3><span class="spacer"></span><label class="chk big"><input type="checkbox" id="abOn"> Zobrazovat na webu</label></div>
+        <div class="item"><label class="field">Jazyk textu<select id="abLang"><option value="body">English</option><option value="body_cs">Čeština</option><option value="body_de">Deutsch</option></select></label></div>
         <div class="item"><textarea id="abBody" rows="22"></textarea></div>
         <p class="hint" style="padding:0 16px 14px;margin:0">
-          Text stránky (anglicky). <b>## Nadpis</b> = nadpis sekce, <b>- text</b> = odrážka, <b>**text**</b> = tučně, prázdný řádek = nový odstavec.
+          Text stránky ve třech jazycích (přepínáš nahoře). Když českou nebo německou verzi necháš prázdnou, ukáže se anglická. <b>## Nadpis</b> = nadpis sekce, <b>- text</b> = odrážka, <b>**text**</b> = tučně, prázdný řádek = nový odstavec.
           Piš principy, ne čísla. Všechno, co je v data.js, je veřejné.
         </p>
       </div>
@@ -1389,7 +1390,7 @@
     $("nlOn").checked = !!D.newsletter.enabled;
     Object.entries(nlMap).forEach(([id, k]) => { $(id).value = D.newsletter[k] || ""; });
     $("abOn").checked = !!D.about.enabled;
-    if (document.activeElement !== $("abBody")) $("abBody").value = D.about.body || "";
+    if (document.activeElement !== $("abBody")) $("abBody").value = D.about[$("abLang").value] || "";
   }
   $("nlOn").onchange = e => {
     if (e.target.checked && !/^https:\/\//i.test(D.newsletter.action || "")) toast("Nejdřív vyplň adresu formuláře – bez ní se box nezobrazí");
@@ -1397,7 +1398,8 @@
   };
   Object.entries(nlMap).forEach(([id, k]) => $(id).addEventListener("change", e => { D.newsletter[k] = e.target.value.trim(); save(); }));
   $("abOn").onchange = e => { D.about.enabled = e.target.checked; save(); };
-  $("abBody").addEventListener("input", () => { D.about.body = $("abBody").value; clearTimeout(renderTexts.t); renderTexts.t = setTimeout(save, 500); });
+  $("abLang").onchange = () => { $("abBody").value = D.about[$("abLang").value] || ""; };
+  $("abBody").addEventListener("input", () => { D.about[$("abLang").value] = $("abBody").value; clearTimeout(renderTexts.t); renderTexts.t = setTimeout(save, 500); });
 
   function renderAll() {
     if (ui.tab === "rank") renderRank();
