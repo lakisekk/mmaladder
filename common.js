@@ -300,6 +300,8 @@ window.MML = (function () {
     d.fights = Array.isArray(d.fights) ? d.fights : [];
     d.history = Array.isArray(d.history) ? d.history : [];
     d.settings = Object.assign({ p4pPublic: false, siteUrl: "", domain: "", analyticsType: "", analyticsId: "" }, d.settings || {});
+    d.ads = Object.assign({ enabled: false, disclaimer: "18+ · Ministerstvo financí varuje: Účastí na hazardní hře může vzniknout závislost.", items: [] }, d.ads || {});
+    d.ads.items = Array.isArray(d.ads.items) ? d.ads.items : [];
     return d;
   }
 

@@ -61,3 +61,14 @@ V editoru → **Nastavení → Měření návštěvnosti** vyber službu a vlož
 - `/fighter/jiri-prochazka/` – profil se všemi pozicemi, grafem a zápasy
 
 Staré odkazy `#/...` se samy přesměrují.
+
+## Reklamy (partnerské bannery)
+
+Editor → **Nastavení → Reklamy**:
+1. Zaškrtni **Zobrazovat na webu**.
+2. **+ Přidat banner**, vlož affiliate odkaz a obrázek (ideálně 300×250).
+   - Obrázek buď jako URL od sázkovky, nebo nahraj soubor do složky `ads/` v repozitáři a napiš `ads/nazev.png`.
+3. Stáhni a nahraj `data.js`.
+
+Na monitoru od šířky 1600 px se ukážou max. 2 bannery vpravo, jinde 1 banner pod obsahem. Pod bannerem je vždy povinné upozornění (18+ a varování MF), jeho text jde upravit.
+Odkazy jsou označené `rel="sponsored"`, takže je Google nebere jako placené SEO odkazy.

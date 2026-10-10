@@ -67,10 +67,12 @@ for (const r of routes) {
 write("404.html", htmlFor(MLR.page(D, { type: "notfound" }, ctx), null).replace("<title>", '<meta name="robots" content="noindex">\n<title>'));
 
 // static files
-for (const f of ["common.js", "data.js", "render.js", "app.js", "admin.html", "og.png", "favicon.png"]) {
-  if (fs.existsSync(path.join(ROOT, f))) fs.copyFileSync(path.join(ROOT, f), path.join(OUT, f));
+// copy everything else from the repo (scripts, images, ads/ folder…) except build-only files
+const SKIP = new Set(["index.html", "build.js", "README.md", "_site", "node_modules", ".git", ".github", ".gitignore"]);
+for (const f of fs.readdirSync(ROOT)) {
+  if (SKIP.has(f) || f.startsWith(".")) continue;
+  fs.cpSync(path.join(ROOT, f), path.join(OUT, f), { recursive: true });
 }
-if (fs.existsSync(path.join(ROOT, "assets"))) fs.cpSync(path.join(ROOT, "assets"), path.join(OUT, "assets"), { recursive: true });
 
 // sitemap + robots
 if (SITE) {

@@ -153,6 +153,13 @@
   .item .field input { width: 100%; }
   .chk.big { font-size: 14px; color: var(--text); gap: 10px; }
   .pill { font-family: var(--body); font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; border: 1px dashed var(--line-2); color: var(--muted); padding: 3px 8px; border-radius: 999px; vertical-align: middle; }
+  .ad-row { display: grid; grid-template-columns: 120px 1fr auto; gap: 14px; padding: 14px 16px; border-bottom: 1px solid var(--line); align-items: start; }
+  .ad-thumb { width: 120px; height: 100px; border: 1px dashed var(--line-2); border-radius: 8px; display: grid; place-items: center; overflow: hidden; color: var(--dim); font-size: 11px; text-align: center; background: #080808; }
+  .ad-thumb img { width: 100%; height: 100%; object-fit: contain; }
+  .ad-fields { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .ad-fields input, .ad-fields select { width: 100%; }
+  .ad-acts { display: grid; gap: 8px; justify-items: end; }
+  @media (max-width: 760px) { .ad-row { grid-template-columns: 1fr; } .ad-fields { grid-template-columns: 1fr; } .ad-acts { justify-items: start; grid-auto-flow: column; } }
   .toast { position: fixed; bottom: 22px; left: 50%; transform: translateX(-50%) translateY(20px); background: #fff; color: #000; font-weight: 600; padding: 10px 16px; border-radius: 8px; opacity: 0; transition: .2s; pointer-events: none; z-index: 99; }
   .toast.show { opacity: 1; transform: translateX(-50%); }
 
@@ -341,6 +348,18 @@
         <div id="histList"></div>
         <p class="hint" style="padding:0 16px 14px;margin:0">Každé kliknutí na „Nová aktualizace“ uloží stav všech žebříčků. Z toho se kreslí grafy na profilech a funguje výběr „As of“ na webu.</p>
       </div>
+    </div>
+
+    <div class="panel" style="margin-top:18px">
+      <div class="panel-head"><h3>Reklamy</h3><span class="spacer"></span><label class="chk big"><input type="checkbox" id="adsOn"> Zobrazovat na webu</label></div>
+      <div class="item"><label class="field grow">Povinné upozornění pod bannerem<input type="text" id="adsNote"></label></div>
+      <div id="adsList"></div>
+      <div class="add"><button class="btn" id="adsAdd">+ Přidat banner</button></div>
+      <p class="hint" style="padding:0 16px 14px;margin:0">
+        Na velkém monitoru se ukážou max. 2 bannery vpravo vedle žebříčku, na menších obrazovkách 1 banner pod obsahem. Když je bannerů víc, střídají se náhodně.
+        Ideální velikost obrázku je <b>300×250</b>. Obrázek buď vlož jako odkaz od sázkovky (affiliate program ho většinou dává), nebo ho nahraj do repozitáře do složky <b>ads/</b> a sem napiš <b>ads/nazev.png</b>.
+        Odkazy se automaticky označí jako sponzorované, takže ti nepokazí hodnocení v Googlu.
+      </p>
     </div>
   </section>
 </main>
@@ -1184,12 +1203,55 @@
     D.history = D.history.filter(h => h.date !== b.dataset.hdel); save(); renderSiteSettings();
   });
 
+  /* ---------- ads ---------- */
+  function renderAds() {
+    $("adsOn").checked = !!D.ads.enabled;
+    $("adsNote").value = D.ads.disclaimer || "";
+    $("adsList").innerHTML = D.ads.items.map((x, i) => `
+      <div class="ad-row" data-ai="${i}">
+        <div class="ad-thumb">${x.img ? `<img src="${esc(x.img)}" alt="" onerror="this.replaceWith('Obrázek nenalezen')">` : "Bez obrázku"}</div>
+        <div class="ad-fields">
+          <label class="field">Název (jen pro tebe)<input type="text" data-k="name" value="${esc(x.name || "")}" placeholder="např. Tipsport"></label>
+          <label class="field">Kde zobrazit<select data-k="place">
+            <option value="both" ${!x.place || x.place === "both" ? "selected" : ""}>Všude</option>
+            <option value="side" ${x.place === "side" ? "selected" : ""}>Jen vpravo (velký monitor)</option>
+            <option value="inline" ${x.place === "inline" ? "selected" : ""}>Jen pod obsahem</option></select></label>
+          <label class="field" style="grid-column:1/-1">Odkaz (affiliate URL)<input type="text" data-k="url" value="${esc(x.url || "")}" placeholder="https://…"></label>
+          <label class="field" style="grid-column:1/-1">Obrázek (URL nebo ads/soubor.png)<input type="text" data-k="img" value="${esc(x.img || "")}" placeholder="ads/tipsport-300x250.png"></label>
+        </div>
+        <div class="ad-acts">
+          <label class="chk"><input type="checkbox" data-k="active" ${x.active !== false ? "checked" : ""}> Aktivní</label>
+          <button class="icon-btn del" data-adel title="Smazat banner">✕</button>
+        </div>
+      </div>`).join("") || `<div class="empty">Zatím žádný banner.</div>`;
+  }
+  $("adsOn").onchange = e => { D.ads.enabled = e.target.checked; save(); toast(e.target.checked ? "Reklamy se zobrazí na webu" : "Reklamy vypnuté"); };
+  $("adsNote").onchange = e => { D.ads.disclaimer = e.target.value.trim(); save(); };
+  $("adsAdd").onclick = () => { D.ads.items.push({ name: "", url: "", img: "", place: "both", active: true }); save(); renderAds(); };
+  $("adsList").addEventListener("change", e => {
+    const row = e.target.closest("[data-ai]"); const k = e.target.dataset.k; if (!row || !k) return;
+    const x = D.ads.items[+row.dataset.ai];
+    if (k === "active") x.active = e.target.checked;
+    else {
+      let v = e.target.value.trim();
+      if (k === "url" && v && !/^https?:\/\//i.test(v)) v = "https://" + v;
+      if (k === "url" && v && !/^https:\/\//i.test(v)) toast("Pozor: odkaz není přes https");
+      x[k] = v;
+    }
+    save(); renderAds();
+  });
+  $("adsList").addEventListener("click", e => {
+    if (!e.target.closest("[data-adel]")) return;
+    if (!confirm("Smazat tento banner?")) return;
+    D.ads.items.splice(+e.target.closest("[data-ai]").dataset.ai, 1); save(); renderAds();
+  });
+
   function renderAll() {
     if (ui.tab === "rank") renderRank();
     if (ui.tab === "fighters") renderFighters();
     if (ui.tab === "fights") renderFights();
     if (ui.tab === "gfx") renderGfx();
-    if (ui.tab === "setup") { renderSetup(); renderSiteSettings(); }
+    if (ui.tab === "setup") { renderSetup(); renderSiteSettings(); renderAds(); }
   }
   renderAll();
 })();

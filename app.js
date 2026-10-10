@@ -128,6 +128,30 @@
     document.head.appendChild(s);
   }
 
+  /* partner banners (configured in the editor → Nastavení → Reklamy) */
+  function renderAds() {
+    const A = D.ads;
+    const items = A.enabled ? A.items.filter(x => x.active !== false && x.img && x.url) : [];
+    const side = $("adsSide"), inline = $("adsInline");
+    if (!items.length) { side.hidden = inline.hidden = true; return; }
+    const shuffled = items.slice().sort(() => Math.random() - .5);
+    const one = x => `<a class="ad" href="${esc(x.url)}" target="_blank" rel="sponsored noopener nofollow" data-ad="${esc(x.name || "")}"><img src="${esc(x.img)}" alt="${esc(x.alt || x.name || "Partner")}" loading="lazy" width="300" height="250"></a>`;
+    const note = A.disclaimer ? `<p class="ad-note">${esc(A.disclaimer)}</p>` : "";
+    const sideItems = shuffled.filter(x => x.place !== "inline").slice(0, 2);
+    const inlineItem = shuffled.find(x => x.place !== "side");
+    side.innerHTML = sideItems.length ? `<p class="ad-label">Partner</p>${sideItems.map(one).join("")}${note}` : "";
+    side.hidden = !sideItems.length;
+    inline.innerHTML = inlineItem ? `<div class="ad-box"><p class="ad-label">Partner</p>${one(inlineItem)}${note}</div>` : "";
+    inline.hidden = !inlineItem;
+    inline.classList.toggle("has-side", !!sideItems.length);
+  }
+  document.addEventListener("click", e => {
+    const a = e.target.closest("a[data-ad]");
+    if (a && window.gtag) gtag("event", "partner_click", { partner: a.dataset.ad });
+    if (a && window.goatcounter && window.goatcounter.count) goatcounter.count({ path: "partner-click-" + a.dataset.ad, event: true });
+  });
+
   render();
+  renderAds();
   analytics();
 })();
