@@ -1,7 +1,7 @@
 /* MMA Ladder – data file.
    Edit via admin.html and replace this file with the exported one. */
 window.MMA_DATA = {
-  "updated": "2026-10-10",
+  "updated": "2026-10-11",
   "divisions": [
     {
       "id": "hw",
@@ -82,6 +82,18 @@ window.MMA_DATA = {
     {
       "id": "ksw",
       "name": "KSW",
+      "color": "#ff0000",
+      "ranked": false
+    },
+    {
+      "id": "pml",
+      "name": "PML",
+      "color": "#00858f",
+      "ranked": false
+    },
+    {
+      "id": "rfa",
+      "name": "RFA",
       "color": "#ff0000",
       "ranked": false
     }
@@ -628,7 +640,7 @@ window.MMA_DATA = {
     },
     "deniz-ilbay": {
       "name": "Deniz Ilbay",
-      "country": "cz",
+      "country": "de",
       "org": "oktagon"
     },
     "igor-severino": {
@@ -1070,6 +1082,136 @@ window.MMA_DATA = {
       "name": "Emir Can-Al",
       "country": "tr",
       "org": "oktagon"
+    },
+    "samuel-bark": {
+      "name": "Samuel Bark",
+      "country": "se",
+      "org": "oktagon"
+    },
+    "karol-rysavy": {
+      "name": "Karol Ryšavý",
+      "country": "sk",
+      "org": "oktagon"
+    },
+    "ayton-de-paepe": {
+      "name": "Ayton de Paepe",
+      "country": "be",
+      "org": "oktagon"
+    },
+    "daniel-schordje": {
+      "name": "Daniel Schordje",
+      "country": "at",
+      "org": "oktagon"
+    },
+    "henrique-madureira": {
+      "name": "Henrique Madureira",
+      "country": "br",
+      "org": "oktagon"
+    },
+    "vaclav-stepan": {
+      "name": "Václav Štěpán",
+      "country": "cz",
+      "org": "oktagon"
+    },
+    "firas-daud": {
+      "name": "Firas Daud",
+      "country": "de",
+      "org": "oktagon"
+    },
+    "eugen-black-dell": {
+      "name": "Eugen Black-Dell",
+      "country": "de",
+      "org": "oktagon"
+    },
+    "marco-novak": {
+      "name": "Marco Novák",
+      "country": "sk",
+      "org": "oktagon"
+    },
+    "hugo-vach": {
+      "name": "Hugo Vach",
+      "country": "de",
+      "org": "oktagon"
+    },
+    "jakub-tichota": {
+      "name": "Jakub Tichota",
+      "country": "cz",
+      "org": "oktagon"
+    },
+    "teo-saldana-smith": {
+      "name": "Teo Saldana Smith",
+      "country": "ch",
+      "org": "oktagon"
+    },
+    "liam-pitts": {
+      "name": "Liam Pitts",
+      "country": "se",
+      "org": "oktagon"
+    },
+    "vojtech-khol": {
+      "name": "Vojtěch Khol",
+      "country": "cz",
+      "org": "oktagon"
+    },
+    "corey-fry": {
+      "name": "Corey Fry",
+      "country": "gb-eng",
+      "org": "oktagon"
+    },
+    "michael-deiga-scheck": {
+      "name": "Michael Deiga-Scheck",
+      "country": "de",
+      "org": "oktagon"
+    },
+    "sami-zarabi": {
+      "name": "Sami Zarabi",
+      "country": "de",
+      "org": "oktagon"
+    },
+    "lukas-zavicak": {
+      "name": "Lukáš Zavičák",
+      "country": "cz",
+      "org": "oktagon"
+    },
+    "moktar-benkaci": {
+      "name": "Moktar Benkaci",
+      "country": "fr",
+      "org": "oktagon"
+    },
+    "simon-bruknar": {
+      "name": "Šimon Bruknar",
+      "country": "cz",
+      "org": "oktagon"
+    },
+    "david-daniel-komar": {
+      "name": "David Daniel Komár",
+      "country": "hu",
+      "org": "oktagon"
+    },
+    "lukas-chotenovsky": {
+      "name": "Lukáš Chotěnovský",
+      "country": "cz",
+      "org": "oktagon"
+    },
+    "nathan-haywood": {
+      "name": "Nathan Haywood",
+      "country": "gb-eng",
+      "org": "oktagon"
+    },
+    "michal-martinek": {
+      "name": "Michal Martínek",
+      "country": "cz",
+      "org": "ksw"
+    },
+    "jakub-kuca": {
+      "name": "Jakub Kůča",
+      "country": "cz",
+      "org": "pml"
+    },
+    "frederico-komuenha": {
+      "name": "Frederico Komuenha",
+      "country": "cz",
+      "org": "free"
     }
   },
   "rankings": {
@@ -1255,25 +1397,41 @@ window.MMA_DATA = {
       "cz": {
         "hw": [
           {
-            "f": "viktor-pesta",
-            "prev": 1
+            "f": "michal-martinek",
+            "prev": "new"
           }
         ],
         "lhw": [
           {
             "f": "jiri-prochazka",
             "prev": 1
+          },
+          {
+            "f": "daniel-skvor",
+            "prev": "new"
+          },
+          {
+            "f": "karlos-vemola",
+            "prev": "new"
+          },
+          {
+            "f": "vojtech-garba",
+            "prev": "new"
+          },
+          {
+            "f": "zdenek-polivka",
+            "prev": "new"
+          },
+          {
+            "f": "jakub-kuca",
+            "prev": "new"
+          },
+          {
+            "f": "frederico-komuenha",
+            "prev": "new"
           }
         ],
         "mw": [
-          {
-            "f": "karlos-vemola",
-            "prev": 1
-          },
-          {
-            "f": "david-kozma",
-            "prev": 2
-          },
           {
             "f": "patrik-kincl",
             "prev": 3
@@ -1853,20 +2011,88 @@ window.MMA_DATA = {
             "prev": 6
           },
           {
-            "f": "radek-rousal",
+            "f": "jakub-batfalsky",
             "prev": 7
           },
           {
-            "f": "jakub-batfalsky",
+            "f": "james-hendin",
             "prev": 8
           },
           {
-            "f": "james-hendin",
+            "f": "radek-rousal",
             "prev": 9
           },
           {
-            "f": "deniz-ilbay",
+            "f": "samuel-bark",
             "prev": 10
+          },
+          {
+            "f": "ayton-de-paepe",
+            "prev": 11
+          },
+          {
+            "f": "karol-rysavy",
+            "prev": 12
+          },
+          {
+            "f": "deniz-ilbay",
+            "prev": 13
+          },
+          {
+            "f": "firas-daud",
+            "prev": 14
+          },
+          {
+            "f": "daniel-schordje",
+            "prev": 15
+          },
+          {
+            "f": "henrique-madureira",
+            "prev": 16
+          },
+          {
+            "f": "vaclav-stepan",
+            "prev": 17
+          },
+          {
+            "f": "marco-novak",
+            "prev": 18
+          },
+          {
+            "f": "hugo-vach",
+            "prev": 19
+          },
+          {
+            "f": "eugen-black-dell",
+            "prev": 20
+          },
+          {
+            "f": "jakub-tichota",
+            "prev": 21
+          },
+          {
+            "f": "teo-saldana-smith",
+            "prev": 22
+          },
+          {
+            "f": "sami-zarabi",
+            "prev": 23
+          },
+          {
+            "f": "corey-fry",
+            "prev": 24
+          },
+          {
+            "f": "vojtech-khol",
+            "prev": 25
+          },
+          {
+            "f": "michael-deiga-scheck",
+            "prev": 26
+          },
+          {
+            "f": "lukas-zavicak",
+            "prev": 27
           }
         ],
         "bw": [
@@ -1899,11 +2125,11 @@ window.MMA_DATA = {
             "prev": 6
           },
           {
-            "f": "roman-paulus",
+            "f": "ali-gunduz",
             "prev": 7
           },
           {
-            "f": "ali-gunduz",
+            "f": "roman-paulus",
             "prev": 8
           },
           {
@@ -1911,8 +2137,32 @@ window.MMA_DATA = {
             "prev": 9
           },
           {
-            "f": "abdullah-sultani",
+            "f": "liam-pitts",
             "prev": 10
+          },
+          {
+            "f": "moktar-benkaci",
+            "prev": 11
+          },
+          {
+            "f": "abdullah-sultani",
+            "prev": 12
+          },
+          {
+            "f": "simon-bruknar",
+            "prev": 13
+          },
+          {
+            "f": "david-daniel-komar",
+            "prev": 14
+          },
+          {
+            "f": "nathan-haywood",
+            "prev": 15
+          },
+          {
+            "f": "lukas-chotenovsky",
+            "prev": 16
           }
         ],
         "flw": [
@@ -1921,27 +2171,27 @@ window.MMA_DATA = {
             "c": true
           },
           {
-            "f": "beno-adamia",
+            "f": "david-dvorak",
             "prev": 1
           },
           {
-            "f": "david-dvorak",
+            "f": "matheus-severino",
             "prev": 2
           },
           {
-            "f": "matheus-severino",
+            "f": "mohamed-walid",
             "prev": 3
           },
           {
-            "f": "mohamed-walid",
+            "f": "beno-adamia",
             "prev": 4
           },
           {
-            "f": "aaron-aby",
+            "f": "shawn-marcos-da-silva",
             "prev": 5
           },
           {
-            "f": "shawn-marcos-da-silva",
+            "f": "aaron-aby",
             "prev": 6
           },
           {
@@ -1954,463 +2204,14 @@ window.MMA_DATA = {
     "p4p": []
   },
   "fights": [],
-  "history": [
-    {
-      "date": "2026-10-09",
-      "r": {
-        "world/hw": [
-          "tom-aspinall",
-          "ciryl-gane",
-          "alexander-volkov",
-          "sergei-pavlovich",
-          "curtis-blaydes"
-        ],
-        "world/lhw": [
-          "alex-pereira",
-          "magomed-ankalaev",
-          "jiri-prochazka",
-          "carlos-ulberg",
-          "jamahal-hill"
-        ],
-        "world/mw": [
-          "khamzat-chimaev",
-          "dricus-du-plessis",
-          "nassourdine-imavov",
-          "reinier-de-ridder",
-          "sean-strickland"
-        ],
-        "world/ww": [
-          "islam-makhachev",
-          "jack-della-maddalena",
-          "belal-muhammad",
-          "shavkat-rakhmonov",
-          "ian-machado-garry"
-        ],
-        "world/lw": [
-          "justin-gaethje",
-          "ilia-topuria",
-          "arman-tsarukyan",
-          "charles-oliveira",
-          "max-holloway"
-        ],
-        "world/fw": [
-          "alexander-volkanovski",
-          "diego-lopes",
-          "movsar-evloev",
-          "jean-silva",
-          "lerone-murphy"
-        ],
-        "world/bw": [
-          "petr-yan",
-          "merab-dvalishvili",
-          "umar-nurmagomedov",
-          "sean-omalley",
-          "cory-sandhagen"
-        ],
-        "world/flw": [
-          "joshua-van",
-          "alexandre-pantoja",
-          "kai-kara-france",
-          "brandon-royval",
-          "tatsuro-taira"
-        ],
-        "country/cz/hw": [
-          "viktor-pesta"
-        ],
-        "country/cz/lhw": [
-          "jiri-prochazka"
-        ],
-        "country/cz/mw": [
-          "karlos-vemola",
-          "david-kozma",
-          "patrik-kincl"
-        ],
-        "country/cz/lw": [
-          "matej-penaz"
-        ],
-        "country/cz/fw": [
-          "leo-brichta"
-        ],
-        "country/sk/hw": [
-          "martin-buday"
-        ],
-        "country/sk/lhw": [
-          "attila-vegh"
-        ],
-        "country/sk/lw": [
-          "ludovit-klein"
-        ],
-        "country/sk/fw": [
-          "ivan-buchinger"
-        ],
-        "org/oktagon/hw": [
-          "!will-fleury",
-          "lazar-todev",
-          "kasim-aras",
-          "martin-buday",
-          "adam-palasz",
-          "michal-piwowarski",
-          "simon-biyong",
-          "patrick-vespaziani",
-          "marc-doussis",
-          "nicolaj-wagner",
-          "yevgeny-orlov"
-        ],
-        "org/oktagon/lhw": [
-          "!makhmud-muradov",
-          "will-fleury",
-          "daniel-skvor",
-          "karlos-vemola",
-          "pavol-langer",
-          "emilio-quissua",
-          "tomasz-narkun",
-          "robert-lau",
-          "frederic-vosgrone",
-          "vojtech-garba",
-          "jesus-samuel-chavarria"
-        ],
-        "org/oktagon/mw": [
-          "!krzysztof-jotko",
-          "makhmud-muradov",
-          "kerim-engizek",
-          "patrik-kincl",
-          "dominik-humburger",
-          "jaime-cordero",
-          "hojat-khajevand",
-          "piotr-wawrzyniak",
-          "matej-penaz",
-          "kamil-oniszczuk",
-          "robert-pukac",
-          "mick-stanton"
-        ],
-        "org/oktagon/ww": [
-          "amiran-gogoladze",
-          "jack-grant",
-          "ion-surdu",
-          "ronald-paradeiser",
-          "felix-klinkhammer",
-          "david-kozma",
-          "jessin-ayari",
-          "tyrone-pfeifer",
-          "cihad-akipa",
-          "andrej-kalasnik"
-        ],
-        "org/oktagon/lw": [
-          "!mateusz-legierski",
-          "ivan-buchinger",
-          "fedor-duric",
-          "gokhan-aksu",
-          "niko-samsonidse",
-          "ozan-aslaner",
-          "arijan-topallaj",
-          "tomas-mudroch",
-          "denis-frimpong",
-          "vladimir-lengal",
-          "tomas-ciganik"
-        ],
-        "org/oktagon/fw": [
-          "mochamed-machaev",
-          "max-holzer",
-          "zafar-mohsen",
-          "gjoni-palokaj",
-          "khalid-taha",
-          "richie-smullen",
-          "radek-rousal",
-          "jakub-batfalsky",
-          "james-hendin",
-          "deniz-ilbay"
-        ],
-        "org/oktagon/bw": [
-          "!igor-severino",
-          "jonas-magard",
-          "dastan-amangeldy",
-          "raul-lemberanskij",
-          "khrushed-kakhorov",
-          "wanderley-junior",
-          "elvis-silva",
-          "roman-paulus",
-          "ali-gunduz",
-          "harun-kurt",
-          "abdullah-sultani"
-        ],
-        "org/oktagon/flw": [
-          "!zhalgas-zhumagulov",
-          "beno-adamia",
-          "david-dvorak",
-          "matheus-severino",
-          "mohamed-walid",
-          "aaron-aby",
-          "shawn-marcos-da-silva",
-          "zoran-milic"
-        ]
-      }
-    },
-    {
-      "date": "2026-10-10",
-      "r": {
-        "world/hw": [
-          "tom-aspinall",
-          "ciryl-gane",
-          "alexander-volkov",
-          "sergei-pavlovich",
-          "curtis-blaydes"
-        ],
-        "world/lhw": [
-          "alex-pereira",
-          "magomed-ankalaev",
-          "jiri-prochazka",
-          "carlos-ulberg",
-          "jamahal-hill"
-        ],
-        "world/mw": [
-          "khamzat-chimaev",
-          "dricus-du-plessis",
-          "nassourdine-imavov",
-          "reinier-de-ridder",
-          "sean-strickland"
-        ],
-        "world/ww": [
-          "islam-makhachev",
-          "jack-della-maddalena",
-          "belal-muhammad",
-          "shavkat-rakhmonov",
-          "ian-machado-garry"
-        ],
-        "world/lw": [
-          "justin-gaethje",
-          "ilia-topuria",
-          "arman-tsarukyan",
-          "charles-oliveira",
-          "max-holloway"
-        ],
-        "world/fw": [
-          "alexander-volkanovski",
-          "diego-lopes",
-          "movsar-evloev",
-          "jean-silva",
-          "lerone-murphy"
-        ],
-        "world/bw": [
-          "petr-yan",
-          "merab-dvalishvili",
-          "umar-nurmagomedov",
-          "sean-omalley",
-          "cory-sandhagen"
-        ],
-        "world/flw": [
-          "joshua-van",
-          "alexandre-pantoja",
-          "kai-kara-france",
-          "brandon-royval",
-          "tatsuro-taira"
-        ],
-        "country/cz/hw": [
-          "viktor-pesta"
-        ],
-        "country/cz/lhw": [
-          "jiri-prochazka"
-        ],
-        "country/cz/mw": [
-          "karlos-vemola",
-          "david-kozma",
-          "patrik-kincl"
-        ],
-        "country/cz/lw": [
-          "matej-penaz"
-        ],
-        "country/cz/fw": [
-          "leo-brichta"
-        ],
-        "country/sk/hw": [
-          "martin-buday"
-        ],
-        "country/sk/lhw": [
-          "attila-vegh"
-        ],
-        "country/sk/lw": [
-          "ludovit-klein"
-        ],
-        "country/sk/fw": [
-          "ivan-buchinger"
-        ],
-        "org/oktagon/hw": [
-          "!will-fleury",
-          "lazar-todev",
-          "martin-buday",
-          "kasim-aras",
-          "adam-palasz",
-          "michal-piwowarski",
-          "simon-biyong",
-          "patrick-vespaziani",
-          "marc-doussis",
-          "nicolaj-wagner",
-          "timo-feucht",
-          "yevgeny-orlov",
-          "olutobi-ayodeji-kalejaiye",
-          "jackson-ross"
-        ],
-        "org/oktagon/lhw": [
-          "!makhmud-muradov",
-          "will-fleury",
-          "daniel-skvor",
-          "karlos-vemola",
-          "emilio-quissua",
-          "tomasz-narkun",
-          "robert-lau",
-          "frederic-vosgrone",
-          "vojtech-garba",
-          "pavol-langer",
-          "mateusz-strzelczyk",
-          "jorick-montagnac",
-          "jesus-samuel-chavarria",
-          "zdenek-polivka",
-          "robin-roos"
-        ],
-        "org/oktagon/mw": [
-          "!krzysztof-jotko",
-          "makhmud-muradov",
-          "kerim-engizek",
-          "patrik-kincl",
-          "dominik-humburger",
-          "jaime-cordero",
-          "matej-penaz",
-          "hojat-khajevand",
-          "piotr-wawrzyniak",
-          "kamil-oniszczuk",
-          "robert-pukac",
-          "mick-stanton",
-          "daniel-ligocki",
-          "brian-manning",
-          "mateusz-janur",
-          "daniel-schwindt",
-          "marek-bartl",
-          "radovan-uskrt",
-          "zebaztian-kadestam",
-          "brajan-przysiwek",
-          "kennedy-rayomba",
-          "david-hosek",
-          "justin-detzel",
-          "kacper-fratczak",
-          "ondrej-raska"
-        ],
-        "org/oktagon/ww": [
-          "amiran-gogoladze",
-          "jack-grant",
-          "ion-surdu",
-          "felix-klinkhammer",
-          "ronald-paradeiser",
-          "david-kozma",
-          "jessin-ayari",
-          "tyrone-pfeifer",
-          "cihad-akipa",
-          "max-coga",
-          "andrej-kalasnik",
-          "christian-jungwirth",
-          "christian-eckerlin",
-          "tamerlan-dulatov",
-          "rafael-aronov",
-          "endrit-brajshori",
-          "christian-draxler",
-          "matous-kohout",
-          "niklas-stolze",
-          "david-zawada",
-          "geraldo-neto",
-          "michael-obodozie",
-          "daniel-makin",
-          "natan-niewiadomski",
-          "ivan-tagner",
-          "bedirhan-kabak",
-          "jozef-wittner",
-          "jan-malach",
-          "petr-bartonek",
-          "lukas-elias",
-          "emir-can-al",
-          "hassan-kayani",
-          "stefan-koncar",
-          "oskar-staszczak"
-        ],
-        "org/oktagon/lw": [
-          "!mateusz-legierski",
-          "ivan-buchinger",
-          "fedor-duric",
-          "niko-samsonidse",
-          "gokhan-aksu",
-          "arijan-topallaj",
-          "tomas-mudroch",
-          "denis-frimpong",
-          "marc-diakiese",
-          "ozan-aslaner",
-          "hafeni-nafuka",
-          "vladimir-lengal",
-          "tomas-ciganik",
-          "said-akhyadov",
-          "attila-korkmaz",
-          "jan-stanovsky",
-          "altin-zenuni",
-          "davlet-karataev",
-          "ahmad-halimson",
-          "berkan-badur",
-          "lukasz-rajewski",
-          "jakub-dohnal",
-          "ivan-klevets",
-          "vojto-barborik",
-          "alex-hutyra",
-          "ognjen-dimic",
-          "frantisek-fodor",
-          "peter-gabal",
-          "adrian-hamerski",
-          "matej-kuznik",
-          "joseph-donkor",
-          "patrik-sebek",
-          "murat-tuysuz",
-          "kevin-enz",
-          "maurice-adorf",
-          "jan-siroky"
-        ],
-        "org/oktagon/fw": [
-          "mochamed-machaev",
-          "max-holzer",
-          "zafar-mohsen",
-          "gjoni-palokaj",
-          "khalid-taha",
-          "richie-smullen",
-          "radek-rousal",
-          "jakub-batfalsky",
-          "james-hendin",
-          "deniz-ilbay"
-        ],
-        "org/oktagon/bw": [
-          "!igor-severino",
-          "jonas-magard",
-          "dastan-amangeldy",
-          "raul-lemberanskij",
-          "khrushed-kakhorov",
-          "wanderley-junior",
-          "elvis-silva",
-          "roman-paulus",
-          "ali-gunduz",
-          "harun-kurt",
-          "abdullah-sultani"
-        ],
-        "org/oktagon/flw": [
-          "!zhalgas-zhumagulov",
-          "beno-adamia",
-          "david-dvorak",
-          "matheus-severino",
-          "mohamed-walid",
-          "aaron-aby",
-          "shawn-marcos-da-silva",
-          "zoran-milic"
-        ]
-      }
-    }
-  ],
+  "history": [],
   "settings": {
     "p4pPublic": false,
     "siteUrl": "",
     "domain": "",
     "analyticsType": "",
-    "analyticsId": ""
+    "analyticsId": "",
+    "instagram": "mmaladder"
   },
   "ads": {
     "enabled": true,
@@ -2428,6 +2229,8 @@ window.MMA_DATA = {
   },
   "about": {
     "enabled": true,
-    "body": "## What we rank\nMMA Ladder ranks active professional MMA fighters in eight men's weight classes: worldwide, by country and by organization.\n\n## What matters\n- **Who you beat.** A win over a ranked, proven opponent counts far more than a win over an unknown one.\n- **When you did it.** Recent results weigh more than old ones. Long inactivity slowly costs places.\n- **How you won.** Finishes and dominant performances matter, but a win is a win.\n- **Level of competition.** Results are weighted by the strength of the opponent and the organization.\n- **Big fights.** Title fights and main events carry extra weight.\n\n## How it works\nEvery ranking starts from the same model built on fight results. The final order is then reviewed by our team, because no formula sees everything: injuries, short-notice fights, weight misses or controversial decisions. The exact formula and its weights are not public, so the rankings can't be gamed.\n\n## Updates\nRankings are updated after every major event. Arrows show how many places a fighter moved since the previous update.\n\n## Independence\nRankings are not for sale. Promoters, sponsors and betting partners have no influence on placements."
+    "body": "## What we rank\nMMA Ladder ranks active professional MMA fighters in eight men's weight classes: worldwide, by country and by organization.\n\n## Our approach\nOur rankings answer one simple question: who would beat whom today?\n\nPurely statistical rankings reward whoever looks best on paper. In MMA that often misleads: records get padded, the level of competition differs hugely between organizations, and one fight can tell you more than ten wins on regional cards. That's why data is our foundation, not the final word.\n\n- **The numbers.** Every fighter is first rated by a model built on results: who they beat, how, when and at what level.\n- **The human factor.** The order is then reviewed fighter by fighter: styles and matchups, current form, activity, injuries, weight cuts and what we actually see in the cage. Where the numbers miss reality, we correct them.\n\nThe goal: the fighter ranked #3 should beat the fighter ranked #4, not just have a better-looking record.\n\nThe exact formula and its weights are not public, so the rankings can't be gamed.\n\n## What matters\n- **Who you beat.** A win over a ranked, proven opponent counts far more than a win over an unknown one.\n- **When you did it.** Recent results weigh more than old ones. Long inactivity slowly costs places.\n- **How you won.** Finishes and dominant performances matter, but a win is a win.\n- **Level of competition.** Results are weighted by the strength of the opponent and the organization.\n- **Big fights.** Title fights and main events carry extra weight.\n\n## Updates\nRankings are updated after every major event. Arrows show how many places a fighter moved since the previous update.",
+    "body_cs": "## Co hodnotíme\nMMA Ladder hodnotí aktivní profesionální MMA zápasníky v osmi mužských vahách: celosvětově, podle zemí a podle organizací.\n\n## Náš přístup\nNaše žebříčky odpovídají na jednoduchou otázku: kdo by dnes koho porazil?\n\nČistě statistické žebříčky odměňují toho, kdo vypadá nejlíp na papíře. V MMA to často klame: bilance se dají nafouknout, úroveň soupeřů se mezi organizacemi obrovsky liší a jeden zápas řekne víc než deset výher na regionálních turnajích. Proto jsou pro nás data základ, ne konečný verdikt.\n\n- **Čísla.** Každého zápasníka nejdřív ohodnotí model postavený na výsledcích: koho porazil, jak, kdy a na jaké úrovni.\n- **Lidský faktor.** Pořadí pak procházíme zápasníka po zápasníkovi: styly a vzájemné souboje, aktuální forma, aktivita, zranění, shazování váhy a to, co skutečně vidíme v kleci. Kde čísla míjí realitu, opravíme je.\n\nCíl: zápasník na 3. místě by měl porazit zápasníka na 4. místě, ne mít jen hezčí bilanci.\n\nPřesný vzorec a jeho váhy nezveřejňujeme, aby se žebříčky nedaly obejít.\n\n## Na čem záleží\n- **Koho porazil.** Výhra nad hodnoceným, prověřeným soupeřem má mnohem větší váhu než výhra nad neznámým.\n- **Kdy to dokázal.** Čerstvé výsledky váží víc než staré. Dlouhá neaktivita postupně stojí místa.\n- **Jak vyhrál.** Ukončení a dominantní výkony se počítají, ale výhra je výhra.\n- **Úroveň soupeřů.** Výsledky vážíme podle síly soupeře i organizace.\n- **Velké zápasy.** Titulové zápasy a hlavní zápasy večera mají větší váhu.\n\n## Aktualizace\nŽebříčky aktualizujeme po každém velkém turnaji. Šipky ukazují, o kolik míst se zápasník posunul od poslední aktualizace.",
+    "body_de": "## Was wir ranken\nMMA Ladder rankt aktive professionelle MMA-Kämpfer in acht Gewichtsklassen der Männer: weltweit, nach Land und nach Organisation.\n\n## Unser Ansatz\nUnsere Rankings beantworten eine einfache Frage: Wer würde heute wen schlagen?\n\nRein statistische Rankings belohnen, wer auf dem Papier am besten aussieht. Im MMA führt das oft in die Irre: Kampfbilanzen werden aufgepolstert, das Niveau der Gegner unterscheidet sich zwischen Organisationen enorm, und ein einziger Kampf sagt oft mehr als zehn Siege auf regionalen Events. Deshalb sind Daten für uns die Grundlage, nicht das letzte Wort.\n\n- **Die Zahlen.** Jeder Kämpfer wird zuerst von einem Modell bewertet, das auf Ergebnissen basiert: wen er geschlagen hat, wie, wann und auf welchem Niveau.\n- **Der menschliche Faktor.** Danach prüfen wir die Reihenfolge Kämpfer für Kämpfer: Stile und Matchups, aktuelle Form, Aktivität, Verletzungen, Gewichtmachen und was wir tatsächlich im Käfig sehen. Wo die Zahlen an der Realität vorbeigehen, korrigieren wir sie.\n\nDas Ziel: Der Kämpfer auf Platz 3 sollte den Kämpfer auf Platz 4 schlagen, nicht nur die schönere Bilanz haben.\n\nDie genaue Formel und ihre Gewichtung veröffentlichen wir nicht, damit sich die Rankings nicht manipulieren lassen.\n\n## Worauf es ankommt\n- **Wen er geschlagen hat.** Ein Sieg gegen einen gerankten, bewährten Gegner zählt weit mehr als einer gegen einen Unbekannten.\n- **Wann.** Aktuelle Ergebnisse zählen mehr als alte. Lange Inaktivität kostet nach und nach Plätze.\n- **Wie.** Finishes und dominante Leistungen zählen, aber ein Sieg ist ein Sieg.\n- **Niveau der Konkurrenz.** Ergebnisse werden nach der Stärke des Gegners und der Organisation gewichtet.\n- **Große Kämpfe.** Titelkämpfe und Main Events zählen mehr.\n\n## Updates\nDie Rankings werden nach jedem großen Event aktualisiert. Pfeile zeigen, um wie viele Plätze sich ein Kämpfer seit dem letzten Update bewegt hat."
   }
 };
