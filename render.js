@@ -12,12 +12,12 @@ window.MLR = (function () {
   };
   const TX = {
     en: {
-      world: "World", byCountry: "By Country", byOrg: "By Organization", p4p: "Pound-for-Pound", hidden: "hidden",
-      scopeTag: "{x} Ranking", heroTitle: "The home of <em>MMA</em> rankings", updated: "Updated {d}",
+      world: "World", byCountry: "By country", byOrg: "By organization", pageTitle: "MMA rankings", lede: "World, national and organization rankings in every men's weight class. Updated after every event.", aboutTeaser: "Our rankings answer one question: who would beat whom today. Built on results, checked fighter by fighter.", aboutMore: "Read how we rank", worldRanking: "World ranking", p4p: "Pound-for-Pound", hidden: "hidden",
+      scopeTag: "{x} ranking", heroTitle: "The home of <em>MMA</em> rankings", updated: "Updated {d}",
       stats: "{n} ranked fighters · {d} divisions", movers: "Biggest movers", since: "Since the previous update",
       rising: "Rising", falling: "Falling", now: "now #{n}", emptyDiv: "No fighters ranked in this division yet.",
       allWeights: "All weight classes", asOf: "As of", current: "current", hiddenNotice: "This ranking is hidden from the public. Only visible in preview.",
-      champ: "CHAMP", champion: "CHAMPION", isNew: "NEW", rankings: "Rankings", country: "Country", organization: "Organization",
+      champ: "Champion", champion: "Champion", isNew: "New", rankings: "Rankings", country: "Country", organization: "Organization",
       record: "Record", lastFight: "Last fight", standings: "Current standings", rankHistory: "Ranking history", fightHistory: "Fight history",
       kindWorld: "Global ranking", kindCountry: "National ranking", kindOrg: "Organization ranking", kindP4p: "All divisions",
       unranked: "Currently unranked.", chartGrows: "The chart grows with every rankings update.", noHistory: "No ranking history yet.",
@@ -34,12 +34,12 @@ window.MLR = (function () {
       dAbout: "How MMA Ladder ranks fighters: who would beat whom, built on data and reviewed by people.", tNotFound: "Page not found · MMA Ladder"
     },
     cs: {
-      world: "Svět", byCountry: "Podle země", byOrg: "Podle organizace", p4p: "Pound-for-Pound", hidden: "skrytý",
-      scopeTag: "{x} · žebříček", heroTitle: "Domov <em>MMA</em> žebříčků", updated: "Aktualizováno {d}",
+      world: "Svět", byCountry: "Podle země", byOrg: "Podle organizace", pageTitle: "MMA žebříčky", lede: "Světové, národní a organizační žebříčky ve všech mužských vahách. Aktualizované po každém turnaji.", aboutTeaser: "Naše žebříčky odpovídají na jednu otázku: kdo by dnes koho porazil. Postavené na výsledcích, ověřené zápasník po zápasníkovi.", aboutMore: "Jak hodnotíme", worldRanking: "Světový žebříček", p4p: "Pound-for-Pound", hidden: "skrytý",
+      scopeTag: "Žebříček: {x}", heroTitle: "Domov <em>MMA</em> žebříčků", updated: "Aktualizováno {d}",
       stats: "{n} hodnocených zápasníků · {d} vah", movers: "Největší posuny", since: "Od poslední aktualizace",
       rising: "Stoupají", falling: "Klesají", now: "nyní #{n}", emptyDiv: "V této váze zatím nikdo není.",
       allWeights: "Všechny váhy", asOf: "Stav k", current: "aktuální", hiddenNotice: "Tento žebříček je pro veřejnost skrytý. Vidíš ho jen v náhledu.",
-      champ: "ŠAMPION", champion: "ŠAMPION", isNew: "NOVĚ", rankings: "Žebříčky", country: "Země", organization: "Organizace",
+      champ: "Šampion", champion: "Šampion", isNew: "Nově", rankings: "Žebříčky", country: "Země", organization: "Organizace",
       record: "Bilance", lastFight: "Poslední zápas", standings: "Aktuální umístění", rankHistory: "Vývoj umístění", fightHistory: "Historie zápasů",
       kindWorld: "Světový žebříček", kindCountry: "Národní žebříček", kindOrg: "Žebříček organizace", kindP4p: "Všechny váhy",
       unranked: "Momentálně bez umístění.", chartGrows: "Graf se rozroste s každou aktualizací žebříčků.", noHistory: "Zatím bez historie.",
@@ -56,12 +56,12 @@ window.MLR = (function () {
       dAbout: "Jak MMA Ladder hodnotí zápasníky: kdo by koho porazil, postaveno na datech a ověřeno lidmi.", tNotFound: "Stránka nenalezena · MMA Ladder"
     },
     de: {
-      world: "Welt", byCountry: "Nach Land", byOrg: "Nach Organisation", p4p: "Pound-for-Pound", hidden: "ausgeblendet",
-      scopeTag: "{x} · Ranking", heroTitle: "Das Zuhause der <em>MMA</em>-Rankings", updated: "Aktualisiert am {d}",
+      world: "Welt", byCountry: "Nach Land", byOrg: "Nach Organisation", pageTitle: "MMA-Rankings", lede: "Welt-, Länder- und Organisations-Rankings in allen Gewichtsklassen der Männer. Aktualisiert nach jedem Event.", aboutTeaser: "Unsere Rankings beantworten eine Frage: Wer würde heute wen schlagen? Auf Ergebnissen aufgebaut, Kämpfer für Kämpfer geprüft.", aboutMore: "So ranken wir", worldRanking: "Weltrangliste", p4p: "Pound-for-Pound", hidden: "ausgeblendet",
+      scopeTag: "Ranking: {x}", heroTitle: "Das Zuhause der <em>MMA</em>-Rankings", updated: "Aktualisiert am {d}",
       stats: "{n} gerankte Kämpfer · {d} Gewichtsklassen", movers: "Größte Veränderungen", since: "Seit dem letzten Update",
       rising: "Aufsteiger", falling: "Absteiger", now: "jetzt #{n}", emptyDiv: "In dieser Gewichtsklasse ist noch niemand gerankt.",
       allWeights: "Alle Gewichtsklassen", asOf: "Stand", current: "aktuell", hiddenNotice: "Dieses Ranking ist öffentlich ausgeblendet. Nur in der Vorschau sichtbar.",
-      champ: "CHAMP", champion: "CHAMPION", isNew: "NEU", rankings: "Rankings", country: "Land", organization: "Organisation",
+      champ: "Champion", champion: "Champion", isNew: "Neu", rankings: "Rankings", country: "Land", organization: "Organisation",
       record: "Bilanz", lastFight: "Letzter Kampf", standings: "Aktuelle Platzierungen", rankHistory: "Ranking-Verlauf", fightHistory: "Kampfhistorie",
       kindWorld: "Weltrangliste", kindCountry: "Nationale Rangliste", kindOrg: "Organisations-Ranking", kindP4p: "Alle Gewichtsklassen",
       unranked: "Derzeit ohne Platzierung.", chartGrows: "Das Diagramm wächst mit jedem Ranking-Update.", noHistory: "Noch kein Verlauf.",
@@ -153,7 +153,13 @@ window.MLR = (function () {
     rankedOrgs(D).forEach(o => D.divisions.forEach(d => out.push({ type: "board", scope: "org", sub: o.id, div: d.id })));
     if (D.settings.p4pPublic) out.push({ type: "board", scope: "p4p" });
     if (D.about.enabled) out.push({ type: "about" });
-    Object.keys(D.fighters).forEach(id => out.push({ type: "fighter", id }));
+    // static pages only for fighters that are ranked somewhere or were added by hand;
+    // the thousands of automatically added opponents still open fine through the 404 fallback of the app
+    const ranked = new Set();
+    const add = l => (l || []).forEach(e => ranked.add(e.f));
+    Object.values(D.rankings.world || {}).forEach(add); add(D.rankings.p4p);
+    ["country", "org"].forEach(sc => Object.values(D.rankings[sc] || {}).forEach(g => Object.values(g).forEach(add)));
+    Object.keys(D.fighters).forEach(id => { if (ranked.has(id) || !D.fighters[id].auto) out.push({ type: "fighter", id }); });
     return out;
   }
 
@@ -209,8 +215,8 @@ window.MLR = (function () {
   function keyInfo(D, key) {
     const p = key.split("/");
     if (p[0] === "p4p") return { scope: "p4p", label: t("p4p") };
-    if (p[0] === "world") return { scope: "world", div: p[1], label: t("world") + " · " + (dnId(D, p[1]) || p[1]) };
-    return { scope: p[0], sub: p[1], div: p[2], label: scopeLabel(D, p[0], p[1]) + " · " + (dnId(D, p[2]) || p[2]) };
+    if (p[0] === "world") return { scope: "world", div: p[1], label: t("world") + ", " + (dnId(D, p[1]) || p[1]) };
+    return { scope: p[0], sub: p[1], div: p[2], label: scopeLabel(D, p[0], p[1]) + ", " + (dnId(D, p[2]) || p[2]) };
   }
   function keyVisible(D, key, preview) {
     const i = keyInfo(D, key);
@@ -310,8 +316,8 @@ window.MLR = (function () {
     return `<span class="org"><i style="background:${esc(o.color || "#888")}"></i>${esc(o.name)}</span>`;
   }
   function moveHtml(m) {
-    if (m.t === "up") return `<span class="move up">▲ ${m.n}</span>`;
-    if (m.t === "down") return `<span class="move down">▼ ${m.n}</span>`;
+    if (m.t === "up") return `<span class="move up" title="Up ${m.n}">+${m.n}</span>`;
+    if (m.t === "down") return `<span class="move down" title="Down ${m.n}">−${m.n}</span>`;
     if (m.t === "new") return `<span class="move new">${t("isNew")}</span>`;
     return `<span class="move same">–</span>`;
   }
@@ -326,9 +332,9 @@ window.MLR = (function () {
       const bits = [orgTag(D, f.org)];
       if (f.nick) bits.push(`<span class="nick">“${esc(f.nick)}”</span>`);
       if (f.record) bits.push(`<span class="rec-inline">${esc(f.record)}</span>`);
-      const sub = bits.filter(Boolean).join(`<span class="sep">·</span>`);
+      const sub = bits.filter(Boolean).join("");
       const rank = r.champ ? `<span class="rank c">C</span>` : `<span class="rank">${r.pos}</span>`;
-      const mv = r.champ ? `<span class="move champ">${t("champ")}</span>` : opts.noMoves ? `<span class="move same"></span>` : moveHtml(r.move);
+      const mv = r.champ ? `<span class="move champ" aria-label="${esc(t("champion"))}"></span>` : opts.noMoves ? `<span class="move same"></span>` : moveHtml(r.move);
       const extra = opts.divOf ? `<span class="divtag">${esc(opts.divOf(r.f))}</span>` : "";
       return a(ctx.link, "fighter/" + r.f, `
         ${rank}${mv}
@@ -346,7 +352,7 @@ window.MLR = (function () {
       ${tab("world", t("world"), path(D, { scope: "world", div }))}
       ${D.countries.length ? tab("country", t("byCountry"), path(D, { scope: "country", sub: scope === "country" ? r.sub : defC, div })) : ""}
       ${rankedOrgs(D).length ? tab("org", t("byOrg"), path(D, { scope: "org", sub: scope === "org" ? r.sub : defO, div })) : ""}
-      ${p4pOn(D, ctx.preview) ? tab("p4p", "P4P" + (!D.settings.p4pPublic ? " · " + t("hidden") : ""), "p4p") : ""}
+      ${p4pOn(D, ctx.preview) ? tab("p4p", "P4P" + (!D.settings.p4pPublic ? " (" + t("hidden") + ")" : ""), "p4p") : ""}
     </nav>`;
     if (scope === "country") html += `<div class="subs">${D.countries.map(c => a(ctx.link, path(D, { scope: "country", sub: c.code, div }), flag(c.code) + esc(LANG === "en" ? (c.name || countryName(c.code)) : cn(c.code)), "sub" + (c.code === r.sub ? " on" : ""))).join("")}</div>`;
     if (scope === "org") html += `<div class="subs">${rankedOrgs(D).map(o => a(ctx.link, path(D, { scope: "org", sub: o.id, div }), `<span class="swatch" style="background:${esc(o.color || "#888")}"></span>${esc(o.name)}`, "sub" + (o.id === r.sub ? " on" : ""))).join("")}</div>`;
@@ -361,7 +367,8 @@ window.MLR = (function () {
     let icon;
     if (scope === "country") icon = flag(sub);
     else if (scope === "org") { const o = orgById(D, sub); icon = `<span class="swatch" style="background:${esc(o ? o.color : "#888")}"></span>`; }
-    else icon = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg>`;
+    else icon = "";
+    if (scope === "world") return esc(t("worldRanking"));
     return icon + esc(t("scopeTag", { x: scopeLabel(D, scope, sub) }));
   }
 
@@ -375,19 +382,23 @@ window.MLR = (function () {
   function moversHtml(D, ctx) {
     const m = movers(D, ctx.preview);
     if (!m.up.length && !m.down.length) return "";
-    const card = x => {
+    const item = x => {
       const f = x.r.fighter, up = x.delta > 0;
-      const where = x.scope === "p4p" ? t("p4p") : scopeLabel(D, x.scope, x.sub) + " · " + dnId(D, x.div);
+      const where = x.scope === "p4p" ? t("p4p") : scopeLabel(D, x.scope, x.sub) + ", " + dnId(D, x.div);
       return a(ctx.link, "fighter/" + x.r.f, `
-        <span class="mv-delta ${up ? "up" : "down"}">${up ? "▲" : "▼"} ${Math.abs(x.delta)}</span>
-        <span class="mv-who">${flag(f.country)}<span><span class="mv-name">${esc(f.name)}</span><span class="mv-where">${esc(where)} · ${esc(t("now", { n: x.r.pos }))}</span></span></span>`, "mover");
+        <span class="mv-delta ${up ? "up" : "down"}">${up ? "+" : "−"}${Math.abs(x.delta)}</span>
+        <span class="mv-who">${flag(f.country)}<span><span class="mv-name">${esc(f.name)}</span><span class="mv-where">${esc(where)}, ${esc(t("now", { n: x.r.pos }))}</span></span></span>`, "mover");
     };
-    return `<section class="movers wrap">
-      <div class="sec-head"><h2>${esc(t("movers"))}</h2><span>${esc(t("since"))}</span></div>
-      <div class="mv-grid">
-        ${m.up.length ? `<div class="mv-col"><h3>${esc(t("rising"))}</h3>${m.up.map(card).join("")}</div>` : ""}
-        ${m.down.length ? `<div class="mv-col"><h3>${esc(t("falling"))}</h3>${m.down.map(card).join("")}</div>` : ""}
-      </div></section>`;
+    return `<section class="side-movers">
+      <h2>${esc(t("movers"))}</h2><p class="note">${esc(t("since"))}</p>
+      ${m.up.length ? `<div class="mv-group"><h3>${esc(t("rising"))}</h3>${m.up.map(item).join("")}</div>` : ""}
+      ${m.down.length ? `<div class="mv-group"><h3>${esc(t("falling"))}</h3>${m.down.map(item).join("")}</div>` : ""}
+    </section>`;
+  }
+  function sideHtml(D, ctx) {
+    const mv = moversHtml(D, ctx);
+    const about = D.about && D.about.enabled ? `<section class="side-about"><h2>${esc(t("howWeRank"))}</h2><p>${esc(t("aboutTeaser"))}</p>${a(ctx.link, "how-we-rank", esc(t("aboutMore")))}</section>` : "";
+    return mv || about ? `<aside class="side">${mv}${about}</aside>` : "";
   }
 
   /* ---------- pages ---------- */
@@ -414,21 +425,25 @@ window.MLR = (function () {
       : (scope === "p4p" ? t("p4p") : label + " · " + dn(div));
     const desc = isHome ? t("dHome") : t("dBoard", { x: what, top: top ? ": " + top : "", d: fd(D.updated) });
 
-    const hero = isHome ? `<section class="hero wrap">
-        <h1>${t("heroTitle")}</h1>
-        <p><span><span class="dot"></span>${esc(t("updated", { d: fd(D.updated) }))}</span><span>${esc(t("stats", { n: countRanked(D, ctx.preview), d: D.divisions.length }))}</span></p>
-      </section>${moversHtml(D, ctx)}` : "";
+    const intro = isHome ? `<section class="intro wrap">
+        <h1>${esc(t("pageTitle"))}</h1>
+        <p>${esc(t("lede"))}</p>
+      </section>` : "";
     const H = isHome ? "h2" : "h1";
-    const html = `${hero}${controls(D, r, ctx)}
-      <section class="board wrap">
+    const side = sideHtml(D, ctx);
+    const html = `${intro}${controls(D, r, ctx)}
+      <div class="layout wrap${side ? "" : " solo"}">
+      <section class="board">
         <div class="board-head">
           <div><${H} class="board-title">${esc(heading)}${!isHome ? `<span class="sr"> ${esc(scope === "p4p" ? t("mmaRankings") : label + " " + t("mmaRankings"))}</span>` : ""}</${H}>
-          <div class="meta">${esc(scope === "p4p" ? t("allWeights") : div.limit || "")}${!isHome ? ` · ${esc(t("updated", { d: fd(D.updated) }))}` : ""}</div></div>
-          <div class="head-right">${historySelect(D, key)}<span class="scope-tag">${scopeTagHtml(D, scope, r.sub)}</span></div>
+          <div class="meta"><span>${esc(scope === "p4p" ? t("allWeights") : String(div.limit || "").replace(/\s*·\s*/g, " / "))}</span><span>${esc(t("updated", { d: fd(D.updated) }))}</span></div></div>
+          <div class="head-right"><span class="scope-tag">${scopeTagHtml(D, scope, r.sub)}</span>${historySelect(D, key)}</div>
         </div>
         ${scope === "p4p" && !D.settings.p4pPublic ? `<div class="notice-hidden">${esc(t("hiddenNotice"))}</div>` : ""}
         <div class="list" data-list="${esc(key)}">${listHtml(D, list, ctx, { divOf })}</div>
-      </section>`;
+      </section>
+      ${side}
+      </div>`;
     return { title, desc, html, path: path(D, r) };
   }
 
@@ -466,7 +481,7 @@ window.MLR = (function () {
     const stHtml = st.length ? st.map(s => {
       const p = s.scope === "p4p" ? "p4p" : path(D, { scope: s.scope, sub: s.sub, div: s.div });
       const icon = s.scope === "country" ? flag(s.sub) : s.scope === "org" ? `<span class="swatch" style="background:${esc((orgById(D, s.sub) || {}).color || "#888")}"></span>` : "";
-      const ttl = s.scope === "p4p" ? t("p4p") : `${scopeLabel(D, s.scope, s.sub)} · ${dnId(D, s.div)}`;
+      const ttl = s.scope === "p4p" ? t("p4p") : `${scopeLabel(D, s.scope, s.sub)}, ${dnId(D, s.div)}`;
       const kind = t(s.scope === "p4p" ? "kindP4p" : s.scope === "world" ? "kindWorld" : s.scope === "country" ? "kindCountry" : "kindOrg");
       return a(ctx.link, p, `<span><span class="st-title">${icon}${esc(ttl)}</span><span class="st-sub">${esc(kind)}</span></span>
         <span class="st-rank ${s.rank === "C" ? "c" : ""}">${s.rank === "C" ? esc(t("champion")) : "#" + s.rank}</span>`, "standing");
@@ -482,7 +497,7 @@ window.MLR = (function () {
       <div class="fight">
         ${resultBadge(x.res)}
         <span class="f-opp">${flag(x.opp.country)}${x.opp.id ? a(ctx.link, "fighter/" + x.opp.id, esc(x.opp.name)) : `<span>${esc(x.opp.name)}</span>`}</span>
-        <span class="f-meth">${esc([x.method, x.round ? "R" + x.round : ""].filter(Boolean).join(" · "))}</span>
+        <span class="f-meth">${esc([x.method, x.round ? "R" + x.round : ""].filter(Boolean).join(" "))}</span>
         <span class="f-ev">${esc(x.event)}<small>${esc(fd(x.date))}</small></span>
       </div>`).join("")}</div>` : `<p class="muted">${esc(t("noFights"))}</p>`;
 

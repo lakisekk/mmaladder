@@ -15,9 +15,9 @@
   const link = p => built ? base + (p ? p + "/" : "") : "#/" + p;
   /* language: ?lang=cs in the URL wins, then the saved choice, else English */
   const UI = {
-    en: { search: "Find a fighter", noFighter: "No fighter found", asOfNote: "Showing the ranking as it stood on {d}.", nobody: "Nobody was ranked here on that date.", email: "Your email", preview: "Preview of your unsaved draft from the editor", foot: "independent MMA rankings. World, national and organization ladders across every men's weight class, updated after each event." },
-    cs: { search: "Najít zápasníka", noFighter: "Nikdo nenalezen", asOfNote: "Žebříček ke dni {d}.", nobody: "K tomuto datu tu nikdo nebyl.", email: "Tvůj e-mail", preview: "Náhled neuloženého konceptu z editoru", foot: "nezávislé MMA žebříčky. Světové, národní a organizační žebříčky ve všech mužských vahách, aktualizované po každém turnaji." },
-    de: { search: "Kämpfer suchen", noFighter: "Kein Kämpfer gefunden", asOfNote: "Ranking vom {d}.", nobody: "An diesem Datum war hier niemand gerankt.", email: "Deine E-Mail", preview: "Vorschau deines ungespeicherten Entwurfs aus dem Editor", foot: "unabhängige MMA-Rankings. Welt-, Länder- und Organisations-Rankings in allen Gewichtsklassen der Männer, aktualisiert nach jedem Event." }
+    en: { search: "Find a fighter", noFighter: "No fighter found", asOfNote: "Showing the ranking as it stood on {d}.", nobody: "Nobody was ranked here on that date.", email: "Your email", preview: "Preview of your unsaved draft from the editor", foot: "Independent MMA rankings. World, national and organization ladders across every men's weight class, updated after each event." },
+    cs: { search: "Najít zápasníka", noFighter: "Nikdo nenalezen", asOfNote: "Žebříček ke dni {d}.", nobody: "K tomuto datu tu nikdo nebyl.", email: "Tvůj e-mail", preview: "Náhled neuloženého konceptu z editoru", foot: "Nezávislé MMA žebříčky. Světové, národní a organizační žebříčky ve všech mužských vahách, aktualizované po každém turnaji." },
+    de: { search: "Kämpfer suchen", noFighter: "Kein Kämpfer gefunden", asOfNote: "Ranking vom {d}.", nobody: "An diesem Datum war hier niemand gerankt.", email: "Deine E-Mail", preview: "Vorschau deines ungespeicherten Entwurfs aus dem Editor", foot: "Unabhängige MMA-Rankings. Welt-, Länder- und Organisations-Rankings in allen Gewichtsklassen der Männer, aktualisiert nach jedem Event." }
   };
   let lang = "en";
   try { lang = localStorage.getItem("mmaladder_lang") || "en"; } catch (e) {}
@@ -31,6 +31,10 @@
     $("previewBar").textContent = u("preview");
     $("footTxt").textContent = u("foot");
     const al = $("aboutLink"); if (al) al.textContent = MLR.t("howWeRank");
+    $("navRank").textContent = MLR.t("rankings"); $("navAbout").textContent = MLR.t("howWeRank");
+    if (!D.about.enabled) $("navAbout").hidden = true;
+    else if (!built) $("navAbout").setAttribute("href", "#/how-we-rank");
+    if (!built) $("navRank").setAttribute("href", "#/");
     document.querySelectorAll("#lang [data-lang]").forEach(b => { b.classList.toggle("on", b.dataset.lang === lang); b.setAttribute("aria-pressed", b.dataset.lang === lang); });
   }
   MLR.setLang(lang);
@@ -56,6 +60,8 @@
     setMeta('meta[property="og:title"]', "content", pg.title);
     setMeta('meta[property="og:description"]', "content", pg.desc);
     $("app").innerHTML = pg.html;
+    $("navRank").classList.toggle("on", route.type === "home" || route.type === "board");
+    $("navAbout").classList.toggle("on", route.type === "about");
     const on = document.querySelector(".divs .on");
     if (on) { const nav = on.parentElement; const l = on.offsetLeft - nav.offsetLeft; if (l < nav.scrollLeft || l + on.offsetWidth > nav.scrollLeft + nav.clientWidth) nav.scrollLeft = l - 16; }
     if (window.goatcounter && window.goatcounter.count && !preview) window.goatcounter.count({ path: location.pathname + location.hash });

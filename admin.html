@@ -172,6 +172,24 @@
   .soc-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; padding: 8px 0 10px; }
   .soc-grid input { width: 100%; }
   @media (max-width: 760px) { .soc-grid { grid-template-columns: 1fr; } }
+  .checks { display: grid; gap: 8px; }
+  .pack-out { display: grid; gap: 18px; min-width: 0; }
+  .assets { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 12px; }
+  .asset { border: 1px solid var(--line); border-radius: 10px; background: var(--panel); overflow: hidden; display: grid; }
+  .asset .thumb { background: #000; aspect-ratio: 9 / 12; display: grid; place-items: center; overflow: hidden; }
+  .asset .thumb img, .asset .thumb video { width: 100%; height: 100%; object-fit: contain; }
+  .asset .meta { padding: 8px 10px; display: grid; gap: 6px; }
+  .asset .meta b { font-size: 12px; }
+  .asset .meta small { color: var(--muted); font-size: 11px; }
+  .asset .acts2 { display: flex; gap: 6px; }
+  .asset .acts2 .btn { flex: 1; justify-content: center; height: 28px; font-size: 11px; padding: 0 6px; }
+  .cap { border: 1px solid var(--line); border-radius: 10px; background: var(--panel); }
+  .cap-head { display: flex; align-items: center; gap: 10px; padding: 10px 12px; border-bottom: 1px solid var(--line); }
+  .cap-head h4 { margin: 0; font-size: 13px; letter-spacing: .08em; text-transform: uppercase; }
+  .cap-head .count { margin-left: auto; font-size: 11px; color: var(--muted); }
+  .cap-head .count.over { color: var(--down); font-weight: 700; }
+  .cap textarea { border: 0; border-radius: 0 0 10px 10px; min-height: 120px; }
+  .pack-top { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
   .toast { position: fixed; bottom: 22px; left: 50%; transform: translateX(-50%) translateY(20px); background: #fff; color: #000; font-weight: 600; padding: 10px 16px; border-radius: 8px; opacity: 0; transition: .2s; pointer-events: none; z-index: 99; }
   .toast.show { opacity: 1; transform: translateX(-50%); }
 
@@ -210,6 +228,7 @@
     <button class="tab" data-tab="fights">Zápasy</button>
     <button class="tab" data-tab="gfx">Grafiky</button>
     <button class="tab" data-tab="vid">Videa</button>
+    <button class="tab" data-tab="pack">Balíček</button>
     <button class="tab" data-tab="setup">Nastavení</button>
   </nav>
 
@@ -350,6 +369,31 @@
         </p>
       </div>
       <div class="gfx-preview"><canvas id="vCanvas" width="1080" height="1920"></canvas></div>
+    </div>
+  </section>
+
+  <!-- PUBLISHING PACK -->
+  <section class="pane" id="pane-pack">
+    <div class="gfx">
+      <div class="gfx-side">
+        <label class="field">Žebříček<select id="pScope"><option value="world">Světový</option><option value="country">Podle země</option><option value="org">Podle organizace</option><option value="p4p">Pound-for-pound</option></select></label>
+        <label class="field" id="pSubWrap">Země / organizace<select id="pSub"></select></label>
+        <label class="field" id="pDivWrap">Váha<select id="pDiv"></select></label>
+        <label class="field">Počet míst<select id="pCount"><option>5</option><option selected>10</option></select></label>
+        <label class="field">Jazyk popisků<select id="pLang"><option value="cs">Čeština</option><option value="en">English</option></select></label>
+        <div class="checks">
+          <label class="chk big"><input type="checkbox" id="pPost" checked> Post 4:5 (Instagram, X)</label>
+          <label class="chk big"><input type="checkbox" id="pStory" checked> Story 9:16</label>
+          <label class="chk big"><input type="checkbox" id="pVideo" checked> Video odpočet (Reels, TikTok)</label>
+          <label class="chk big"><input type="checkbox" id="pMovers"> Movers grafika</label>
+          <label class="chk big"><input type="checkbox" id="pMoversVid"> Movers video</label>
+          <label class="chk big"><input type="checkbox" id="pPhoto"> Ve videu nechat místo na fotku</label>
+        </div>
+        <button class="btn primary" id="pMake">Vytvořit balíček</button>
+        <div class="vprog" id="pProg" hidden><div></div></div>
+        <p class="hint" id="pStatus">Vytvoří všechny obrázky, videa a popisky najednou. Na mobilu je pak můžeš rovnou sdílet do Instagramu, TikToku nebo X tlačítkem <b>Sdílet</b>.</p>
+      </div>
+      <div class="pack-out" id="pOut"><div class="empty">Vyber žebříček a klikni na „Vytvořit balíček“.</div></div>
     </div>
   </section>
 
@@ -1146,10 +1190,9 @@
   }
   const siteHost = () => { try { return new URL(D.settings.siteUrl).hostname.replace(/^www\./, ""); } catch (e) { return "mmaladder.com"; } };
   let gfxToken = 0;
-  async function drawGfx() {
-    const token = ++gfxToken;
-    const [W, H] = $("gFormat").value.split("x").map(Number);
-    const cv = $("gCanvas");
+  // draws one graphic and returns the canvas; o = { format: "1080x1350", type: "rank"|"movers", scope, sub, div, count }
+  async function paintGfx(o) {
+    const [W, H] = o.format.split("x").map(Number);
     try { await Promise.all([document.fonts.load('800 100px "Barlow Condensed"'), document.fonts.load('italic 800 60px "Barlow Condensed"'), document.fonts.load('700 30px Inter'), document.fonts.load('600 30px Inter')]); } catch (e) {}
     const mark = await loadImg(document.querySelector(".brand img").src, false);
     // draw into an offscreen canvas so a slow flag never leaves a half-drawn preview
@@ -1171,12 +1214,12 @@
     c.fillText(MML.fmtDate(D.updated).toUpperCase(), W - P, P + 42); c.textAlign = "left";
 
     let y = P + 150;
-    const type = $("gType").value;
+    const type = o.type;
     let rowsData = [], label = "", heading = "", labelIcon = null;
     if (type === "rank") {
-      const sc = $("gScope").value, sub = $("gSub").value || null, div = $("gDiv").value;
+      const sc = o.scope, sub = o.sub || null, div = o.div;
       const list = MLR.rows(D, sc, MLR.getList(D, sc, sub, div));
-      const n = +$("gCount").value;
+      const n = +o.count;
       const champ = list.filter(r => r.champ);
       rowsData = champ.concat(list.filter(r => !r.champ).slice(0, n));
       label = (sc === "p4p" ? "All divisions" : MLR.scopeLabel(D, sc, sub)) + " · Rankings";
@@ -1261,8 +1304,13 @@
     c.fillStyle = "#fff"; c.font = `700 24px ${IN}`; spaced(c, siteHost().toUpperCase(), P, footerY + 6, 5);
     c.fillStyle = "#6a6a6a"; c.font = `600 22px ${IN}`; spaced(c, "THE HOME OF MMA RANKINGS", W - P, footerY + 6, 4, "right");
 
+    return off;
+  }
+  async function drawGfx() {
+    const token = ++gfxToken;
+    const off = await paintGfx({ format: $("gFormat").value, type: $("gType").value, scope: $("gScope").value, sub: $("gSub").value || null, div: $("gDiv").value, count: $("gCount").value });
     if (token !== gfxToken) return;
-    cv.width = W; cv.height = H; cv.getContext("2d").drawImage(off, 0, 0);
+    const cv = $("gCanvas"); cv.width = off.width; cv.height = off.height; cv.getContext("2d").drawImage(off, 0, 0);
   }
   function renderGfx() { renderGfxControls(); drawGfx(); }
   ["gType", "gScope", "gSub", "gDiv", "gCount", "gFormat"].forEach(id => $(id).addEventListener("change", renderGfx));
@@ -1429,6 +1477,173 @@
   $("abLang").onchange = () => { $("abBody").value = D.about[$("abLang").value] || ""; };
   $("abBody").addEventListener("input", () => { D.about[$("abLang").value] = $("abBody").value; clearTimeout(renderTexts.t); renderTexts.t = setTimeout(save, 500); });
 
+  /* ---------- publishing pack ---------- */
+  // minimal ZIP writer (store only – PNG/MP4 are already compressed)
+  const CRC_T = (() => { const t = new Uint32Array(256); for (let n = 0; n < 256; n++) { let c = n; for (let k = 0; k < 8; k++) c = c & 1 ? 0xEDB88320 ^ (c >>> 1) : c >>> 1; t[n] = c >>> 0; } return t; })();
+  const crc32 = u8 => { let c = 0xFFFFFFFF; for (let i = 0; i < u8.length; i++) c = CRC_T[(c ^ u8[i]) & 0xFF] ^ (c >>> 8); return (c ^ 0xFFFFFFFF) >>> 0; };
+  async function makeZip(files) {
+    const enc = new TextEncoder(), parts = [], central = []; let offset = 0;
+    for (const f of files) {
+      const data = new Uint8Array(await f.blob.arrayBuffer()), name = enc.encode(f.name), crc = crc32(data);
+      const lh = new DataView(new ArrayBuffer(30));
+      lh.setUint32(0, 0x04034b50, true); lh.setUint16(4, 20, true); lh.setUint16(6, 0x0800, true); lh.setUint16(8, 0, true);
+      lh.setUint16(10, 0, true); lh.setUint16(12, 0x21, true); lh.setUint32(14, crc, true); lh.setUint32(18, data.length, true); lh.setUint32(22, data.length, true);
+      lh.setUint16(26, name.length, true); lh.setUint16(28, 0, true);
+      parts.push(new Uint8Array(lh.buffer), name, data);
+      const ch = new DataView(new ArrayBuffer(46));
+      ch.setUint32(0, 0x02014b50, true); ch.setUint16(4, 20, true); ch.setUint16(6, 20, true); ch.setUint16(8, 0x0800, true); ch.setUint16(10, 0, true);
+      ch.setUint16(12, 0, true); ch.setUint16(14, 0x21, true); ch.setUint32(16, crc, true); ch.setUint32(20, data.length, true); ch.setUint32(24, data.length, true);
+      ch.setUint16(28, name.length, true); ch.setUint32(42, offset, true);
+      central.push(new Uint8Array(ch.buffer), name);
+      offset += 30 + name.length + data.length;
+    }
+    const cSize = central.reduce((a, b) => a + b.length, 0);
+    const end = new DataView(new ArrayBuffer(22));
+    end.setUint32(0, 0x06054b50, true); end.setUint16(8, files.length, true); end.setUint16(10, files.length, true); end.setUint32(12, cSize, true); end.setUint32(16, offset, true);
+    return new Blob([...parts, ...central, new Uint8Array(end.buffer)], { type: "application/zip" });
+  }
+  const canvasBlob = cv => new Promise(res => cv.toBlob(res, "image/png"));
+  const flagEmoji = code => /^[a-z]{2}$/i.test(code || "") ? String.fromCodePoint(...[...code.toUpperCase()].map(c => 0x1F1E6 + c.charCodeAt(0) - 65)) : "";
+  function igHandle(f) {
+    let v = String(((f.socials || {}).instagram) || "").trim();
+    if (!v) return "";
+    v = v.replace(/^https?:\/\/(www\.)?instagram\.com\//i, "").replace(/[/?#].*$/, "").replace(/^@+/, "");
+    return v ? "@" + v : "";
+  }
+  const tagify = s => String(s || "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^A-Za-z0-9]/g, "");
+  const siteBase = () => (D.settings.siteUrl ? D.settings.siteUrl.replace(/\/+$/, "") + "/" : location.href.replace(/admin\.html.*$/, "").replace(/[?#].*$/, ""));
+  // X counts every link as 23 characters and most emoji as 2
+  const xLength = txt => { let n = 0; txt.replace(/https?:\/\/\S+/g, "x".repeat(23)).split("").forEach(ch => { n += /[\u1100-\uFFFF]/.test(ch) ? 2 : 1; }); n += (txt.match(/[\uD800-\uDBFF]/g) || []).length * 0; return n; };
+
+  const CAP = {
+    cs: {
+      title: (l, d) => d ? `🏆 ${l} · ${d} – žebříček` : `🏆 ${l} – žebříček`, upd: d => `Aktualizováno ${d}`, champ: "👑 Šampion", isNew: "NOVĚ",
+      climb: "📈 Největší posun nahoru", drop: "📉 Největší propad", q: "Souhlasíte s pořadím? Kdo je podle vás moc vysoko a kdo si zaslouží víc? 👇",
+      bio: "Celý žebříček najdeš na webu (odkaz v biu)", tt: (l, d, n) => `${l}${d ? " · " + d : ""} – top ${n} 🏆 Souhlasíte? 👇`, full: "Celý žebříček 👉"
+    },
+    en: {
+      title: (l, d) => d ? `🏆 ${l} ${d} Rankings` : `🏆 ${l} Rankings`, upd: d => `Updated ${d}`, champ: "👑 Champion", isNew: "NEW",
+      climb: "📈 Biggest climb", drop: "📉 Biggest drop", q: "Do you agree with the order? Who's ranked too high and who deserves more? 👇",
+      bio: "Full rankings on our website (link in bio)", tt: (l, d, n) => `${l}${d ? " " + d : ""} top ${n} 🏆 Do you agree? 👇`, full: "Full rankings 👉"
+    }
+  };
+  function buildCaptions(o) {
+    const L = CAP[o.lang] || CAP.en;
+    MLR.setLang(o.lang);
+    const label = MLR.scopeLabel(D, o.scope, o.sub);
+    const divObj = D.divisions.find(d => d.id === o.div);
+    const divName = o.scope === "p4p" ? "" : MLR.dn(divObj);
+    const dateTxt = MML.fmtDate(D.updated, o.lang);
+    MLR.setLang("en");
+    const all = MLR.rows(D, o.scope, MLR.getList(D, o.scope, o.sub, o.div));
+    const champ = all.find(r => r.champ);
+    const list = all.filter(r => !r.champ).slice(0, o.count);
+    const mv = r => r.move.t === "up" ? ` ↑${r.move.n}` : r.move.t === "down" ? ` ↓${r.move.n}` : r.move.t === "new" ? ` ${L.isNew}` : "";
+    const line = (r, withTag) => { const h = withTag ? igHandle(r.fighter) : ""; return `${r.pos}. ${r.fighter.name} ${flagEmoji(r.fighter.country)}${h ? " " + h : ""}${mv(r)}`.replace(/\s+$/, ""); };
+    const champLine = withTag => champ ? `${L.champ}: ${champ.fighter.name} ${flagEmoji(champ.fighter.country)}${withTag && igHandle(champ.fighter) ? " " + igHandle(champ.fighter) : ""}` : "";
+    const ups = list.filter(r => r.move.t === "up").sort((a, b) => b.move.n - a.move.n);
+    const downs = list.filter(r => r.move.t === "down").sort((a, b) => b.move.n - a.move.n);
+    const moversTxt = [ups[0] ? `${L.climb}: ${ups[0].fighter.name} (+${ups[0].move.n})` : "", downs[0] ? `${L.drop}: ${downs[0].fighter.name} (−${downs[0].move.n})` : ""].filter(Boolean).join("\n");
+    const url = siteBase() + MLR.path(D, { type: "board", scope: o.scope, sub: o.sub, div: o.div }) + (MLR.path(D, { type: "board", scope: o.scope, sub: o.sub, div: o.div }) ? "/" : "") + (o.lang === "cs" ? "?lang=cs" : "");
+    // hashtags
+    const tags = new Set(["MMA", "MMALadder", "MMArankings"]);
+    if (o.scope === "org") tags.add(tagify((MLR.orgById(D, o.sub) || {}).name));
+    if (o.scope === "country") tags.add("MMA" + tagify(o.sub.toUpperCase()));
+    list.concat(champ ? [champ] : []).forEach(r => { const og = MLR.orgById(D, r.fighter.org); if (og && og.id !== "free") tags.add(tagify(og.name)); });
+    if (divObj && o.scope !== "p4p") tags.add(tagify(divObj.name));
+    if (o.scope === "p4p") tags.add("P4P");
+    const tagArr = [...tags].filter(Boolean);
+    const ig = [L.title(label, divName), L.upd(dateTxt), "", champLine(true), ...list.map(r => line(r, true)), "", moversTxt, moversTxt ? "" : null, L.q, "", L.bio, "", tagArr.map(t => "#" + t).join(" ")]
+      .filter(x => x !== null && x !== undefined).join("\n").replace(/\n{3,}/g, "\n\n").replace(/^\n+/, "");
+    const tt = L.tt(label, divName, list.length) + "\n\n" + tagArr.slice(0, 6).map(t => "#" + t.toLowerCase()).join(" ");
+    // X: as many places as fit into 280 characters
+    let xs = "";
+    for (let k = list.length; k >= 1; k--) {
+      const body = [L.title(label, divName), "", champLine(false), ...list.slice(0, k).map(r => line(r, false)), "", `${L.full} ${url}`].filter(x => x !== "" || true).join("\n").replace(/\n{3,}/g, "\n\n");
+      xs = body; if (xLength(body) <= 280) break;
+    }
+    return { ig, tt, x: xs, url };
+  }
+
+  let packFiles = [];
+  function renderPackControls() {
+    const sc = $("pScope").value;
+    $("pSubWrap").style.display = sc === "country" || sc === "org" ? "" : "none";
+    $("pDivWrap").style.display = sc === "p4p" ? "none" : "";
+    const subs = sc === "country" ? D.countries.map(c => [c.code, c.name || countryName(c.code)]) : sc === "org" ? rankedOrgs().map(o => [o.id, o.name]) : [];
+    const keep = $("pSub").value;
+    $("pSub").innerHTML = subs.map(([v, n]) => `<option value="${esc(v)}">${esc(n)}</option>`).join("");
+    if (subs.some(x => x[0] === keep)) $("pSub").value = keep;
+    if (!$("pDiv").options.length) $("pDiv").innerHTML = D.divisions.map(d => `<option value="${esc(d.id)}">${esc(d.name)}</option>`).join("");
+  }
+  ["pScope", "pSub"].forEach(id => $(id).addEventListener("change", renderPackControls));
+  function packOpts() { return { scope: $("pScope").value, sub: $("pSub").value || null, div: $("pDiv").value, count: +$("pCount").value, lang: $("pLang").value }; }
+
+  $("pMake").onclick = async () => {
+    const o = packOpts();
+    const btn = $("pMake"), bar = $("pProg");
+    btn.disabled = true; bar.hidden = false; bar.firstElementChild.style.width = "0";
+    packFiles.forEach(f => f.url && URL.revokeObjectURL(f.url)); packFiles = [];
+    const key = [o.scope, o.scope === "p4p" ? "" : o.sub, o.scope === "p4p" ? "" : o.div].filter(Boolean).join("-");
+    const base = `mmaladder-${key}-${D.updated || "pack"}`;
+    const steps = [];
+    if ($("pPost").checked) steps.push(["post", "Post 4:5", async () => ({ blob: await canvasBlob(await paintGfx({ format: "1080x1350", type: "rank", ...o })), ext: "png" })]);
+    if ($("pStory").checked) steps.push(["story", "Story 9:16", async () => ({ blob: await canvasBlob(await paintGfx({ format: "1080x1920", type: "rank", ...o })), ext: "png" })]);
+    if ($("pMovers").checked) steps.push(["movers", "Movers 4:5", async () => ({ blob: await canvasBlob(await paintGfx({ format: "1080x1350", type: "movers" })), ext: "png" })]);
+    if ($("pVideo").checked) steps.push(["reel", "Video odpočet", async p => MLV.exportMp4(await MLV.build(D, { type: "rank", ...o, photo: $("pPhoto").checked, markSrc: document.querySelector(".brand img").src }), p)]);
+    if ($("pMoversVid").checked) steps.push(["movers-reel", "Movers video", async p => MLV.exportMp4(await MLV.build(D, { type: "movers", markSrc: document.querySelector(".brand img").src }), p)]);
+    try {
+      for (let i = 0; i < steps.length; i++) {
+        const [id, label, fn] = steps[i];
+        $("pStatus").textContent = `Vytvářím: ${label} (${i + 1}/${steps.length})…`;
+        const r = await fn(p => { bar.firstElementChild.style.width = Math.round(((i + (p || 0)) / steps.length) * 100) + "%"; });
+        packFiles.push({ id, label, name: `${base}-${id}.${r.ext}`, blob: r.blob, url: URL.createObjectURL(r.blob), video: r.ext !== "png" });
+        bar.firstElementChild.style.width = Math.round(((i + 1) / steps.length) * 100) + "%";
+      }
+      const caps = buildCaptions(o);
+      renderPackOut(caps, base);
+      $("pStatus").innerHTML = "Hotovo. Na mobilu použij <b>Sdílet</b>, na počítači <b>Stáhnout vše</b>.";
+    } catch (e) {
+      console.error(e); alert("Balíček se nepodařilo vytvořit: " + (e && e.message ? e.message : e));
+      $("pStatus").textContent = "Něco se pokazilo. Zkus to znovu v Chrome nebo Edge.";
+    } finally { btn.disabled = false; setTimeout(() => { bar.hidden = true; }, 800); }
+  };
+  function renderPackOut(caps, base) {
+    const canShare = f => { try { return !!(navigator.canShare && navigator.canShare({ files: [new File([f.blob], f.name, { type: f.blob.type })] })); } catch (e) { return false; } };
+    const capBox = (id, title, text, limit) => `<div class="cap"><div class="cap-head"><h4>${title}</h4><span class="count${limit && xLength(text) > limit ? " over" : ""}" data-count="${id}">${limit ? xLength(text) + " / " + limit : text.length + " znaků"}</span><button class="btn sm" data-copy="${id}">Kopírovat</button></div><textarea id="cap-${id}" rows="${Math.min(18, text.split("\n").length + 1)}">${esc(text)}</textarea></div>`;
+    $("pOut").innerHTML = `
+      <div class="pack-top"><button class="btn primary" id="pZip">Stáhnout vše (ZIP)</button><span class="hint" style="margin:0">Obrázky, videa a popisky v jednom souboru.</span></div>
+      <div class="assets">${packFiles.map((f, i) => `<div class="asset">
+        <div class="thumb">${f.video ? `<video src="${f.url}" muted loop playsinline preload="metadata" controls></video>` : `<img src="${f.url}" alt="">`}</div>
+        <div class="meta"><b>${esc(f.label)}</b><small>${(f.blob.size / 1048576).toFixed(1)} MB · ${f.video ? f.name.split(".").pop().toUpperCase() : "PNG"}</small>
+          <div class="acts2"><button class="btn" data-dl="${i}">Stáhnout</button>${canShare(f) ? `<button class="btn" data-share="${i}">Sdílet</button>` : ""}</div></div></div>`).join("")}</div>
+      ${capBox("ig", "Instagram", caps.ig)}
+      ${capBox("tt", "TikTok", caps.tt)}
+      ${capBox("x", "X", caps.x, 280)}
+      <p class="hint" style="margin:0">Story: přidej v Instagramu nálepku <b>Odkaz</b> s adresou <b>${esc(caps.url)}</b>. Zápasníci s vyplněným Instagramem jsou v popisku rovnou označení. Popisky můžeš před kopírováním upravit.</p>`;
+    $("pOut").dataset.base = base;
+  }
+  $("pOut").addEventListener("input", e => {
+    if (e.target.id === "cap-x") { const n = xLength(e.target.value), c = $("pOut").querySelector('[data-count="x"]'); c.textContent = n + " / 280"; c.classList.toggle("over", n > 280); }
+  });
+  $("pOut").addEventListener("click", async e => {
+    const dl = e.target.closest("[data-dl]"), sh = e.target.closest("[data-share]"), cp = e.target.closest("[data-copy]");
+    if (dl) { const f = packFiles[+dl.dataset.dl]; const a = document.createElement("a"); a.href = f.url; a.download = f.name; document.body.appendChild(a); a.click(); a.remove(); }
+    if (sh) {
+      const f = packFiles[+sh.dataset.share];
+      const text = ($("cap-ig") || {}).value || "";
+      try { await navigator.clipboard.writeText(text); } catch (err) {}
+      try { await navigator.share({ files: [new File([f.blob], f.name, { type: f.blob.type })] }); toast("Popisek pro Instagram je zkopírovaný – vlož ho"); } catch (err) { if (err && err.name !== "AbortError") toast("Sdílení se nepodařilo"); }
+    }
+    if (cp) { const ta = $("cap-" + cp.dataset.copy); try { await navigator.clipboard.writeText(ta.value); toast("Zkopírováno"); } catch (err) { ta.select(); document.execCommand("copy"); toast("Zkopírováno"); } }
+    if (e.target.id === "pZip") {
+      const base = $("pOut").dataset.base;
+      const capTxt = `INSTAGRAM\n=========\n${$("cap-ig").value}\n\n\nTIKTOK\n======\n${$("cap-tt").value}\n\n\nX\n=\n${$("cap-x").value}\n`;
+      const zip = await makeZip(packFiles.map(f => ({ name: f.name, blob: f.blob })).concat([{ name: base + "-popisky.txt", blob: new Blob([capTxt], { type: "text/plain" }) }]));
+      const a = document.createElement("a"); a.href = URL.createObjectURL(zip); a.download = base + ".zip"; document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(a.href), 5000);
+    }
+  });
+
   function renderAll() {
     if (ui.tab === "rank") renderRank();
     if (ui.tab === "fighters") renderFighters();
@@ -1436,6 +1651,7 @@
     if (ui.tab === "gfx") renderGfx();
     if (ui.tab !== "vid") vStop();
     if (ui.tab === "vid") renderVid(true);
+    if (ui.tab === "pack") renderPackControls();
     if (ui.tab === "setup") { renderSetup(); renderSiteSettings(); renderAds(); renderTexts(); }
   }
   renderAll();
